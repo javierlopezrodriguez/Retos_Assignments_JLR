@@ -1,0 +1,3 @@
+class HybridCross
+    #code
+end
