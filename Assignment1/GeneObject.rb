@@ -5,6 +5,9 @@ class Gene
       #@name:
       #@mutant_phenotype:
       #@linked:
+      #@@gene_list: list of all the genes, class variable
+    
+    @@gene_list = []
     
     # Attribute accessors for @name, @mutant_phenotype and @linked
     attr_accessor :name, :mutant_phenotype, :linked
@@ -24,6 +27,7 @@ class Gene
         @name = params.fetch(:name, "unknown_name")
         @mutant_phenotype = params.fetch(:mutant_phenotype, "unknown_mutant_phenotype")
         @linked = nil # default value at the start, when no hybrid cross has been made
+        @@gene_list << self # adding this Gene object to a gene_list
     end
     
     # Fabricator
@@ -39,6 +43,15 @@ class Gene
         else
             new(params) # if the id is correct, it calls initialize, creating the instance of Gene.
         end
+    end
+    
+    # Class method
+    # Checks if there is any gene object with that id and returns it, returns nil if not.
+    def Gene.return_gene_with_id(input_id)
+        @@gene_list.each do |gene| # iterates through the gene list
+              return gene if gene.id == input_id
+        end
+        return nil # if no gene has the input_id
     end
     
     
