@@ -4,10 +4,7 @@ class Gene
       #@id:
       #@name:
       #@mutant_phenotype:
-      #@linked:
-      #@@gene_list: list of all the genes, class variable
-    
-    @@gene_list = []
+      #@linked: 
     
     # Attribute accessors for @name, @mutant_phenotype and @linked
     attr_accessor :name, :mutant_phenotype, :linked
@@ -27,15 +24,14 @@ class Gene
         @name = params.fetch(:name, "unknown_name")
         @mutant_phenotype = params.fetch(:mutant_phenotype, "unknown_mutant_phenotype")
         @linked = nil # default value at the start, when no hybrid cross has been made
-        @@gene_list << self # adding this Gene object to a gene_list
     end
     
     # Fabricator
-    # This is the method that will be called to create an object
-    # It checks if the id is correct:
-    #   if it isn't, it prints a message and returns nil, cancelling the creation.
-    #   if it is, it calls the initializer
     def self.fabricate (params = {})
+        # This is the method that will be called to create an object
+        # It checks if the id is correct:
+        #   if it isn't, it prints a message and returns nil, cancelling the creation.
+        #   if it is, it calls the initializer
         input_id = params.fetch(:id, "No ID provided")
         unless Regexp.new(/A[Tt]\d[Gg]\d\d\d\d\d/).match(input_id) # if the id format doesn't match the regexp
             puts "The entry with ID: #{input_id} doesn't have a correct ID. It is being ignored."
@@ -43,15 +39,6 @@ class Gene
         else
             new(params) # if the id is correct, it calls initialize, creating the instance of Gene.
         end
-    end
-    
-    # Class method
-    # Checks if there is any gene object with that id and returns it, returns nil if not.
-    def Gene.return_gene_with_id(input_id)
-        @@gene_list.each do |gene| # iterates through the gene list
-              return gene if gene.id == input_id
-        end
-        return nil # if no gene has the input_id
     end
     
     
