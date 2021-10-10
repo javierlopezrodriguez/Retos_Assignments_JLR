@@ -12,17 +12,12 @@ class SeedStock
     attr_accessor :id, :mutant_gene_id, :gene, :last_planted, :storage, :grams_remaining
     
     def initialize(params = {})
-        @id = params.fetch(:id, "Unknown stock ID")
-        @last_planted = params.fetch(:last_planted, "Not planted")
-        @storage = params.fetch(:storage, "Unknown location")
-        @grams_remaining = params.fetch(:grams_remaining, 0)
-        @mutant_gene_id = params.fetch(:mutant_gene_id, "Unknown mutant gene id.") 
+        @id = params.fetch(:Seed_Stock, "Unknown stock ID")
+        @last_planted = params.fetch(:Last_Planted, "Not planted")
+        @storage = params.fetch(:Storage, "Unknown location")
+        @grams_remaining = params.fetch(:Grams_Remaining, 0).to_f # converting the string to float
+        @mutant_gene_id = params.fetch(:Mutant_Gene_ID, "Unknown mutant gene id.") 
         @gene = nil # by default
-        
-            
-            
-            #####   EN QUÉ ORDEN VAN A IR LAS COSAS
-          
     end
     
     def add_gene_object(gene_database)
@@ -33,7 +28,22 @@ class SeedStock
         
         @gene = gene_database.get_object_by_id(@mutant_gene_id) # the Gene object if it exists, or nil if it doesn't
     end
-        
-        
-        
+    
+    def increase_quantity(grams)
+        @grams_remaining += grams
+    end
+    
+    def decrease_quantity(grams)
+        new_amount = @grams_remaining - grams
+        case
+            when new_amount < 0
+                puts "WARNING: For Stock #{@id}, grams remaining are less than cero (#{new_amount}), it has been set to 0."
+                @grams_remaining = 0
+            when new_amount = 0
+                puts "WARNING: We have run out of Seed Stock #{@id}."
+                @grams_remaining = 0
+            else
+                @grams_remaining = new_amount
+        end
+    end
 end

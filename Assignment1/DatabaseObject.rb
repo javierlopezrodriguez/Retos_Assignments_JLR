@@ -41,7 +41,7 @@ class Database
                 end
             end
         rescue Errno::ENOENT # handling the missing file exception
-            puts "Can't find the file #{filepath}"
+            puts "ERROR: Can't find the file #{filepath}"
         end
     end
     
