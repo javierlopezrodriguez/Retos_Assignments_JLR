@@ -68,7 +68,7 @@ class Database
                     
                     # Accessing the attribute attr_name:
                     # (https://stackoverflow.com/questions/1407451/calling-a-method-from-a-string-with-the-methods-name-in-ruby)
-                    # I'm creating the method, and then calling it with attribute.call()
+                    # I'm creating the method, and then calling it with obj_attr.call()
                     # This is equivalent to calling obj.attr_name, but allows me to not hard-code it
                     # (so I can use this method with HybridStockDatabase, because HybridStock has two ids called @parent1, @parent2)
                     # If I don't do this, I have to either:
