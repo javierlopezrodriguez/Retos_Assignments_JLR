@@ -10,7 +10,7 @@ class GeneDatabase < Database
     # because this is different for every Class.
     def create_and_store_object(params)
         new_gene = Gene.fabricate(params) # calling fabricate instead of new because we are checking the format of the id
-        @all_entries << new_gene
+        @all_entries << new_gene unless new_gene.nil? # if the gene id format is incorrect, Gene.fabricate returns nil
     end
     
     def set_linked_genes(gene1, gene2)

@@ -2,6 +2,9 @@ require './HybridCrossDatabaseObject.rb'
 require './StockDatabaseObject.rb'
 require './GeneDatabaseObject.rb'
 
+# ruby process_database.rb gene_information.tsv seed_stock_data.tsv cross_data.tsv output_test_1.tsv
+
+
 if ARGV.length < 4
     puts "You need to include, in this order, the names of: gene_file, seed_stock_file, cross_file, and output_file"
 else # everything ok

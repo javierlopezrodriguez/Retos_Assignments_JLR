@@ -49,23 +49,46 @@ class Database
         # empty method
     end
     
-    def get_object_by_id(input_id)
+    def get_object_by_id(input_value, attribute_name = :id) # by default: we are comparing input_value to the attribute @id
         
-        # Gets an object from the database that has an attribute @id matching the input_id
-        # or returns nil if there isn't any matching object (or the database is empty)
+        # Gets an object from the database that has an attribute called attribute_name with value matching the input_value
         
-        unless @all_entries.empty? # if the array is not empty
-            @all_entries.each do |item| # iterate through the array
-                next unless item.id == input_id # go to the next object if the id doesn't match
-                return item # return the object if it matches, exiting the method
+        # If attribute_name is iterable, it first looks for the id in the first attribute.
+        # If it doesn't find an object, it then checks the second attribute name, and so on.
+        
+        # Returns nil if there isn't any matching object (or the database is empty)
+        
+        unless attribute_name.respond_to? :each # if the attribute_name is not iterable
+            attribute_name = [attribute_name] # converts it into an array of 1 element
+        end
+        
+        attribute_name.each do |attr_name| # for each attribute name
+            unless @all_entries.empty? # if the database is not empty
+                @all_entries.each do |obj| # for each object in the database
+                    
+                    # Accessing the attribute attr_name:
+                    # (https://stackoverflow.com/questions/1407451/calling-a-method-from-a-string-with-the-methods-name-in-ruby)
+                    # I'm creating the method, and then calling it with attribute.call()
+                    # This is equivalent to calling obj.attr_name, but allows me to not hard-code it
+                    # (so I can use this method with HybridStockDatabase, because HybridStock has two ids called @parent1, @parent2)
+                    # If I don't do this, I have to either:
+                    #    - repeat this method in HybridStockDatabase changing only a few lines
+                    #    - make it so that HybridStockDatabase can't use this method, because HybridStock.id doesn't exist.
+                    
+                    obj_attr = obj.method(attr_name) # creating the method
+                    return obj if obj_attr.call() == input_value # return obj if obj.attr_name == input_value
+                    # The return will exit the function if it found an object.
+                end
             end
-            # This only gets executed if no object has been found but @all_entries has objects
-            puts "No #{@all_entries[1].class} object found with ID: #{input_id}" # warning message
+        end
+        
+        # Code below only gets executed if no object has been found
+        unless @all_entries.empty? # If there are objects in @all_entries
+            puts "WARNING: No #{@all_entries[0].class} object found with ID: #{input_value}"
             return nil
         else # if the array is empty
-            puts "There are no objects in the database" # warning message
+            puts "WARNING: You're looking for an object but there are no objects in the database."
             return nil
-        end  
+        end
     end
-    
 end

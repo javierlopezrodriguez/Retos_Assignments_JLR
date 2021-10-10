@@ -16,14 +16,13 @@ class StockDatabase < Database
     def write_database(output_name)
         # It supports .csv and .tsv files. The extension must be the last part of the filename.
         extension_separator = {tsv: "\t", csv: ","}
-        extension = output_name.split(".").last # gets the extension
+        extension = output_name.split(".").last.to_sym # gets the extension
         sep = extension_separator.fetch(extension, "\t") # gets the corresponding separator, tab by default
         
         header = ["Seed_Stock", "Mutant_Gene_ID", "Last_Planted", "Storage", "Grams_Remaining"]
         
         f = File.new(output_name, "w") # opening the file
-        f.write(header.join(sep)) # writing the header
-        f.write("\n") #newline
+        f.write(header.join(sep) + "\n") # writing the header
         @all_entries.each do |stock| # iterating through each SeedStock object in the database
             elements = [stock.id, stock.mutant_gene_id, stock.last_planted, stock.storage, stock.grams_remaining.to_s]
             entry = elements.join(sep) + "\n"

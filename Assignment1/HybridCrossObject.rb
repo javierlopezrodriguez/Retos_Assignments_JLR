@@ -32,9 +32,9 @@ class HybridCross
         obs_exp_pairs = observed.zip(expected) # arranges it as [observed wild, expected wild], [observed p1, expected p1]...
         
         # Chi square estimator:
-        estimator = 0 # start value
+        estimator = 0.0 # start value
         obs_exp_pairs.each do |obs, exp| # for each [observed, expected] pair
-            estimator += ((obs - exp)**2/exp).round(3) # add that expression to the current value of estimator
+            estimator += ((obs*1.0 - exp*1.0)**2/(exp*1.0)).round(3) # add that expression to the current value of estimator
         end
         
         @estimator = estimator # storing the estimator
