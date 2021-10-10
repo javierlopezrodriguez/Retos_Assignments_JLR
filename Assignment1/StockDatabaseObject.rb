@@ -20,10 +20,15 @@ class StockDatabase < Database
         sep = extension_separator.fetch(extension, "\t") # gets the corresponding separator, tab by default
         
         header = ["Seed_Stock", "Mutant_Gene_ID", "Last_Planted", "Storage", "Grams_Remaining"]
-        File.write(output_name, header.join(sep), mode: "w") # writing the header
+        
+        f = File.new(output_name, "w") # opening the file
+        f.write(header.join(sep)) # writing the header
+        f.write("\n") #newline
         @all_entries.each do |stock| # iterating through each SeedStock object in the database
-            entry = stock.id + sep + stock.mutant_gene_id + sep + stock.last_planted + sep + stock.storage + sep + stock.grams_remaining.to_s
-            File.write(output_name, entry, mode: "a") # appending the rest of the seedstocks.
-        end    
+            elements = [stock.id, stock.mutant_gene_id, stock.last_planted, stock.storage, stock.grams_remaining.to_s]
+            entry = elements.join(sep) + "\n"
+            f.write(entry) # writing the next entry
+        end
+        f.close()
     end
 end

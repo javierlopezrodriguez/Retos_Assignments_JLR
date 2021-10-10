@@ -20,8 +20,8 @@ class Gene
     # Basic initializer
     # (we won't use it directly, to create an object we will call Gene.fabricate)
     def initialize(params)
-        @id = params.fetch(:Gene_ID) # no default because this only gets called if it is correct
-        @name = params.fetch(:Gene_name, "unknown_name")
+        @id = params.fetch(:gene_id) # no default because this only gets called if it is correct
+        @name = params.fetch(:gene_name, "unknown_name")
         @mutant_phenotype = params.fetch(:mutant_phenotype, "unknown_mutant_phenotype")
         @linked = nil # default value
     end
@@ -32,7 +32,7 @@ class Gene
         # It checks if the id is correct:
         #   if it isn't, it prints a message and returns nil, cancelling the creation.
         #   if it is, it calls the initializer
-        input_id = params.fetch(:Gene_ID, "No ID provided")
+        input_id = params.fetch(:gene_id, "No ID provided")
         unless Regexp.new(/A[Tt]\d[Gg]\d\d\d\d\d/).match(input_id) # if the id format doesn't match the regexp
             puts "The entry with ID: #{input_id} doesn't have a correct ID. It is being ignored."
             return nil # returns nil instead of creating an instance of Gene.

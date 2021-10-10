@@ -8,11 +8,11 @@ else # everything ok
 
     # Creating each database object, and loading the database from each file
     gene_db = GeneDatabase.new
-    gene_db.load_from_file(ARGV[1])
+    gene_db.load_from_file(ARGV[0])
     stock_db = StockDatabase.new
-    stock_db.load_from_file(ARGV[2])
+    stock_db.load_from_file(ARGV[1])
     cross_db = HybridCrossDatabase.new
-    cross_db.load_from_file(ARGV[3])
+    cross_db.load_from_file(ARGV[2])
     
     # Adding each Gene object to the corresponding SeedStock object (this is not necessary)
     stock_db.all_entries.each {|seed_stock| seed_stock.add_gene_object(gene_db)}
@@ -21,7 +21,7 @@ else # everything ok
     stock_db.all_entries.each {|seed_stock| seed_stock.decrease_quantity(grams = 7)}
     
     # Writing the new state of the stock database to a new file
-    stock_db.write_database(ARGV[4])
+    stock_db.write_database(ARGV[3])
     
     # Processing the hybrid cross information
     cross_db.all_entries.each {|cross| cross.chi_square_test} # chi square test for each hybrid cross

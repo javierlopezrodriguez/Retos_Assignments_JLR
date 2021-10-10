@@ -2,15 +2,19 @@ class HybridCross
   
     # Attribute accessors:
     attr_accessor :parent1, :parent2, :f2_wild, :f2_p1, :f2_p2, :f2_p1p2, :linked
+    attr_reader :estimator, :cutoff_probability
   
     def initialize(params = {})
-        @parent1 = params.fetch(:Parent1, "Parent 1 ID")
-        @parent2 = params.fetch(:Parent2, "Parent 2 ID")
-        @f2_wild = params.fetch(:F2_Wild, 0).to_i # converting the string to integer
-        @f2_p1 = params.fetch(:F2_P1, 0).to_i # converting the string to integer
-        @f2_p2 = params.fetch(:F2_P2, 0).to_i # converting the string to integer
-        @f2_p1p2 = params.fetch(:F2_P1P2, 0).to_i # converting the string to integer
+        @parent1 = params.fetch(:parent1, "Parent 1 ID") # stock id
+        @parent2 = params.fetch(:parent2, "Parent 2 ID") # stock id
+        @f2_wild = params.fetch(:f2_wild, 0).to_i # converting the string to integer
+        @f2_p1 = params.fetch(:f2_p1, 0).to_i # converting the string to integer
+        @f2_p2 = params.fetch(:f2_p2, 0).to_i # converting the string to integer
+        @f2_p1p2 = params.fetch(:f2_p1p2, 0).to_i # converting the string to integer
         @linked = nil #default. after analysing: true if linked, false if not
+        @estimator = nil #default
+        @cutoff_probability = nil #default
+        # estimator and cutoff_probability will store those results after a chi_square_test has been performed
     end
     #code
     
@@ -33,6 +37,8 @@ class HybridCross
             estimator += ((obs - exp)**2/exp).round(3) # add that expression to the current value of estimator
         end
         
+        @estimator = estimator # storing the estimator
+        
         # Hash with:
         # Values: Probabilities that the genes are not linked
         # Keys: The value of the chi square estimator for each probability
@@ -45,9 +51,10 @@ class HybridCross
             cutoff_probability = 0.05
         end
         
+        @cutoff_probability = cutoff_probability # storing the cutoff used
+        
         # Checking if our estimator is >= the estimator corresponding to the cutoff probability
         if estimator >= probs_values[cutoff_probability]
-            puts "Recording: #{@parent1} is genetically linked to #{@parent2} with chi square score #{estimator} (cutoff probability: #{cutoff_probability}."
             @linked = true
         else
             @linked = false

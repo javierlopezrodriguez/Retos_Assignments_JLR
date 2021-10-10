@@ -67,6 +67,8 @@ class HybridCrossDatabase < Database
                         gene_id_p1, gene_id_p2 = stock_p1.mutant_gene_id, stock_p2.mutant_gene_id
                         gene_database.set_linked_genes_by_id(gene_id_p1, gene_id_p2) #setting @linked attribute using the gene ids
                     end
+                    # Printing the message:
+                    puts "Recording: #{gene_id_p1} is genetically linked to #{gene_id_p2} with chi square score #{cross.estimator} (cutoff probability: #{cross.cutoff_probability})."
                     # Adding the messages to the linked_report array
                     linked_report << "#{gene_id_p1} is linked to #{gene_id_p2}"
                     linked_report << "#{gene_id_p2} is linked to #{gene_id_p1}"
@@ -76,6 +78,7 @@ class HybridCrossDatabase < Database
             end
         end
         # Printing the report
+        puts "\nFinal hybrid cross report:"
         linked_report.each do |message| puts message end
     end
 end

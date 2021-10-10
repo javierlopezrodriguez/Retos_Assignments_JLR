@@ -29,16 +29,13 @@ class Database
         # using a begin - rescue block to handle exceptions when opening the file
         begin 
             # Opening the file as read (mode = "r" by default).
-            # Using with_index to be able to store the header (the line with index == 1)
-            CSV.foreach(filepath, col_sep: separator).with_index do |line, index|
-                if index == 1 # for the header:
-                    header = line.map &:to_sym # converting the array of strings to an array of symbols
-                else # Creating an object for every other line
-                    # creating the hash with the parameters: (https://stackoverflow.com/questions/33899766/ruby-how-to-create-a-hash-from-two-arrays)
-                    params = header.zip(line).to_h
-                    # creating the object and storing it in @all_entries
-                    create_and_store_object(params)
-                end
+            # Including the separator (default tab), skip_blanks: true so that it skips empty lines,
+            # and headers: true, header_converters: symbol so that it processes the header and converts it to symbol
+            # header_converters: :symbol also turns the string into snake_case ("Gene_Name" -> :gene_name)
+            CSV.foreach(filepath, col_sep: separator, skip_blanks: true, headers: true, header_converters: :symbol) do |line|
+                # line is a hash-like object, indexable by the header symbols
+                # creating the object and storing it in @all_entries
+                create_and_store_object(line)
             end
         rescue Errno::ENOENT # handling the missing file exception
             puts "ERROR: Can't find the file #{filepath}"
