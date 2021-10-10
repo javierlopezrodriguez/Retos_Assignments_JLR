@@ -1,10 +1,10 @@
 class Gene
   
     #Attributes:
-      #@id:
-      #@name:
-      #@mutant_phenotype:
-      #@linked: 
+      #@id: gene id
+      #@name: gene name
+      #@mutant_phenotype: phenotype of the mutant
+      #@linked: nil by default. If a hybrid cross has been performed and this gene is linked to another, @linked contains the other's id
     
     # Attribute accessors for @name, @mutant_phenotype and @linked
     attr_accessor :name, :mutant_phenotype, :linked
@@ -19,7 +19,7 @@ class Gene
     
     # Basic initializer
     # (we won't use it directly, to create an object we will call Gene.fabricate)
-    def initialize (params)
+    def initialize(params)
         @id = params.fetch(:Gene_ID) # no default because this only gets called if it is correct
         @name = params.fetch(:Gene_name, "unknown_name")
         @mutant_phenotype = params.fetch(:mutant_phenotype, "unknown_mutant_phenotype")
@@ -27,7 +27,7 @@ class Gene
     end
     
     # Fabricator
-    def self.fabricate (params = {})
+    def self.fabricate(params = {})
         # This is the method that will be called to create an object
         # It checks if the id is correct:
         #   if it isn't, it prints a message and returns nil, cancelling the creation.
@@ -40,6 +40,4 @@ class Gene
             new(params) # if the id is correct, it calls initialize, creating the instance of Gene.
         end
     end
-    
-    
 end

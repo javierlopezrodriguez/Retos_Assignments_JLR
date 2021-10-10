@@ -1,12 +1,12 @@
 class SeedStock
   
     #Attributes:
-      #@id:
-      #@mutant_gene_id:
+      #@id: seed stock id
+      #@mutant_gene_id: id of the mutant gene
       #@gene: nil by default, or the corresponding Gene object if there is a GeneDatabase with an object with id @mutant_gene_id
-      #@last_planted:
-      #@storage:
-      #@grams_remaining:
+      #@last_planted: date 
+      #@storage: storage location
+      #@grams_remaining: amount remaining in grams
     
     # Attribute accessors:
     attr_accessor :id, :mutant_gene_id, :gene, :last_planted, :storage, :grams_remaining
@@ -30,20 +30,20 @@ class SeedStock
     end
     
     def increase_quantity(grams)
-        @grams_remaining += grams
+        @grams_remaining += grams # updating the amount
     end
     
     def decrease_quantity(grams)
         new_amount = @grams_remaining - grams
-        case
+        case # different warnings depending on the final amount
             when new_amount < 0
                 puts "WARNING: For Stock #{@id}, grams remaining are less than cero (#{new_amount}), it has been set to 0."
-                @grams_remaining = 0
+                @grams_remaining = 0 # can't be negative
             when new_amount = 0
                 puts "WARNING: We have run out of Seed Stock #{@id}."
-                @grams_remaining = 0
+                @grams_remaining = 0 # updating the amount
             else
-                @grams_remaining = new_amount
+                @grams_remaining = new_amount # updating the amount
         end
     end
 end

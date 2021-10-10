@@ -1,3 +1,6 @@
+require './DatabaseObject.rb'
+require './HybridCrossObject.rb'
+
 class HybridCrossDatabase < Database
         
     # HybridCrossDatabase inherits #initialize and #load_from_file from Database
@@ -37,8 +40,15 @@ class HybridCrossDatabase < Database
         end  
     end
     
-    def annotate_linked_genes(stock_database, gene_database)
-        @all_entries.each do |cross|
+    def annotate_linked_genes_and_report(stock_database, gene_database)
+        
+        # Checks every HybridCross object to see if both genes are linked. If they are,
+        # it sets the @linked attribute for each Gene object to the id of the other.
+        # At the end, it prints a report with every linkage.
+        
+        linked_report = [] # Stores the strings "A is linked to B" "B is linked to A" for every pair of linked genes
+        
+        @all_entries.each do |cross| # iterates through all the crosses
             if cross.linked # not false or nil
                 # getting the seed stock ids from the HybridCross objects
                 cross_id_p1, cross_id_p2 = cross.parent1, cross.parent2
@@ -47,18 +57,25 @@ class HybridCrossDatabase < Database
                 stock_p2 = stock_database.get_object_by_id(cross_id_p2)
                 # if both are found
                 unless stock_p1.nil? || stock_p2.nil?
-                    # getting the gene ids from the SeedStock objects
                     # if the SeedStock objects contain the Gene objects, retrieve them and link both genes that way
                     # if the SeedStock objects don't contain the Gene objects, link them using their ids
                     unless stock_p1.gene.nil? || stock_p2.gene.nil? # if the Gene objects are inside the SeedStock objects
                         gene_p1, gene_p2 = stock_p1.gene, stock_p2.gene
-                        gene_database.set_linked_genes(gene_p1, gene_p2)
+                        gene_database.set_linked_genes(gene_p1, gene_p2) # setting @linked attribute using the genes
+                        gene_id_p1, gene_id_p2 = gene_p1.id, gene_p2.id # getting the ids anyway for the final report
                     else # if one or both aren't
                         gene_id_p1, gene_id_p2 = stock_p1.mutant_gene_id, stock_p2.mutant_gene_id
-                        gene_database.set_linked_genes_by_id(gene_id_p1, gene_id_p2)
+                        gene_database.set_linked_genes_by_id(gene_id_p1, gene_id_p2) #setting @linked attribute using the gene ids
                     end
+                    # Adding the messages to the linked_report array
+                    linked_report << "#{gene_id_p1} is linked to #{gene_id_p2}"
+                    linked_report << "#{gene_id_p2} is linked to #{gene_id_p1}"
+                else
+                    puts "WARNING: one or both of the stocks #{cross_id_p1}, #{cross_id_p2} aren't in the StockDatabase"
                 end
             end
         end
+        # Printing the report
+        linked_report.each do |message| puts message end
     end
 end

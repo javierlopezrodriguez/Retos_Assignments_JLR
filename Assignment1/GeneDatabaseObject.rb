@@ -1,5 +1,8 @@
-class GeneDatabase < Database
-        
+require './DatabaseObject.rb'
+require './GeneObject.rb'
+
+class GeneDatabase < Database    
+    
     # GeneDatabase inherits #initialize, #load_from_file and #get_object_by_id from Database
     
     # Helper method used by #load_from_file

@@ -1,5 +1,8 @@
 class HybridCross
   
+    # Attribute accessors:
+    attr_accessor :parent1, :parent2, :f2_wild, :f2_p1, :f2_p2, :f2_p1p2, :linked
+  
     def initialize(params = {})
         @parent1 = params.fetch(:Parent1, "Parent 1 ID")
         @parent2 = params.fetch(:Parent2, "Parent 2 ID")
@@ -7,6 +10,7 @@ class HybridCross
         @f2_p1 = params.fetch(:F2_P1, 0).to_i # converting the string to integer
         @f2_p2 = params.fetch(:F2_P2, 0).to_i # converting the string to integer
         @f2_p1p2 = params.fetch(:F2_P1P2, 0).to_i # converting the string to integer
+        @linked = nil #default. after analysing: true if linked, false if not
     end
     #code
     
@@ -32,19 +36,21 @@ class HybridCross
         # Hash with:
         # Values: Probabilities that the genes are not linked
         # Keys: The value of the chi square estimator for each probability
-        probs = [0.9, 0.7, 0.6, 0.5, 0.2, 0.1, 0.05, 0.01]
-        estimators = [0.58, 1.42, 1.85, 2.37, 4.64, 6.25, 7.82, 11.34]
+        probs = [0.1, 0.05, 0.01]
+        estimators = [6.25, 7.82, 11.34]
         probs_values = probs.zip(estimators).to_h # zipping both arrays and converting it to hash
         
-        # If the probability isn't in 
-        unless probs_values.has_key?(cutoff_probability)
-        cutoff = 0.05 
+        unless probs_values.has_key?(cutoff_probability) # If the probability isn't in our hash
+            puts "WARNING: the probability cutoff provided isn't in our array, we will use the default 0.05"
+            cutoff_probability = 0.05
+        end
         
-        
-        
-        
-        
+        # Checking if our estimator is >= the estimator corresponding to the cutoff probability
+        if estimator >= probs_values[cutoff_probability]
+            puts "Recording: #{@parent1} is genetically linked to #{@parent2} with chi square score #{estimator} (cutoff probability: #{cutoff_probability}."
+            @linked = true
+        else
+            @linked = false
+        end
     end
-
-
 end
