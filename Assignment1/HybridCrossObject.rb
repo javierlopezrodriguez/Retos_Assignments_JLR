@@ -54,10 +54,6 @@ class HybridCross
         @cutoff_probability = cutoff_probability # storing the cutoff used
         
         # Checking if our estimator is >= the estimator corresponding to the cutoff probability
-        if estimator >= probs_values[cutoff_probability]
-            @linked = true
-        else
-            @linked = false
-        end
+        @linked = (estimator >= probs_values[cutoff_probability]) # storing the result of the comparison in @linked (true/false)
     end
 end
