@@ -1,8 +1,8 @@
 class HybridCross
   
     # Attribute accessors:
-    attr_accessor :parent1, :parent2, :f2_wild, :f2_p1, :f2_p2, :f2_p1p2, :linked
-    attr_reader :estimator, :cutoff_probability
+    attr_accessor :parent1, :parent2, :f2_wild, :f2_p1, :f2_p2, :f2_p1p2
+    attr_reader :estimator, :cutoff_probability, :linked
   
     def initialize(params = {})
         @parent1 = params.fetch(:parent1, "Parent 1 ID") # stock id
@@ -11,12 +11,11 @@ class HybridCross
         @f2_p1 = params.fetch(:f2_p1, 0).to_i # converting the string to integer
         @f2_p2 = params.fetch(:f2_p2, 0).to_i # converting the string to integer
         @f2_p1p2 = params.fetch(:f2_p1p2, 0).to_i # converting the string to integer
-        @linked = nil #default. after analysing: true if linked, false if not
-        @estimator = nil #default
-        @cutoff_probability = nil #default
+        @linked = nil #default. After analysing: true if linked, false if not
+        @estimator = nil #default. After analysing: value of the chi square estimator
+        @cutoff_probability = nil #default. After analysing: cutoff probability used to determine if they are linked
         # estimator and cutoff_probability will store those results after a chi_square_test has been performed
     end
-    #code
     
     def chi_square_test(cutoff_probability = 0.05)
       
@@ -28,13 +27,13 @@ class HybridCross
         
         # Creating an array containing the observed and expected number of each phenotype
         observed = [@f2_wild, @f2_p1, @f2_p2, @f2_p1p2]
-        expected = [total * 9/16, total * 3/16, total * 3/16, total * 1/16]
+        expected = [total * 9.0/16, total * 3.0/16, total * 3.0/16, total * 1.0/16]
         obs_exp_pairs = observed.zip(expected) # arranges it as [observed wild, expected wild], [observed p1, expected p1]...
         
         # Chi square estimator:
         estimator = 0.0 # start value
         obs_exp_pairs.each do |obs, exp| # for each [observed, expected] pair
-            estimator += ((obs*1.0 - exp*1.0)**2/(exp*1.0)).round(3) # add that expression to the current value of estimator
+            estimator += ((obs*1.0 - exp*1.0)**2/(exp*1.0)) # add that expression to the current value of estimator
         end
         
         @estimator = estimator # storing the estimator

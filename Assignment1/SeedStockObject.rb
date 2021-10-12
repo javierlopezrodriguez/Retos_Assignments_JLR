@@ -29,10 +29,6 @@ class SeedStock
         @gene = gene_database.get_object_by_id(@mutant_gene_id) # the Gene object if it exists, or nil if it doesn't
     end
     
-    def increase_quantity(grams)
-        @grams_remaining += grams # updating the amount
-    end
-    
     def decrease_quantity(grams)
         new_amount = @grams_remaining - grams
         case # different warnings depending on the final amount

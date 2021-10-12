@@ -16,7 +16,7 @@ class StockDatabase < Database
     def write_database(output_name)
         # It supports .csv and .tsv files. The extension must be the last part of the filename.
         extension_separator = {tsv: "\t", csv: ","}
-        extension = output_name.split(".").last.to_sym # gets the extension
+        extension = output_name.split(".").last.to_sym # gets the extension (last element after splitting) and converts it to symbol
         sep = extension_separator.fetch(extension, "\t") # gets the corresponding separator, tab by default
         
         header = ["Seed_Stock", "Mutant_Gene_ID", "Last_Planted", "Storage", "Grams_Remaining"]
@@ -28,6 +28,6 @@ class StockDatabase < Database
             entry = elements.join(sep) + "\n"
             f.write(entry) # writing the next entry
         end
-        f.close()
+        f.close() # closing the file
     end
 end
