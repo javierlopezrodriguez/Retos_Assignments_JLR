@@ -1,5 +1,5 @@
 class Database
-    # Generic class over which StockDatabase and GeneDatabase will be built.
+    # Generic class over which StockDatabase, HybridCrossDatabase and GeneDatabase will be built.
     
     #Attributes:
         # @all_entries: array of every object in the database
