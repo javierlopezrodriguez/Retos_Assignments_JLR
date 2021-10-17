@@ -1,5 +1,5 @@
-require './DatabaseObject.rb'
-require './HybridCrossObject.rb'
+require_relative './DatabaseObject.rb' # require_relative so that the path is relative to this file
+require_relative './HybridCrossObject.rb'
 
 class HybridCrossDatabase < Database
         

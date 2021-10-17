@@ -1,5 +1,5 @@
-require './DatabaseObject.rb'
-require './SeedStockObject.rb'
+require_relative './DatabaseObject.rb' # require_relative so that the path is relative to this file
+require_relative './SeedStockObject.rb'
 
 class StockDatabase < Database
         

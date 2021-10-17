@@ -1,5 +1,5 @@
-require './DatabaseObject.rb'
-require './GeneObject.rb'
+require_relative './DatabaseObject.rb' # require_relative so that the path is relative to this file
+require_relative './GeneObject.rb' 
 
 class GeneDatabase < Database    
     

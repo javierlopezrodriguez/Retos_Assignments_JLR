@@ -1,6 +1,6 @@
-require './HybridCrossDatabaseObject.rb'
-require './StockDatabaseObject.rb'
-require './GeneDatabaseObject.rb'
+require_relative './HybridCrossDatabaseObject.rb' # require_relative so that the path is relative to this file
+require_relative './StockDatabaseObject.rb'
+require_relative './GeneDatabaseObject.rb'
 
 # ruby process_database.rb gene_information.tsv seed_stock_data.tsv cross_data.tsv output_test_1.tsv
 

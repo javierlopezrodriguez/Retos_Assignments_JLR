@@ -1,6 +1,6 @@
 # https://semaphoreci.com/community/tutorials/getting-started-with-minitest
 require 'minitest/autorun'
-require './GeneObject.rb'
+require_relative './GeneObject.rb' # require_relative so that the path is relative to this file
 
 # ruby GeneTest.rb
 

@@ -1,6 +1,6 @@
 # https://semaphoreci.com/community/tutorials/getting-started-with-minitest
 require 'minitest/autorun'
-require './HybridCrossDatabaseObject.rb'
+require_relative './HybridCrossDatabaseObject.rb' # require_relative so that the path is relative to this file
 
 # ruby HybridCrossDatabaseTest.rb
 
