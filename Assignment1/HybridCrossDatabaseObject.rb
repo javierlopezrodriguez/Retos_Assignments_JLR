@@ -42,14 +42,19 @@ class HybridCrossDatabase < Database
                     # if the SeedStock objects don't contain the Gene objects, link them using their ids
                     unless stock_p1.gene.nil? || stock_p2.gene.nil? # if the Gene objects are inside the SeedStock objects
                         gene_p1, gene_p2 = stock_p1.gene, stock_p2.gene
-                        gene_database.set_linked_genes(gene_p1, gene_p2) # setting @linked attribute using the genes
-                        gene_id_p1, gene_id_p2 = gene_p1.id, gene_p2.id # getting the ids anyway for the final report
+                        gene_database.set_linked_genes(gene_p1, gene_p2) # setting @linked attribute using the genes in the gene database
+                        gene_id_p1, gene_id_p2 = gene_p1.id, gene_p2.id # getting the ids
+                        stock_p1.gene.linked, stock_p2.gene.linked = gene_id_p2, gene_id_p1 # setting @linked attribute in the genes inside the stock objects
+                        gene_name_p1, gene_name_p2 = stock_p1.gene.name, stock_p2.gene.name # getting the gene names
                     else # if one or both aren't
                         gene_id_p1, gene_id_p2 = stock_p1.mutant_gene_id, stock_p2.mutant_gene_id
-                        gene_database.set_linked_genes_by_id(gene_id_p1, gene_id_p2) #setting @linked attribute using the gene ids
+                        gene_database.set_linked_genes_by_id(gene_id_p1, gene_id_p2) #setting @linked attribute using the gene ids in the gene database
+                        # getting the gene names
+                        gene_name_p1 = gene_database.get_object_by_id(gene_id_p1).name
+                        gene_name_p2 = gene_database.get_object_by_id(gene_id_p2).name
                     end
                     # Printing the message:
-                    puts "Recording: #{gene_id_p1} is genetically linked to #{gene_id_p2} with chi square score #{cross.estimator} (cutoff probability: #{cross.cutoff_probability})."
+                    puts "Recording: #{gene_name_p1} (#{gene_id_p1}) is genetically linked to #{gene_name_p2} (#{gene_id_p2}) with chi square score #{cross.estimator} (cutoff probability: #{cross.cutoff_probability})."
                     # Adding the messages to the linked_report array
                     linked_report << "#{gene_id_p1} is linked to #{gene_id_p2}"
                     linked_report << "#{gene_id_p2} is linked to #{gene_id_p1}"
