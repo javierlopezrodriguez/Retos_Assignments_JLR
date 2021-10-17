@@ -1,16 +1,13 @@
-require '../Assignment1/GeneObject'
+require_relative '../Assignment1/GeneObject.rb' # require_relative so that the path is relative to this file
 
 class AnnotatedGene < Gene
     
-    attr_accessor :dna_seq, :prot_seq
+    attr_accessor :dna_seq, :prot_seq, :prot_id
     
     def initialize(params = {})
-        Gene.fabricate(params)
+        super
         @dna_seq = params.fetch(:dna_seq, nil)
         @prot_seq = params.fetch(:prot_seq, nil)
-    end
-    
-    def AnnotatedGene.from_gene(gene_object)
-        
+        @prot_id = params.fetch(:prot_id, nil)
     end
 end
