@@ -18,7 +18,7 @@ class Annotation
     # Function to add one annotation
     def add_one_annotation(key, values)
         unless @annotations_hash.key?(key)
-            @annotations_hash[key] = [] # empty array if there isn't any
+            @annotations_hash[key] = [] # empty array if there isn't any with that key
         end
         @annotations_hash[key] << values # appending values to the empty array
         # if values is only one element, we will have [a, b, c, ...]
