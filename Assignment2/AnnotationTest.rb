@@ -10,6 +10,7 @@ class AnnotationTest < Minitest::Test
         ann.add_one_annotation_as_array("A", "test")
         ann_hash = ann.annotations_hash
         #puts ann_hash
+        # should be: {"A" => ["test"]}
 
         assert ann_hash.key?("A") && ann_hash["A"].is_a?(Array) && ann_hash["A"][0] == "test" && !ann_hash["A"][0].is_a?(Array)
     end
@@ -19,6 +20,7 @@ class AnnotationTest < Minitest::Test
         ann.add_one_annotation_as_array("A", ["test1", "test2"])
         ann_hash = ann.annotations_hash
         #puts ann_hash
+        # should be: {"A" => ["test1", "test2"]}
 
         assert ann_hash.key?("A") && ann_hash["A"].is_a?(Array) && ann_hash["A"][0].is_a?(Array) && ann_hash["A"][0][0] == "test1"
     end
@@ -28,6 +30,7 @@ class AnnotationTest < Minitest::Test
         ["ann1", "ann2", "ann3"].each {|ann_value| ann.add_one_annotation_as_array("A", ann_value)}
         ann_hash = ann.annotations_hash
         #puts ann_hash
+        # should be: {"A" => ["ann1", "ann2", "ann3"]}
 
         assert ann_hash.key?("A") && ann_hash["A"].is_a?(Array) && ann_hash["A"][2] == "ann3" && !ann_hash["A"][0].is_a?(Array)
     end
@@ -37,6 +40,7 @@ class AnnotationTest < Minitest::Test
         [["ann1_first", "ann1_second"], ["ann2_first", "ann2_second"]].each {|ann_array| ann.add_one_annotation_as_array("A", ann_array)}
         ann_hash = ann.annotations_hash
         #puts ann_hash
+        # should be: {"A" => [["ann1_first", "ann1_second"], ["ann2_first", "ann2_second"]]}
 
         assert ann_hash.key?("A") && ann_hash["A"].is_a?(Array) && ann_hash["A"][0].is_a?(Array) 
     end
@@ -58,7 +62,8 @@ class AnnotationTest < Minitest::Test
         ann.annotations_hash["A"] = {} # empty hash
         ann.add_one_annotation_as_array("A", ["B1", "B2"]) # should print a warning and not do anything
         ann_hash = ann.annotations_hash
-        
+        # should be: {"A" => {}}
+
         # Checking that it is still a hash and hasn't introduced anything
         assert ann_hash["A"].is_a?(Hash) && !ann_hash["A"].is_a?(Array) && ann_hash["A"].empty?
     end
@@ -68,6 +73,7 @@ class AnnotationTest < Minitest::Test
         ann.annotations_hash["A"] = [] # empty array
         ann.add_one_annotation_as_hash("A", {B1: "B2"}) # should print a warning and not do anything
         ann_hash = ann.annotations_hash
+        # should be: {"A" => []}
 
         # Checking that it is still an array and hasn't introduced anything
         assert !ann_hash["A"].is_a?(Hash) && ann_hash["A"].is_a?(Array) && ann_hash["A"].empty?
@@ -78,6 +84,7 @@ class AnnotationTest < Minitest::Test
         ann.add_one_annotation_as_hash("A", {bkey: :bvalue})
         ann_hash = ann.annotations_hash
         #puts ann_hash
+        # should be: {"A" => {bkey: :bvalue}}
 
         assert ann_hash.key?("A") && ann_hash["A"].key?(:bkey) && ann_hash["A"].keys.length == 1 && ann_hash["A"][:bkey] == :bvalue
     end
@@ -87,6 +94,7 @@ class AnnotationTest < Minitest::Test
         ann.add_one_annotation_as_hash("A", {bkey: :bvalue})
         ann.add_one_annotation_as_hash("A", {otherkey: :othervalue})
         ann_hash = ann.annotations_hash
+        # should be: {"A" => {bkey: :bvalue, otherkey: :othervalue}}
 
         assert ann_hash.key?("A") && ann_hash["A"].key?(:bkey) && ann_hash["A"].key?(:otherkey) && ann_hash["A"].keys.length == 2 && ann_hash["A"][:bkey] == :bvalue && ann_hash["A"][:otherkey] == :othervalue
     end
@@ -96,6 +104,7 @@ class AnnotationTest < Minitest::Test
         ann.add_one_annotation_as_hash("A", {bkey: :bvalue})
         ann.add_one_annotation_as_hash("A", {bkey: :bvalue}) # should not do anything because it is already there
         ann_hash = ann.annotations_hash
+        # should be: {"A" => {bkey: :bvalue}}
 
         assert ann_hash.key?("A") && ann_hash["A"].key?(:bkey) && ann_hash["A"].keys.length == 1 && ann_hash["A"][:bkey] == :bvalue && ann_hash["A"].values.length == 1
     end
@@ -103,8 +112,9 @@ class AnnotationTest < Minitest::Test
     def test_annotate_hash_multiple_same_key_diff_value
         ann = Annotation.new
         ann.add_one_annotation_as_hash("A", {bkey: :bvalue})
-        ann.add_one_annotation_as_hash("A", {bkey: :different_value}) # # should print a warning and not do anything
+        ann.add_one_annotation_as_hash("A", {bkey: :different_value}) # should print a warning and not do anything
         ann_hash = ann.annotations_hash
+        # should be: {"A" => {bkey: :bvalue}}
 
         assert ann_hash.key?("A") && ann_hash["A"].key?(:bkey) && ann_hash["A"].keys.length == 1 && ann_hash["A"][:bkey] == :bvalue && ann_hash["A"].values.length == 1
     end
