@@ -4,6 +4,8 @@ require_relative './Annotation.rb' # require_relative so that the path is relati
 # ruby AnnotationTest.rb
 
 class AnnotationTest < Minitest::Test
+
+    # Testing basic behaviours when @annotations_hash[key] is an array:
   
     def test_annotate_array_single_value
         ann = Annotation.new
@@ -68,6 +70,8 @@ class AnnotationTest < Minitest::Test
         assert ann_hash["A"].is_a?(Hash) && !ann_hash["A"].is_a?(Array) && ann_hash["A"].empty?
     end
 
+    # Testing basic behaviours when @annotations_hash[key] is a hash:
+
     def test_annotate_hash_when_already_has_array
         ann = Annotation.new
         ann.annotations_hash["A"] = [] # empty array
@@ -118,4 +122,34 @@ class AnnotationTest < Minitest::Test
 
         assert ann_hash.key?("A") && ann_hash["A"].key?(:bkey) && ann_hash["A"].keys.length == 1 && ann_hash["A"][:bkey] == :bvalue && ann_hash["A"].values.length == 1
     end
+
+    # Testing KEGG and GO anotations:
+
+    def test_kegg
+        gene_id = :at1g74960
+        ann = Annotation.new
+        ann.get_kegg_annotation(gene_id)
+        ann_hash = ann.annotations_hash
+        # {"ath00061"=>"Fatty acid biosynthesis", "ath00780"=>"Biotin metabolism", "ath01100"=>"Metabolic pathways", "ath01212"=>"Fatty acid metabolism", "ath01240"=>"Biosynthesis of cofactors"}
+        assert ann_hash[:KEGG].is_a?(Hash) && ann_hash[:KEGG].keys.length == 5 && ann_hash[:KEGG]["ath00061"] == "Fatty acid biosynthesis" && ann_hash[:KEGG]["ath01240"] == "Biosynthesis of cofactors"
+    end
+
+    def test_kegg_empty
+        gene_id = :at4g18960 # this has no KEGG pathways (at 2021-10-24)
+        ann = Annotation.new
+        ann.get_kegg_annotation(gene_id)
+        ann_hash = ann.annotations_hash
+        # ann_hash[:KEGG] should be nil
+        assert ann_hash[:KEGG].nil?
+    end
+
+    def test_go
+        gene_id = :at1g74960
+        ann = Annotation.new
+        ann.get_go_annotation(gene_id)
+        ann_hash = ann.annotations_hash
+        # {"GO:0009631"=>"cold acclimation", "GO:0009793"=>"embryo development ending in seed dormancy", "GO:0006633"=>"fatty acid biosynthetic process", "GO:0006636"=>"unsaturated fatty acid biosynthetic process"}
+        assert ann_hash[:GO].is_a?(Hash) && ann_hash[:GO].keys.length == 4 && ann_hash[:GO]["GO:0009631"] == "cold acclimation"
+    end
+
 end

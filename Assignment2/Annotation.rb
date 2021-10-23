@@ -83,7 +83,7 @@ Both GO:ID and GO Term Name
             return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
     end 
 
-    def get_kegg_annotation()
+    def get_kegg_annotation(id_list)
         # makes the array into an array in case there is only one element
         id_list = [id_list] unless id_list.respond_to? :each
         # for each id in the array
@@ -93,6 +93,7 @@ Both GO:ID and GO Term Name
             response = fetch(url)
             if response # if fetch was successful
                 body = JSON.parse(response.body) # turns the JSON file into a ruby data structure made of arrays and hashes
+                next if body.empty? # next id if there is nothing inside the hash
                 # for each {kegg_id: kegg_pathway_name} hash in body
                 body.each do |kegg_hash|
                     # for each hash
@@ -115,6 +116,7 @@ Both GO:ID and GO Term Name
             if response # if fetch was successful
                 body = JSON.parse(response.body) # turns the JSON file into a ruby data structure made of arrays and hashes
                 body.each do |hash|
+                    next unless hash.key?("GO") # next id if there aren't GO annotations
                     hash["GO"].each do |go_info|
                         # go_info is an array, for instance: ["GO:0080671", "P:phosphatidylglycerol metabolic process", "IMP:TAIR"]
                         # getting only the biological processes, whose second field (go_info[1]) starts with 'P:'
@@ -129,5 +131,4 @@ Both GO:ID and GO Term Name
             end
         end
     end
-
 end
