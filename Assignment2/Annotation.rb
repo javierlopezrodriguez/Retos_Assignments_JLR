@@ -60,7 +60,8 @@ Both GO:ID and GO Term Name
     '''
 
     # Function fetch to access an URL via code, donated by Mark Wilkinson.
-    def fetch(url, headers = {accept: "*/*"}, user = "", pass="")
+    # Making it a class method because I want to access it when no instances have been created
+    def self.fetch(url, headers = {accept: "*/*"}, user = "", pass="")
         response = RestClient::Request.execute({
             method: :get,
             url: url.to_s,
@@ -90,7 +91,7 @@ Both GO:ID and GO Term Name
         id_list.each do |id|
             # this URL works with AGI locus codes
             url = "http://togows.org/entry/kegg-genes/ath:#{id}/pathways.json" # id can be a symbol, there is implicit conversion to string
-            response = fetch(url)
+            response = Annotation.fetch(url)
             if response # if fetch was successful
                 body = JSON.parse(response.body) # turns the JSON file into a ruby data structure made of arrays and hashes
                 next if body.empty? # next id if there is nothing inside the hash
@@ -112,7 +113,7 @@ Both GO:ID and GO Term Name
         id_list.each do |id|
             # this URL works with AGI locus codes
             url = "http://togows.org/entry/ebi-uniprot/#{id}/dr.json" # id can be a symbol, there is implicit conversion to string
-            response = fetch(url)
+            response = Annotation.fetch(url)
             if response # if fetch was successful
                 body = JSON.parse(response.body) # turns the JSON file into a ruby data structure made of arrays and hashes
                 body.each do |hash|

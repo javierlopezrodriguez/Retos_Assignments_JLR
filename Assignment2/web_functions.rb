@@ -43,6 +43,8 @@ end
 # Score:
 # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7708836/
 # "authors recommend a MIscore range of 0.45–1 to identify medium confidence interactions and 0.6–1 for high confidence sets"
+# http://europepmc.org/article/MED/25652942
+# "the IntAct database regards data with a score of >0.6 as high-confidence and 0.45–0.6 as medium confidence"
 # 14
 # intact-miscore:0.37
 
