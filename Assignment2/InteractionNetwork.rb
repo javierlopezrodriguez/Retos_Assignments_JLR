@@ -67,16 +67,66 @@ class InteractionNetwork < Annotation
     end
 
     # For genes A, B in the gene list, I will consider A-B interactions, and A-X-B interactions, where X is not part of the gene list.
-    def self.find_interactions_intact()
+    def self.find_interactions_intact(cutoff = 0.45)
         @@gene_array.each do |gene_id|
+            next unless gene_id =~ /[Aa][Tt]\w[Gg]\d\d\d\d\d/ # we only want AGI locus codes
             url = "http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/interactor/#{gene_id}?format=tab25"
             response = InteractionNetwork.fetch(url)
-            if response
-                puts response
-                abort
+            if response && !response.body.empty? # ruby uses short-circuit evaluation, if response is false, the second half doesn't get evaluated
+                response.body.each_line do |tab25|
+                    fields = tab25.split("\t")
+                    # fields 4 and 5 contain the interacting genes, fields 9 and 10 contain the species, fields 14 contains the mi-score
+                    # Checking for species, taxid:3702 is Arabidopsis thaliana
+                    next unless fields[9] =~ /taxid:3702/ && fields[10] =~ /taxid:3702/ 
+                    # Checking for score >= cutoff
+                    # http://europepmc.org/article/MED/25652942
+                    # "the IntAct database regards data with a score of >0.6 as high-confidence and 0.45–0.6 as medium confidence" 
+                    matchscore = fields[14].match(/score:(.*)/)
+                    next unless matchscore # if there is no score, skip
+                    miscore = matchscore[1].to_f
+                    next unless miscore >= cutoff
+                    # Getting the genes and checking they are in AGI locus code format:
+                    matchgene1 = fields[4].match(/uniprotkb:([Aa][Tt]\w[Gg]\d\d\d\d\d)/)
+                    matchgene2 = fields[5].match(/uniprotkb:([Aa][Tt]\w[Gg]\d\d\d\d\d)/)
+                    next unless matchgene1 && matchgene2 # skipping if there aren't AGI locus codes
+                    gene1, gene2 = matchgene1[1].downcase.to_sym, matchgene2[1].downcase.to_sym
+                    next if gene1 == gene2 # if both are the same gene, skip
+                    new_gene = gene1 if gene2 == gene_id # if the original gene_id used in the search is gene2, the new gene is gene1
+                    new_gene = gene2 if gene1 == gene_id # and viceversa
+                    InteractionNetwork.add_interaction(gene_id, new_gene) # adding the interaction
+                end
             end
         end
     end
+
+    def self.create_networks()
+        # for each gene in the gene list:
+            # get all the interactions
+            # mark that gene as completed or something
+            # remove the genes that are already completed from the interactions
+            # if any interaction:
+                # check which genes are in the gene list:
+                    # add those interactions to the network or to the intermediate thing (maybe create an interaction object or something?? idk)
+                    # (an interaction added to the network, direct or with intermediates, needs that both the start and end are genes from the gene list (intermediates can be or not be))
+                # for each gene in the interactions:
+                    # get all the interactions
+                    # mark that gene as completed or something
+                    # remove the genes that are already completed from the interactions
+                    # if any interaction:
+                        # check which genes are in the gene list:
+                            # add those interactions to the network or to the intermediate thing
+
+                            # NOT FINISHED
+
+                            # probably could add recursion here somewhere
+
+        # MIRA STRUCTS PARA NO ESTAR REBUSCANDO MIL VECES SI TAL SYMBOL ESTA EN LA GENELIST O NO!! en plan structs para usar aqui simplemente, cuando haces la lista de los genes etc. i guess
+        # a lo mejor no tiene sentido eh 
+
+    end
+
+
+
 
 
 

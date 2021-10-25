@@ -90,7 +90,7 @@ Both GO:ID and GO Term Name
         # for each id in the array
         id_list.each do |id|
             # this URL works with AGI locus codes
-            url = "http://togows.org/entry/kegg-genes/ath:#{id}/pathways.json" # id can be a symbol, there is implicit conversion to string
+            url = "http://togows.org/entry/kegg-genes/ath:#{id}/pathways.json" 
             response = Annotation.fetch(url)
             if response # if fetch was successful
                 body = JSON.parse(response.body) # turns the JSON file into a ruby data structure made of arrays and hashes
@@ -112,7 +112,7 @@ Both GO:ID and GO Term Name
         # for each id in the array
         id_list.each do |id|
             # this URL works with AGI locus codes
-            url = "http://togows.org/entry/ebi-uniprot/#{id}/dr.json" # id can be a symbol, there is implicit conversion to string
+            url = "http://togows.org/entry/ebi-uniprot/#{id}/dr.json" 
             response = Annotation.fetch(url)
             if response # if fetch was successful
                 body = JSON.parse(response.body) # turns the JSON file into a ruby data structure made of arrays and hashes
