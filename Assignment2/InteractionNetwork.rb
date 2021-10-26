@@ -1,5 +1,7 @@
 require_relative './Annotation.rb' # require_relative so that the path is relative to this file
-require 'rgl/'
+# I'm using the rgl gem, version 0.5.7
+require 'rgl/adjacency' 
+require 'rgl/connected_components'
 
 class InteractionNetwork < Annotation
 
@@ -16,27 +18,43 @@ class InteractionNetwork < Annotation
 
     @@gene_array = [] # array to store every gene id (as a lowercase symbol) read from the .txt file
 
-    attr_accessor :net_gene_ids # Gene ids of the current InteractionNetwork object
+    attr_accessor :network_graph # Graph that represents an Interaction Network
 
-
-    def initialize
+    def initialize(params = {})
         super # initializing Annotation
-
-
-
-        
-        @@all_networks << self # including the new InteractionNetwork into the network list
+        # initializing @network_graph with a new AdjacencyGraph (undirected graph from rgl)
+        @network_graph = RGL::AdjacencyGraph.new
+        # getting the hash with the network interactions
+        net_interactions = params.fetch(:net_interactions, {})
+        # adding each interaction to the graph:
+        net_interactions.each do |gene_id, interactions|
+            next if interactions.empty? # skip if there aren't interactions (shouldn't happen)
+            # for each id in the interactions array
+            interactions.each do |inter_id|
+                @network_graph.add_edge(gene_id, inter_id) # adding the edge to the graph
+            end
+        end
+        # getting the list of genes from the graph
+        network_gene_list = @network_graph.vertices
+        # adding KEGG annotations for the genes in the network
+        InteractionNetwork.get_kegg_annotation(network_gene_list)
+        # adding GO annotations for the genes in the network
+        InteractionNetwork.get_go_annotation(network_gene_list)
+        # adding this new InteractionNetwork object into the class variable @all_networks
+        @@all_networks << self 
     end
 
-    def self.add_interaction(gene1, gene2)
+    # Class methods:
+
+    def self.add_interaction_to_hash(gene1, gene2, int_hash = @@all_interactions)
         # Class method
-        # adds interactions gene1->gene2 and gene2->gene1 to the @all_interactions
+        # adds interactions gene1->gene2 and gene2->gene1 to a hash, by default @@all_interactions
         [gene1.to_sym, gene2.to_sym].each { |gene| 
             # for each gene, creating an empty array to store the gene's interactions if there aren't any already
-            @@all_interactions[gene] = [] unless @@all_interactions.key?(gene1) 
+            int_hash[gene] = [] unless int_hash.key?(gene1) 
         }
-        @@all_interactions[gene1] |= [gene2] # adding gene2 to gene1's interaction array if it isn't already there
-        @@all_interactions[gene2] |= [gene1] # adding gene1 to gene2's interaction array if it isn't already there
+        int_hash[gene1] |= [gene2] # adding gene2 to gene1's interaction array if it isn't already there
+        int_hash[gene2] |= [gene1] # adding gene1 to gene2's interaction array if it isn't already there
     end
 
     def self.get_interactions_from_all_interactions(id_list)
@@ -95,8 +113,29 @@ class InteractionNetwork < Annotation
                     new_gene = gene1 if gene2 == gene_id # if the original gene_id used in the search is gene2, the new gene is gene1
                     new_gene = gene2 if gene1 == gene_id # and viceversa
                     next unless gene2 == gene_id || gene1 == gene_id # shouldn't happen but just in case none of the genes equal the original gene_id, skip it
-                    InteractionNetwork.add_interaction(gene_id, new_gene) # adding the interaction
+                    InteractionNetwork.add_interaction_to_hash(gene_id, new_gene) # adding the interaction
                 end
+            end
+        end
+    end
+
+    # Because I am only considering A-B and A-X-B interactions (where A and B in the .txt file, X not in the file)
+    # If a gene that is not in the file (not in @@gene_array) only has one interaction, it can't be part of a network
+    # (because X, in the case of A-X-B, is the bridge between A and B and therefore interacts with both A and B)
+    # This function does that. For each gene that is not in @@gene_array, it removes them from @@all_interactions 
+    # if they interact with one gene.
+    def self.remove_unimportant_interactions()
+        # getting the ids in @@all_interactions that aren't part of @@gene_array
+        genes_not_in_array = @@all_interactions.keys.select {|gene_id| !@@gene_array.include? gene_id }
+        genes_not_in_array.each do |gene_id|
+            next unless @@all_interactions[gene_id].length == 1 # skip it unless it has only one interaction
+            # remove it if it only has one interaction:
+            interactor = @@all_interactions[gene_id][0] # getting the id of the gene that interacts with it
+            @@all_interactions.delete(gene_id) # deleting the entry of gene_id
+            if @@all_interactions[interactor].length == 1 # deleting the entry of interactor if gene_id was the only element
+                @@all_interactions.delete(interactor)
+            else # removing gene_id from the entry of interactor if it is not the only element
+                @@all_interactions[interactor].delete(gene_id)
             end
         end
     end
@@ -127,7 +166,8 @@ class InteractionNetwork < Annotation
 
     #end
 
-=begin     def self.create_networks()
+=begin     
+    def self.create_networks()
         # creating a hash to store the genes as I go through them
         total_genes = {}
         @@gene_array.each do |gene|
@@ -172,10 +212,87 @@ class InteractionNetwork < Annotation
             
             # if there is more than one gene from @@gene_array, create the InteractionNetwork object
         end
-    end =end
+    end 
+=end
+
+
+    def self.create_networks_rgl()
+        # The general idea is to create an undirected graph, using all the interactions in @@all_interactions as its edges.
+        # The nodes of the graph will be the genes.
+
+        # After creating the graph, rgl can get the connected components of a graph. 
+        # A connected component is a group of nodes where you can find a path between any two nodes of the group,
+        # but there is no path between any node of the group and any node outside of the group.
+        # (So, every smaller sub-graph that is isolated from the rest of the nodes).
+        # Each connected component that contains more than one gene from the @@gene_array (our .txt) will be used to create an InteractionNetwork.
+
+        # All the information about using this library was gotten from https://www.rubydoc.info/github/monora/rgl
+
+        # First step: creating the graph with all of the interactions.
+        full_graph = RGL::AdjacencyGraph.new # instantiating an undirected graph
+        # for each gene_id in @@all_interactions hash
+        @@all_interactions.each do |gene_id, interactions|
+            next if interactions.empty? # skip if there aren't interactions (shouldn't happen)
+            # for each id in the interactions array
+            interactions.each do |inter_id|
+                full_graph.add_edge(gene_id, inter_id) # adding the edge to the graph
+            end
+        end
+        # Second step: when the graph is complete, getting each of the connected components.
+        # each_connected_component returns an array with the nodes of each subgraph
+        full_graph.each_connected_component do |subgraph_nodes|
+            num_genes_in_array = 0 # counter, number of genes that are part of @@gene_array
+            # for each node in the connected component
+            subgraph_nodes.each do |node|
+                num_genes_in_array += 1 if @@gene_array.include? node # incrementing the counter if the node is part of the array
+            end
+            # if there are two or more genes from @@gene_array, build an InteractionNetwork
+            if num_genes_in_array >= 2
 
 
 
+                # COMPLETE
+
+                # building the interaction network? do I use a graph? seems like the best idea la verdad
+                # luego para el transversal me cojo todos los edges y palante y 0 dramas
+
+                # COMPLETE
+
+
+
+            end
+        end
+    end
+
+    # Instance methods:
+
+    def genes
+        return @network_graph.vertices
+    end
+
+    def interactions
+        all_edges = @network_graph.edges
+        interaction_array = []
+        all_edges.each do |edge|
+            interaction_array << edge.to_a
+            # .to_a converts an Edge object to an array [source, target]
+        end
+        return interaction_array
+    end
+
+    def interactions_as_hash
+        interaction_array = self.interactions
+        interaction_hash = {}
+        interaction_array.each do |interaction|
+            gene1, gene2 = *interaction
+            InteractionNetwork.add_interaction_to_hash(gene1, gene2, hash=interaction_hash)
+        end
+        return interaction_hash
+    end
+
+    def interactions_as_edges
+        return @network_graph.edges
+    end
 
 
 
