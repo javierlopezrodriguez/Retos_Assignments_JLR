@@ -40,7 +40,7 @@ class InteractionNetwork < Annotation
         InteractionNetwork.get_kegg_annotation(network_gene_list)
         # adding GO annotations for the genes in the network
         InteractionNetwork.get_go_annotation(network_gene_list)
-        # adding this new InteractionNetwork object into the class variable @all_networks
+        # adding this new InteractionNetwork object into the class variable @@all_networks
         @@all_networks << self 
     end
 
@@ -65,7 +65,7 @@ class InteractionNetwork < Annotation
         id_list.uniq.each do |id|
             int_subset[id] = [] # empty array for id
             @@all_interactions[id].each do |int_id| # for each int_id interacting with id
-                if id_list.contains?(int_id) # if int_id is part of the id_list, there is an interaction between two members of the list
+                if id_list.include?(int_id) # if int_id is part of the id_list, there is an interaction between two members of the list
                     int_subset[id] |= [int_id] # adding int_id to the array of id if it's not already there
                     int_subset[int_id] = [] unless int_subset.key?(int_id) # creating an array for int_id if it doesn't exist
                     int_subset[int_id] |= [id] # adding id to the array of int_id if it's not already there
@@ -112,7 +112,9 @@ class InteractionNetwork < Annotation
                     next if gene1 == gene2 # if both are the same gene, skip
                     new_gene = gene1 if gene2 == gene_id # if the original gene_id used in the search is gene2, the new gene is gene1
                     new_gene = gene2 if gene1 == gene_id # and viceversa
-                    next unless gene2 == gene_id || gene1 == gene_id # shouldn't happen but just in case none of the genes equal the original gene_id, skip it
+                    unless gene2 == gene_id || gene1 == gene_id # shouldn't happen but just in case none of the genes equal the original gene_id
+                        puts "WARNING: unexpected, none of the gene ids of the interaction (#{gene1} #{gene2}) are the original gene #{gene_id}" # warning
+                        next # skip
                     InteractionNetwork.add_interaction_to_hash(gene_id, new_gene) # adding the interaction
                 end
             end
@@ -140,81 +142,6 @@ class InteractionNetwork < Annotation
         end
     end
 
-    #def self.create_networks()
-        # for each gene in the gene list:
-            # get all the interactions
-            # mark that gene as completed or something
-            # remove the genes that are already completed from the interactions
-            # if any interaction:
-                # check which genes are in the gene list:
-                    # add those interactions to the network or to the intermediate thing (maybe create an interaction object or something?? idk)
-                    # (an interaction added to the network, direct or with intermediates, needs that both the start and end are genes from the gene list (intermediates can be or not be))
-                # for each gene in the interactions:
-                    # get all the interactions
-                    # mark that gene as completed or something
-                    # remove the genes that are already completed from the interactions
-                    # if any interaction:
-                        # check which genes are in the gene list:
-                            # add those interactions to the network or to the intermediate thing
-
-                            # NOT FINISHED
-
-                            # probably could add recursion here somewhere
-
-        # MIRA STRUCTS PARA NO ESTAR REBUSCANDO MIL VECES SI TAL SYMBOL ESTA EN LA GENELIST O NO!! en plan structs para usar aqui simplemente, cuando haces la lista de los genes etc. i guess
-        # a lo mejor no tiene sentido eh 
-
-    #end
-
-=begin     
-    def self.create_networks()
-        # creating a hash to store the genes as I go through them
-        total_genes = {}
-        @@gene_array.each do |gene|
-
-        end
-        # for each gene in @@gene_array (from our .txt gene list)
-        @@gene_array.each do |gene1|
-            successful? = false # boolean value, it is true when the network contains two or more genes that come from @@gene_array
-            # hash to store the genes of the current network, their interactions, and if they're part of @@gene_array or not
-            network_genes = {}
-            # updating the entry at the hash, it has been visited (now) and is part of @@gene_array
-            total_genes[gene1] = {visited?: true, in_gene_list?: true}
-            # getting its interactions
-            gene1_inter = @@all_interactions[gene1]
-            # if there are interactions (not nil)
-            if gene1_inter
-                # adding the gene to the network_genes hash
-                network_genes[gene1] = {in_gene_list?: true, interactions: []} # gene1 comes from @@gene_array
-                # for each interaction
-                gene1_inter.each do |gene2|
-                    # if gene2 is in the hash already (not nil)
-                    if total_genes[gene2]
-                        next if total_genes[gene2][:visited?] # next if gene2 has been visited already
-                        # if it exists in the hash but hasn't been visited yet
-                        total_genes[gene2][:visited?] = true # setting it as visited
-                        in_gene_list = total_genes[gene2][:in_gene_list?] # true if it is part of @@gene_array
-                        successful? = successful? || in_gene_list # true if it was already true or if the gene2 is part of @@gene_array
-                        # adding gene2 to the network_genes if it wasn't there
-                        network_genes[gene2] = {in_gene_list?: in_gene_list, interactions: []} if network_genes[gene2].nil?
-                        # adding gene1 as an interaction of gene2 if it wasn't already there
-                        network_genes[gene2][:interactions] |= gene1
-                        # adding gene2 as an interaction of gene1 if it wasn't already there
-                        network_genes[gene1][:interactions] |= gene2
-
-                        # problem! now if gene1-gene2 and gene2-gene3-gene4, how do I keep track of this
-
-                    else
-
-                    end
-                end
-            end
-            
-            # if there is more than one gene from @@gene_array, create the InteractionNetwork object
-        end
-    end 
-=end
-
 
     def self.create_networks_rgl()
         # The general idea is to create an undirected graph, using all the interactions in @@all_interactions as its edges.
@@ -238,6 +165,7 @@ class InteractionNetwork < Annotation
                 full_graph.add_edge(gene_id, inter_id) # adding the edge to the graph
             end
         end
+
         # Second step: when the graph is complete, getting each of the connected components.
         # each_connected_component returns an array with the nodes of each subgraph
         full_graph.each_connected_component do |subgraph_nodes|
@@ -246,20 +174,14 @@ class InteractionNetwork < Annotation
             subgraph_nodes.each do |node|
                 num_genes_in_array += 1 if @@gene_array.include? node # incrementing the counter if the node is part of the array
             end
-            # if there are two or more genes from @@gene_array, build an InteractionNetwork
+            # if that connected component has two or more genes from @@gene_array, build an InteractionNetwork
             if num_genes_in_array >= 2
-
-
-
-                # COMPLETE
-
-                # building the interaction network? do I use a graph? seems like the best idea la verdad
-                # luego para el transversal me cojo todos los edges y palante y 0 dramas
-
-                # COMPLETE
-
-
-
+                parameters = {net_interactions: InteractionNetwork.get_interactions_from_all_interactions(subgraph_nodes)}
+                if parameters[:net_interactions].nil?
+                    puts "WARNING: for genes #{subgraph_nodes} something went wrong when creating the InteractionNetwork, there were no interactions found even though there should have been."
+                    next
+                end
+                InteractionNetwork.new(parameters) # creating the new InteractionNetwork.
             end
         end
     end
@@ -267,7 +189,14 @@ class InteractionNetwork < Annotation
     # Instance methods:
 
     def genes
-        return @network_graph.vertices
+        return @network_graph.vertices # returns an array of the genes
+    end
+
+    def genes_with_origin
+        gene_hash = {gene_list: [], intact: []}
+        gene_hash[:gene_list] = @network_graph.vertices.select {|gene| @@gene_array.include? gene} # genes from the network that are in @@gene_array
+        gene_hash[:intact] = @network_graph.vertices.select {|gene| !gene_hash[:gene_list].include? gene} # the rest of the genes from the network
+        return gene_hash
     end
 
     def interactions
@@ -277,35 +206,21 @@ class InteractionNetwork < Annotation
             interaction_array << edge.to_a
             # .to_a converts an Edge object to an array [source, target]
         end
-        return interaction_array
+        return interaction_array # returns an array of interactions, for instance: [[source1, target1], [source2, target2]]
     end
 
     def interactions_as_hash
         interaction_array = self.interactions
         interaction_hash = {}
         interaction_array.each do |interaction|
-            gene1, gene2 = *interaction
-            InteractionNetwork.add_interaction_to_hash(gene1, gene2, hash=interaction_hash)
+            InteractionNetwork.add_interaction_to_hash(*interaction, hash=interaction_hash) # adding the interaction to the hash
         end
-        return interaction_hash
+        return interaction_hash # returns a hash of interactions, with every interaction twice (bidirectional)
     end
 
     def interactions_as_edges
-        return @network_graph.edges
+        return @network_graph.edges # returns each interaction as RGL::Edge::UnDirectedEdge object
     end
 
-
-
-
-
-
-
-        
-
-
-
-
-
-    
 
 end
