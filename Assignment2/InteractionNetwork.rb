@@ -85,8 +85,34 @@ class InteractionNetwork < Annotation
         end
     end
 
+
     # For genes A, B in the gene list, I will consider A-B interactions, and A-X-B interactions, where X is not part of the gene list.
+
+    # Because I am only considering A-B and A-X-B interactions (where A and B in the .txt file, X not in the file)
+    # If a gene that is not in the file (not in @@gene_array) only has one interaction, it can't be part of a network
+    # (because X, in the case of A-X-B, is the bridge between A and B and therefore interacts with both A and B)
+    # This function does that. For each gene that is not in @@gene_array, it removes them from @@all_interactions 
+    # if they interact with one gene.
+    def self.remove_unimportant_interactions()
+        # getting the ids in @@all_interactions that aren't part of @@gene_array
+        genes_not_in_array = @@all_interactions.keys.select {|gene_id| !@@gene_array.include? gene_id }
+        genes_not_in_array.each do |gene_id|
+            next unless @@all_interactions[gene_id].length == 1 # skip it unless it has only one interaction
+            # remove it if it only has one interaction:
+            interactor = @@all_interactions[gene_id][0] # getting the id of the gene that interacts with it
+            @@all_interactions.delete(gene_id) # deleting the entry of gene_id
+            if @@all_interactions[interactor].length == 1 # deleting the entry of interactor if gene_id was the only element
+                @@all_interactions.delete(interactor)
+            else # removing gene_id from the entry of interactor if it is not the only element
+                @@all_interactions[interactor].delete(gene_id)
+            end
+        end
+    end
+    
     def self.find_interactions_intact(cutoff = 0.45)
+
+        #### @@all_interactions = {}
+
         @@gene_array.each do |gene_id|
             next unless gene_id =~ /[Aa][Tt]\w[Gg]\d\d\d\d\d/ # we only want AGI locus codes
             url = "http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/interactor/#{gene_id}?format=tab25"
@@ -95,6 +121,8 @@ class InteractionNetwork < Annotation
                 response.body.each_line do |tab25|
                     fields = tab25.split("\t")
                     # fields 4 and 5 contain the interacting genes, fields 9 and 10 contain the species, fields 14 contains the mi-score
+                    # I'm not filtering by interaction type, but if I had to, I would filter by the field 11 (for example: psi-mi:"MI:0915"(physical association))
+
                     # Checking for species, taxid:3702 is Arabidopsis thaliana
                     next unless fields[9] =~ /taxid:3702/ && fields[10] =~ /taxid:3702/ 
                     # Checking for score >= cutoff
@@ -119,29 +147,9 @@ class InteractionNetwork < Annotation
                 end
             end
         end
+        # After finding all of the interactions, remove the unimportant interactions
+        InteractionNetwork.remove_unimportant_interactions
     end
-
-    # Because I am only considering A-B and A-X-B interactions (where A and B in the .txt file, X not in the file)
-    # If a gene that is not in the file (not in @@gene_array) only has one interaction, it can't be part of a network
-    # (because X, in the case of A-X-B, is the bridge between A and B and therefore interacts with both A and B)
-    # This function does that. For each gene that is not in @@gene_array, it removes them from @@all_interactions 
-    # if they interact with one gene.
-    def self.remove_unimportant_interactions()
-        # getting the ids in @@all_interactions that aren't part of @@gene_array
-        genes_not_in_array = @@all_interactions.keys.select {|gene_id| !@@gene_array.include? gene_id }
-        genes_not_in_array.each do |gene_id|
-            next unless @@all_interactions[gene_id].length == 1 # skip it unless it has only one interaction
-            # remove it if it only has one interaction:
-            interactor = @@all_interactions[gene_id][0] # getting the id of the gene that interacts with it
-            @@all_interactions.delete(gene_id) # deleting the entry of gene_id
-            if @@all_interactions[interactor].length == 1 # deleting the entry of interactor if gene_id was the only element
-                @@all_interactions.delete(interactor)
-            else # removing gene_id from the entry of interactor if it is not the only element
-                @@all_interactions[interactor].delete(gene_id)
-            end
-        end
-    end
-
 
     def self.create_networks_rgl()
         # The general idea is to create an undirected graph, using all the interactions in @@all_interactions as its edges.
@@ -221,6 +229,5 @@ class InteractionNetwork < Annotation
     def interactions_as_edges
         return @network_graph.edges # returns each interaction as RGL::Edge::UnDirectedEdge object
     end
-
-
+end
 end

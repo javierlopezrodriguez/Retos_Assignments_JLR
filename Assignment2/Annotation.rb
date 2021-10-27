@@ -47,18 +47,6 @@ class Annotation
         end
     end
 
-    '''
-Annotate it with any KEGG Pathways the interaction network members are part of
-
-both KEGG ID and Pathway Name
-
-Annotate it with the GO Terms associated with the total of all genes in the network
-
-BUT ONLY FROM THE biological_process part of the GO Ontology!
-
-Both GO:ID and GO Term Name
-    '''
-
     # Function fetch to access an URL via code, donated by Mark Wilkinson.
     # Making it a class method because I want to access it when no instances have been created
     def self.fetch(url, headers = {accept: "*/*"}, user = "", pass="")
