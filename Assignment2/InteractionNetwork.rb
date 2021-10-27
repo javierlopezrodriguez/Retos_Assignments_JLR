@@ -46,12 +46,36 @@ class InteractionNetwork < Annotation
 
     # Class methods:
 
+    def self.all_interactions
+        return @@all_interactions
+    end
+    
+    def self.reset_all_interactions
+        @@all_interactions = {}
+    end
+
+    def self.all_interactions=(new_value)
+        @@all_interactions = new_value
+    end
+
+    def self.gene_array
+        return @@gene_array
+    end
+
+    def self.reset_gene_array
+        @@gene_array = []
+    end
+
+    def self.gene_array=(new_value)
+        @@gene_array = new_value
+    end
+
     def self.add_interaction_to_hash(gene1, gene2, int_hash = @@all_interactions)
         # Class method
         # adds interactions gene1->gene2 and gene2->gene1 to a hash, by default @@all_interactions
         [gene1.to_sym, gene2.to_sym].each { |gene| 
             # for each gene, creating an empty array to store the gene's interactions if there aren't any already
-            int_hash[gene] = [] unless int_hash.key?(gene1) 
+            int_hash[gene] = [] unless int_hash.key?(gene) 
         }
         int_hash[gene1] |= [gene2] # adding gene2 to gene1's interaction array if it isn't already there
         int_hash[gene2] |= [gene1] # adding gene1 to gene2's interaction array if it isn't already there
@@ -61,17 +85,14 @@ class InteractionNetwork < Annotation
         # Class method
         # gets the interactions A-B from @@all_interactions where both A and B are part of id_list
         int_subset = {} # hash to store the results
-        # for each unique id
-        id_list.uniq.each do |id|
-            int_subset[id] = [] # empty array for id
-            @@all_interactions[id].each do |int_id| # for each int_id interacting with id
-                if id_list.include?(int_id) # if int_id is part of the id_list, there is an interaction between two members of the list
-                    int_subset[id] |= [int_id] # adding int_id to the array of id if it's not already there
-                    int_subset[int_id] = [] unless int_subset.key?(int_id) # creating an array for int_id if it doesn't exist
-                    int_subset[int_id] |= [id] # adding id to the array of int_id if it's not already there
-                end
-            end
+        # getting all the keys from id_list that are in @@all_interactions
+        key_list = @@all_interactions.keys.select {|gene_id| id_list.include? gene_id}
+        # for each key
+        key_list.each do |key|
+            # storing the interactions between the genes of the id_list
+            int_subset[key] = @@all_interactions[key].select {|interactor| id_list.include? interactor}
         end
+
         return int_subset unless int_subset.empty? # returns the results hash
         return nil # if empty
     end
@@ -79,9 +100,16 @@ class InteractionNetwork < Annotation
     def self.read_gene_list(filename)
         # Class method
         # for each gene in the file, stores the id as a lowercase symbol in @@gene_array (if it doesn't exist already)
-        IO.foreach(filename) do |gene|
-            gene = gene.strip.downcase # removing whitespace (if any) and converting the letters to lowercase
-            @@gene_array |= [gene.to_sym] if gene =~ /at\wg\d\d\d\d\d/ # storing the gene id as a symbol if it matches the regexp
+        begin
+            IO.foreach(filename) do |gene|
+                gene = gene.strip.downcase # removing whitespace (if any) and converting the letters to lowercase
+                @@gene_array |= [gene.to_sym] if gene =~ /at\wg\d\d\d\d\d/ # storing the gene id as a symbol if it matches the regexp
+            end
+        rescue Errno::ENOENT => e # handling the missing file exception
+            puts "ERROR: Can't find the file"
+            $stderr.puts e.inspect
+        rescue Exception => e # other possible exceptions
+            $stderr.puts e.inspect
         end
     end
 
@@ -93,18 +121,41 @@ class InteractionNetwork < Annotation
     # (because X, in the case of A-X-B, is the bridge between A and B and therefore interacts with both A and B)
     # This function does that. For each gene that is not in @@gene_array, it removes them from @@all_interactions 
     # if they interact with one gene.
-    def self.remove_unimportant_interactions()
-        # getting the ids in @@all_interactions that aren't part of @@gene_array
-        genes_not_in_array = @@all_interactions.keys.select {|gene_id| !@@gene_array.include? gene_id }
-        genes_not_in_array.each do |gene_id|
-            next unless @@all_interactions[gene_id].length == 1 # skip it unless it has only one interaction
-            # remove it if it only has one interaction:
-            interactor = @@all_interactions[gene_id][0] # getting the id of the gene that interacts with it
-            @@all_interactions.delete(gene_id) # deleting the entry of gene_id
+
+    def self.remove_interactions(gene_id)
+        return nil if @@all_interactions.empty? || !@@all_interactions.keys.include?(gene_id) # if there aren't interactions with that id
+        interactor_ids = @@all_interactions[gene_id] # storing the interactors
+        @@all_interactions.delete(gene_id) # deleting the entry of gene_id
+        interactor_ids.each do |interactor|
             if @@all_interactions[interactor].length == 1 # deleting the entry of interactor if gene_id was the only element
                 @@all_interactions.delete(interactor)
             else # removing gene_id from the entry of interactor if it is not the only element
                 @@all_interactions[interactor].delete(gene_id)
+            end
+        end
+        return interactor_ids # returns the removed interactor ids
+    end
+
+    def self.remove_unimportant_branches
+        # getting the ids in @@all_interactions that aren't part of @@gene_array
+        genes_not_in_array = @@all_interactions.keys.select {|gene_id| !@@gene_array.include? gene_id }
+        genes_not_in_array.each do |gene_id|
+            next unless @@all_interactions[gene_id].length == 1 # skip it unless it has only one interaction
+            to_be_removed = gene_id
+            while true
+                interactors = InteractionNetwork.remove_interactions(to_be_removed) # remove to_be_removed from the @@all_interactions
+                if interactors.length == 1
+                    if @@gene_array.include? interactors[0]
+                        break # exit the while loop if the interactor is in @@gene_array
+                    else
+                        # exit the while loop unless the interactor has exactly one interaction remaining
+                        break if @@all_interactions[interactors[0]].nil? || @@all_interactions[interactors[0]].length > 1 
+                        # if it has one interaction (we know from above it is not in @@gene_array), we want to repeat the process
+                        to_be_removed = interactors[0] # setting to_be_removed to this id so that it also gets removed from @@all_interactions
+                    end
+                else # if interactors.length != 1                    
+                    break # exit the while loop if more than one interaction were removed
+                end
             end
         end
     end
@@ -151,7 +202,7 @@ class InteractionNetwork < Annotation
         InteractionNetwork.remove_unimportant_interactions
     end
 
-    def self.create_networks_rgl()
+    def self.create_networks_rgl
         # The general idea is to create an undirected graph, using all the interactions in @@all_interactions as its edges.
         # The nodes of the graph will be the genes.
 
@@ -208,13 +259,7 @@ class InteractionNetwork < Annotation
     end
 
     def interactions
-        all_edges = @network_graph.edges
-        interaction_array = []
-        all_edges.each do |edge|
-            interaction_array << edge.to_a
-            # .to_a converts an Edge object to an array [source, target]
-        end
-        return interaction_array # returns an array of interactions, for instance: [[source1, target1], [source2, target2]]
+        return @network_graph.edges.map &:to_a
     end
 
     def interactions_as_hash
