@@ -124,40 +124,70 @@ class InteractionNetworkTest < Minitest::Test
         InteractionNetwork.reset_gene_array
     end
 
-################### I'm pretty confident the following one works fine:
-################### LEAVE IT FOR LAST
 
-    def find_interactions_intact_none
+
+    def test_find_interactions_intact_none
         # when the gene has no interactions
+        gene_id = :at4g27030
+        InteractionNetwork.all_interactions = {}
+        InteractionNetwork.gene_array = [gene_id]
 
+        InteractionNetwork.find_interactions_intact
+        int_hash = InteractionNetwork.all_interactions
+
+        assert int_hash.empty? && int_hash.is_a?(Hash)
+
+        InteractionNetwork.reset_all_interactions
+        InteractionNetwork.reset_gene_array
     end
 
-    def find_interactions_intact_some
+    ##################  THIS IS FAILING !!!! ###################
+    def test_find_interactions_intact_some
         # when the gene has some interactions, including from other species
+        gene_id = :at4g09650
+        InteractionNetwork.all_interactions = {}
+        InteractionNetwork.gene_array = [gene_id]
 
+        InteractionNetwork.find_interactions_intact
+        int_hash = InteractionNetwork.all_interactions
+
+        assert !int_hash.empty? && int_hash.keys.include?(gene_id) && int_hash.keys.length > 1
+
+        InteractionNetwork.reset_all_interactions
+        InteractionNetwork.reset_gene_array
     end
 
-    def find_interactions_intact_species
-        # when the gene has some interactions and they include different species
-        :at1g06680
+    def test_find_interactions_intact_species
+        # when the gene's interactions include different species
+        gene_id = :at1g06680 # has no arath - arath interactions
+        InteractionNetwork.all_interactions = {}
+        InteractionNetwork.gene_array = [gene_id]
+
+        InteractionNetwork.find_interactions_intact
+        int_hash = InteractionNetwork.all_interactions
+
+        assert int_hash.empty? && int_hash.is_a?(Hash)
+
+        InteractionNetwork.reset_all_interactions
+        InteractionNetwork.reset_gene_array
     end
 
-    def find_interactions_intact_not_agi
+    def test_find_interactions_intact_not_agi
         # when the gene is not from arabidopsis
+        gene_id = :notacorrectid
+        InteractionNetwork.all_interactions = {}
+        InteractionNetwork.gene_array = [gene_id]
 
+        InteractionNetwork.find_interactions_intact
+        int_hash = InteractionNetwork.all_interactions
+
+        assert int_hash.empty? && int_hash.is_a?(Hash)
+
+        InteractionNetwork.reset_all_interactions
+        InteractionNetwork.reset_gene_array
     end
 
-####################
 
-## ESTAS SON IMPORTANTES, MÍRALAS!
-
-    def test_remove_interactions
-
-    end
-
-    def test_remove_interactions_doesnt_exist
-
-    end
 
     def test_remove_unimportant_branches_none
         # @@all_interactions not empty, but no unimportant branches
@@ -244,6 +274,22 @@ class InteractionNetworkTest < Minitest::Test
         InteractionNetwork.reset_all_interactions
         InteractionNetwork.reset_gene_array
 
+    end
+
+    def test_remove_unimportant_branches_branched
+        # one unimportant branch but with many ends
+        InteractionNetwork.gene_array = [:id1, :id2]
+        InteractionNetwork.all_interactions = {}
+        # id1 <-> idX <-> id2 <-> idA <-> idB, idB <-> idB1, idB <-> idB2, idB <-> idB3
+        [[:id1, :idX], [:idX, :id2], [:id2, :idA], [:idA, :idB], [:idB, :idB1], [:idB, :idB2], [:idB, :idB3]].each do |pair|
+            InteractionNetwork.add_interaction_to_hash(*pair)
+        end
+        #puts "branched before" + InteractionNetwork.all_interactions.to_s
+        InteractionNetwork.remove_unimportant_branches
+        #puts "branched after" + InteractionNetwork.all_interactions.to_s
+
+        int_hash = InteractionNetwork.all_interactions
+        assert int_hash.keys.length == 3 && !int_hash.keys.include?(:idB) && !int_hash.keys.include?(:idB1) && !int_hash.keys.include?(:idB2) && !int_hash.keys.include?(:idB3)
     end
 
 end
