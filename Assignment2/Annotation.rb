@@ -15,7 +15,7 @@ class Annotation
     attr_accessor :annotations_hash
 
     # on initialization the hash is empty
-    def initialize
+    def initialize(params)
         @annotations_hash = {}
     end
 

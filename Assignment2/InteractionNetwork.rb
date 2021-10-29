@@ -37,9 +37,9 @@ class InteractionNetwork < Annotation
         # getting the list of genes from the graph
         network_gene_list = @network_graph.vertices
         # adding KEGG annotations for the genes in the network
-        InteractionNetwork.get_kegg_annotation(network_gene_list)
+        get_kegg_annotation(network_gene_list)
         # adding GO annotations for the genes in the network
-        InteractionNetwork.get_go_annotation(network_gene_list)
+        get_go_annotation(network_gene_list)
         # adding this new InteractionNetwork object into the class variable @@all_networks
         @@all_networks << self 
     end
@@ -199,8 +199,8 @@ class InteractionNetwork < Annotation
                     unless gene2 == gene_id || gene1 == gene_id # shouldn't happen but just in case none of the genes equal the original gene_id
                         puts "WARNING: unexpected, none of the gene ids of the interaction (#{gene1} #{gene2}) are the original gene #{gene_id}" # warning
                         next # skip
-                        InteractionNetwork.add_interaction_to_hash(gene_id, new_gene) # adding the interaction
                     end
+                    InteractionNetwork.add_interaction_to_hash(gene_id, new_gene) # adding the interaction
                 end
             end
         end
@@ -278,6 +278,16 @@ class InteractionNetwork < Annotation
     def interactions_as_edges
         return @network_graph.edges # returns each interaction as RGL::Edge::UnDirectedEdge object
     end
+
+    def interactions_as_string(int = "<-->", sep = "\n")
+        interaction_array = self.interactions
+        result_string = ""
+        interaction_array.each do |interaction|
+            source, target = *interaction
+            result_string << "#{source} #{int} #{target}#{sep}"
+        end
+        return result_string
+    end
     
     def self.write_report(filename = "Report.txt")
         
@@ -286,26 +296,24 @@ class InteractionNetwork < Annotation
         f = File.new(filename, "w") # opening the file
         
         @@all_networks.each_with_index do |network, index|
-            f.write "--------------------------------------------"
-            f.write "Network #{index}"
+            f.write "--------------------------------------------\n"
+            f.write "Network #{index + 1}\n"
             network_genes = network.genes_with_origin
             gene_counter += network_genes[:gene_list].length # incrementing the counter
-            f.write "Genes from the gene list: #{network_genes[:gene_list].join(" ")}"
-            f.write "Interactions: "
-            network.interactions.each do |pair|
-                f.write pair
-            end
-            f.write "KEGG annotations for all the genes in the network:"
+            f.write "Genes from the gene list: #{network_genes[:gene_list].join(" ")}\n"
+            f.write "Interactions: \n"
+            f.write network.interactions_as_string
+            f.write "KEGG annotations for all the genes in the network: \n"
             network.annotations_hash[:KEGG].each do |kegg_id, kegg_pathway|
-                f.write "ID: #{kegg_id}, pathway name: #{kegg_pathway}"
+                f.write "ID: #{kegg_id}, pathway name: #{kegg_pathway}\n"
             end
-            f.write "GO annotations for all the genes in the network:"
+            f.write "GO annotations for all the genes in the network: \n"
             network.annotations_hash[:GO].each do |go_id, go_process|
-                f.write "ID: #{go_id}, process: #{go_process}"
+                f.write "ID: #{go_id}, process: #{go_process}\n"
             end
             f.write "--------------------------------------------"
         end
-        f.write "From the #{total_genes_num} genes of the gene list, #{gene_counter} are present in interaction networks"
+        f.write "\nFrom the #{total_genes_num} genes of the gene list, #{gene_counter} are present in interaction networks."
         
         f.close() # closing the file        
     end
