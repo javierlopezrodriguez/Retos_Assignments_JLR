@@ -148,8 +148,9 @@ class AnnotationTest < Minitest::Test
         ann = Annotation.new
         ann.get_go_annotation(gene_id)
         ann_hash = ann.annotations_hash
-        # {"GO:0009631"=>"cold acclimation", "GO:0009793"=>"embryo development ending in seed dormancy", "GO:0006633"=>"fatty acid biosynthetic process", "GO:0006636"=>"unsaturated fatty acid biosynthetic process"}
-        assert ann_hash[:GO].is_a?(Hash) && ann_hash[:GO].keys.length == 4 && ann_hash[:GO]["GO:0009631"] == "cold acclimation"
+        #puts ann_hash
+        # {"GO:0009631"=>"cold acclimation", "GO:0009793"=>"embryo development ending in seed dormancy", "GO:0006633"=>"fatty acid biosynthetic process"}
+        assert ann_hash[:GO].is_a?(Hash) && ann_hash[:GO].keys.length == 3 && ann_hash[:GO]["GO:0009631"] == "cold acclimation"
     end
 
 end

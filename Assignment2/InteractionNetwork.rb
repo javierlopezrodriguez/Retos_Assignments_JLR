@@ -41,7 +41,7 @@ class InteractionNetwork < Annotation
         # adding GO annotations for the genes in the network
         get_go_annotation(network_gene_list)
         # adding this new InteractionNetwork object into the class variable @@all_networks
-        @@all_networks << self 
+        @@all_networks << self
     end
     
     # for testing purposes
@@ -107,6 +107,7 @@ class InteractionNetwork < Annotation
     def self.read_gene_list(filename)
         # Class method
         # for each gene in the file, stores the id as a lowercase symbol in @@gene_array (if it doesn't exist already)
+        puts "Reading the gene list..."
         begin
             IO.foreach(filename) do |gene|
                 gene = gene.strip.downcase # removing whitespace (if any) and converting the letters to lowercase
@@ -167,9 +168,9 @@ class InteractionNetwork < Annotation
         end
     end
     
-    def self.find_interactions_intact(cutoff = 0.45)
-        
-        @@gene_array.each do |gene_id|
+    def self.find_interactions_intact(cutoff = 0.45, gene_array = @@gene_array)
+        puts "Finding interactions..."
+        gene_array.each do |gene_id|
             next unless gene_id =~ /[Aa][Tt]\w[Gg]\d\d\d\d\d/ # we only want AGI locus codes
             url = "http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/interactor/#{gene_id}?format=tab25"
             response = InteractionNetwork.fetch(url)
@@ -222,6 +223,7 @@ class InteractionNetwork < Annotation
         full_graph = RGL::AdjacencyGraph.new # instantiating an undirected graph
         # Before starting, I'm removing the unnecessary interactions (interactions with genes not in @@gene_array that don't lead anywhere)
         InteractionNetwork.remove_unimportant_branches
+        puts "Creating the networks..."
         # for each gene_id in @@all_interactions hash
         @@all_interactions.each do |gene_id, interactions|
             next if interactions.empty? # skip if there aren't interactions (shouldn't happen)
@@ -245,8 +247,9 @@ class InteractionNetwork < Annotation
                 if parameters[:net_interactions].nil?
                     puts "WARNING: for genes #{subgraph_nodes} something went wrong when creating the InteractionNetwork, there were no interactions found even though there should have been."
                     next
+                else
+                    InteractionNetwork.new(parameters) # creating the new InteractionNetwork.
                 end
-                InteractionNetwork.new(parameters) # creating the new InteractionNetwork.
             end
         end
     end
@@ -290,6 +293,7 @@ class InteractionNetwork < Annotation
     end
     
     def self.write_report(filename = "Report.txt")
+        puts "Writing the report..."
         
         gene_counter = 0
         total_genes_num = @@gene_array.length
@@ -303,13 +307,21 @@ class InteractionNetwork < Annotation
             f.write "Genes from the gene list: #{network_genes[:gene_list].join(" ")}\n"
             f.write "Interactions: \n"
             f.write network.interactions_as_string
-            f.write "KEGG annotations for all the genes in the network: \n"
-            network.annotations_hash[:KEGG].each do |kegg_id, kegg_pathway|
-                f.write "ID: #{kegg_id}, pathway name: #{kegg_pathway}\n"
+            if network.annotations_hash[:KEGG]
+                f.write "KEGG annotations for all the genes in the network: \n"
+                network.annotations_hash[:KEGG].each do |kegg_id, kegg_pathway|
+                    f.write "ID: #{kegg_id}, pathway name: #{kegg_pathway}\n"
+                end
+            else
+                f.write "No KEGG pathways found for the genes in the network. \n"
             end
-            f.write "GO annotations for all the genes in the network: \n"
-            network.annotations_hash[:GO].each do |go_id, go_process|
-                f.write "ID: #{go_id}, process: #{go_process}\n"
+            if network.annotations_hash[:GO]
+                f.write "GO annotations for all the genes in the network: \n"
+                network.annotations_hash[:GO].each do |go_id, go_process|
+                    f.write "ID: #{go_id}, process: #{go_process}\n"
+                end
+            else
+                f.write "No GO annotations found for the genes in the network. \n"
             end
             f.write "--------------------------------------------"
         end

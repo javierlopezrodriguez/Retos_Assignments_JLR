@@ -15,7 +15,7 @@ class Annotation
     attr_accessor :annotations_hash
 
     # on initialization the hash is empty
-    def initialize(params)
+    def initialize(params = {})
         @annotations_hash = {}
     end
 
@@ -108,6 +108,14 @@ class Annotation
                     next unless hash.key?("GO") # next id if there aren't GO annotations
                     hash["GO"].each do |go_info|
                         # go_info is an array, for instance: ["GO:0080671", "P:phosphatidylglycerol metabolic process", "IMP:TAIR"]
+
+                        # I'm filtering for the evidence type, adding only those annotations inferred from experiments or from high-throughput experiments
+                        # http://geneontology.org/docs/guide-go-evidence-codes/
+                        # To do that, instead of looking for those codes, I'm looking for the annotations NOT inferred from experiments and skipping them
+                        not_exp_evidence_codes = ["IBA", "IBD", "IKR","IRD", "ISS", "ISO", "ISA", "ISM", "IGC", "RCA", "TAS", "NAS", "IC", "ND", "IEA"]
+                        matchobj = go_info[2].match(/([A-Z]{3}):.*/)
+                        next if not_exp_evidence_codes.include?(matchobj[1]) # skipping the GO annotation if the evidence is one of those types
+                        
                         # getting only the biological processes, whose second field (go_info[1]) starts with 'P:'
                         matchobj = go_info[1].match(/P:(.*)/)
                         if matchobj

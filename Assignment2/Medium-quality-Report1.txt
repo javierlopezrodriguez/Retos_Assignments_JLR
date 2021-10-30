@@ -1,0 +1,93 @@
+--------------------------------------------
+Network 1
+Genes from the gene list: at4g09650 at1g03130 at4g02770 at1g37130 at1g76080 at1g14280
+Interactions: 
+at4g09650 <--> at4g37260
+at4g09650 <--> at4g32570
+at4g37260 <--> at1g03130
+at4g37260 <--> at4g02770
+at4g32570 <--> at1g37130
+at4g02770 <--> at1g31880
+at1g37130 <--> at1g31880
+at1g31880 <--> at1g76080
+at1g31880 <--> at1g14280
+KEGG annotations for all the genes in the network: 
+ID: ath00190, pathway name: Oxidative phosphorylation
+ID: ath00195, pathway name: Photosynthesis
+ID: ath01100, pathway name: Metabolic pathways
+ID: ath00910, pathway name: Nitrogen metabolism
+GO annotations for all the genes in the network: 
+ID: GO:0042742, process: defense response to bacterium
+ID: GO:0015979, process: photosynthesis
+ID: GO:0009773, process: photosynthetic electron transport in photosystem I
+ID: GO:0009772, process: photosynthetic electron transport in photosystem II
+ID: GO:0009409, process: response to cold
+ID: GO:0019760, process: glucosinolate metabolic process
+ID: GO:1901001, process: negative regulation of response to salt stress
+ID: GO:0010929, process: positive regulation of auxin mediated signaling pathway
+ID: GO:0006355, process: regulation of transcription, DNA-templated
+ID: GO:0010200, process: response to chitin
+ID: GO:0140547, process: acquisition of seed longevity
+ID: GO:0042128, process: nitrate assimilation
+ID: GO:0006809, process: nitric oxide biosynthetic process
+ID: GO:0009416, process: response to light stimulus
+ID: GO:0009610, process: response to symbiotic fungus
+ID: GO:0009734, process: auxin-activated signaling pathway
+ID: GO:0030154, process: cell differentiation
+ID: GO:0009736, process: cytokinin-activated signaling pathway
+ID: GO:0048527, process: lateral root development
+ID: GO:0010078, process: maintenance of root meristem identity
+ID: GO:0010088, process: phloem development
+ID: GO:2000280, process: regulation of root development
+ID: GO:0009737, process: response to abscisic acid
+ID: GO:0048364, process: root development
+ID: GO:0048756, process: sieve cell differentiation
+ID: GO:0045454, process: cell redox homeostasis
+ID: GO:0048366, process: leaf development
+ID: GO:0009638, process: phototropism
+----------------------------------------------------------------------------------------
+Network 2
+Genes from the gene list: at4g17460 at5g15850 at5g17300 at2g46340 at1g71030
+Interactions: 
+at4g17460 <--> at3g07220
+at4g17460 <--> at3g15030
+at3g07220 <--> at5g15850
+at3g15030 <--> at5g17300
+at5g15850 <--> at3g02150
+at5g15850 <--> at2g46340
+at5g17300 <--> at3g02150
+at5g17300 <--> at1g60250
+at1g60250 <--> at1g71030
+KEGG annotations for all the genes in the network: 
+ID: ath04712, pathway name: Circadian rhythm - plant
+GO annotations for all the genes in the network: 
+ID: GO:0003006, process: developmental process involved in reproduction
+ID: GO:0010582, process: floral meristem determinacy
+ID: GO:0080127, process: fruit septum development
+ID: GO:0048467, process: gynoecium development
+ID: GO:0006338, process: chromatin remodeling
+ID: GO:0048638, process: regulation of developmental growth
+ID: GO:0080086, process: stamen filament development
+ID: GO:0048825, process: cotyledon development
+ID: GO:0048826, process: cotyledon morphogenesis
+ID: GO:0009793, process: embryo development ending in seed dormancy
+ID: GO:0048366, process: leaf development
+ID: GO:0010150, process: leaf senescence
+ID: GO:0009909, process: regulation of flower development
+ID: GO:0009734, process: auxin-activated signaling pathway
+ID: GO:0007623, process: circadian rhythm
+ID: GO:0010600, process: regulation of auxin biosynthetic process
+ID: GO:0031347, process: regulation of defense response
+ID: GO:0009658, process: chloroplast organization
+ID: GO:0010100, process: negative regulation of photomorphogenesis
+ID: GO:0009640, process: photomorphogenesis
+ID: GO:0010017, process: red or far-red light signaling pathway
+ID: GO:2000028, process: regulation of photoperiodism, flowering
+ID: GO:0009637, process: response to blue light
+ID: GO:0010218, process: response to far red light
+ID: GO:0010114, process: response to red light
+ID: GO:0048575, process: short-day photoperiodism, flowering
+ID: GO:0009718, process: anthocyanin-containing compound biosynthetic process
+ID: GO:0010023, process: proanthocyanidin biosynthetic process
+--------------------------------------------
+From the 168 genes of the gene list, 11 are present in interaction networks.

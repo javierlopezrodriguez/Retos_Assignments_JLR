@@ -1,0 +1,20 @@
+--------------------------------------------
+Network 1
+Genes from the gene list: at5g15850 at2g46340
+Interactions: 
+at5g15850 <--> at2g46340
+KEGG annotations for all the genes in the network: 
+ID: ath04712, pathway name: Circadian rhythm - plant
+GO annotations for all the genes in the network: 
+ID: GO:0009909, process: regulation of flower development
+ID: GO:0009658, process: chloroplast organization
+ID: GO:0010100, process: negative regulation of photomorphogenesis
+ID: GO:0009640, process: photomorphogenesis
+ID: GO:0010017, process: red or far-red light signaling pathway
+ID: GO:2000028, process: regulation of photoperiodism, flowering
+ID: GO:0009637, process: response to blue light
+ID: GO:0010218, process: response to far red light
+ID: GO:0010114, process: response to red light
+ID: GO:0048575, process: short-day photoperiodism, flowering
+--------------------------------------------
+From the 168 genes of the gene list, 2 are present in interaction networks.
