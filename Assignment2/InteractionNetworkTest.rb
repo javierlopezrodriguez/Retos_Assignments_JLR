@@ -3,6 +3,9 @@ require_relative './InteractionNetwork.rb' # require_relative so that the path i
 
 # ruby InteractionNetworkTest.rb
 
+#
+# Some tests for InteractionNetwork
+#
 class InteractionNetworkTest < Minitest::Test
 
 

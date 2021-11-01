@@ -3,6 +3,9 @@ require_relative './Annotation.rb' # require_relative so that the path is relati
 
 # ruby AnnotationTest.rb
 
+#
+# Some tests for Annotation
+#
 class AnnotationTest < Minitest::Test
 
     # Testing basic behaviours when @annotations_hash[key] is an array:

@@ -1,25 +1,45 @@
 require 'rest-client'
 require 'json'
 
+# == Annotation
+#
+# Class that represents an annotation object, containing a hash to store annotations,
+# functions to add annotations in different formats, and functions to search for KEGG and GO annotations.
+#
+# == Summary
+# 
+# This can be used to find and store annotations.
+#
 class Annotation
 
     # General use Annotation object
 
-    # Attributes:
     # @annotations_hash: a hash that, for each annotation type (key), contains an array or a hash (depending on the annotation type)
     # example if an annotation type contains an array: (in this case an array of arrays)
     # @annotations_hash["GO"] could contain [["GO:0005634", "C:nucleus", "IEA:UniProtKB-SubCell"], ["GO:0000151", "C:ubiquitin ligase complex", "IBA:GO_Central"]]
     # same example if an annotation type contains a hash:
     # @annotations_hash["GO"] could contain {"GO:000534" => ["C:nucleus", "IEA:UniProtKB-SubCell"], "GO:0000151" => ["C:ubiquitin ligase complex", "IBA:GO_Central"]}
     
+    # Get/Set the hash that stores the annotations
+    # @!attribute [rw]
+    # @return [Hash] The hash to store the annotations
     attr_accessor :annotations_hash
 
-    # on initialization the hash is empty
+    #
+    # Create a new instance of Annotation
+    #
+    # @param [Hash] params Hash of parameters
+    #
     def initialize(params = {})
-        @annotations_hash = {}
+        @annotations_hash = {} # on initialization the hash is empty
     end
 
-    # Function to add one annotation as an array or an array of arrays
+    #
+    # Adds one annotation as an array or as an array of arrays to @annotations_hash
+    #
+    # @param [Symbol] key Annotation type, key of the hash @annotations_hash
+    # @param [Array] value Array of elements to be added to @annotations_hash[key]
+    #
     def add_one_annotation_as_array(key, value)
         @annotations_hash[key] = [] unless @annotations_hash.key?(key) # empty array if there isn't any with that key
         if @annotations_hash[key].is_a?(Array)
@@ -31,7 +51,12 @@ class Annotation
         # if value is an array, we will have [[a1, a2], [b1, b2], ...]
     end
 
-    # Function to add one annotation as a hash
+    #
+    # Adds one annotation as a hash to @annotations_hash
+    #
+    # @param [Symbol] key Annotation type, key of the hash @annotations_hash
+    # @param [Hash] input_hash Hash of elements to be added to @annotations_hash[key]
+    #
     def add_one_annotation_as_hash(key, input_hash)
         @annotations_hash[key] = {} unless @annotations_hash.key?(key) # empty hash if there isn't anything with that key
         input_hash.each do |id, values|
@@ -49,6 +74,17 @@ class Annotation
 
     # Function fetch to access an URL via code, donated by Mark Wilkinson.
     # Making it a class method because I want to access it when no instances have been created
+
+    #
+    # Access an URL, function donated by Mark Wilkinson.
+    #
+    # @param [String] url URL
+    # @param [String] headers headers
+    # @param [String] user username, default ""
+    # @param [String] pass password, default ""
+    #
+    # @return [String, false] the contents of the URL, or false if an exception occured
+    #
     def self.fetch(url, headers = {accept: "*/*"}, user = "", pass="")
         response = RestClient::Request.execute({
             method: :get,
@@ -61,17 +97,23 @@ class Annotation
         rescue RestClient::ExceptionWithResponse => e
             $stderr.puts e.inspect
             response = false
-            return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+            return response 
         rescue RestClient::Exception => e
             $stderr.puts e.inspect
             response = false
-            return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+            return response 
         rescue Exception => e # generic
             $stderr.puts e.inspect
             response = false
-            return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+            return response 
     end 
 
+    #
+    # Given an id list, gets the KEGG annotations (KEGG ID and KEGG pathway) for each id
+    # and stores it in @annotations_hash[:KEGG] 
+    #
+    # @param [Array<Symbol>] id_list The list of ids
+    #
     def get_kegg_annotation(id_list)
         # makes the array into an array in case there is only one element
         id_list = [id_list] unless id_list.respond_to? :each
@@ -94,6 +136,13 @@ class Annotation
         end
     end
 
+    #
+    # Given an id list, gets the GO annotations (GO ID and biological process) for each id
+    # if the annotation is a biological process (P:)
+    # and there is experimental or high-throughput experimental evidence
+    #
+    # @param (see #get_kegg_annotation)
+    #
     def get_go_annotation(id_list)
         # makes the array into an array in case there is only one element
         id_list = [id_list] unless id_list.respond_to? :each
@@ -113,7 +162,7 @@ class Annotation
                         # http://geneontology.org/docs/guide-go-evidence-codes/
                         # To do that, instead of looking for those codes, I'm looking for the annotations NOT inferred from experiments and skipping them
                         not_exp_evidence_codes = ["IBA", "IBD", "IKR","IRD", "ISS", "ISO", "ISA", "ISM", "IGC", "RCA", "TAS", "NAS", "IC", "ND", "IEA"]
-                        matchobj = go_info[2].match(/([A-Z]{3}):.*/)
+                        matchobj = go_info[2].match(/([A-Z]{2,3}):.*/)
                         next if not_exp_evidence_codes.include?(matchobj[1]) # skipping the GO annotation if the evidence is one of those types
                         
                         # getting only the biological processes, whose second field (go_info[1]) starts with 'P:'
