@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Annotation
+  
+    &mdash; Documentation by YARD 0.9.25
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Annotation";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (A)</a> &raquo;
+    
+    
+    <span class="title">Annotation</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Annotation
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Annotation</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>Annotation.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h2 id="label-Annotation">Annotation</h2>
+
+<p>Class that represents an annotation object, containing a hash to store
+annotations, functions to add annotations in different formats, and
+functions to search for KEGG and GO annotations.</p>
+
+<h2 id="label-Summary">Summary</h2>
+
+<p>This can be used to find and store annotations.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="InteractionNetwork.html" title="InteractionNetwork (class)">InteractionNetwork</a></span></p>
+</div>
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#annotations_hash-instance_method" title="#annotations_hash (instance method)">#<strong>annotations_hash</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get/Set the hash that stores the annotations.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#fetch-class_method" title="fetch (class method)">.<strong>fetch</strong>(url, headers = {accept: &quot;*/*&quot;}, user = &quot;&quot;, pass = &quot;&quot;)  &#x21d2; String, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Access an URL, function donated by Mark Wilkinson.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_one_annotation_as_array-instance_method" title="#add_one_annotation_as_array (instance method)">#<strong>add_one_annotation_as_array</strong>(key, value)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Adds one annotation as an array or as an array of arrays to
+@annotations_hash.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_one_annotation_as_hash-instance_method" title="#add_one_annotation_as_hash (instance method)">#<strong>add_one_annotation_as_hash</strong>(key, input_hash)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Adds one annotation as a hash to @annotations_hash.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_go_annotation-instance_method" title="#get_go_annotation (instance method)">#<strong>get_go_annotation</strong>(id_list)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Given an id list, gets the GO annotations (GO ID and biological process)
+for each id if the annotation is a biological process (P:) and there is
+experimental or high-throughput experimental evidence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_kegg_annotation-instance_method" title="#get_kegg_annotation (instance method)">#<strong>get_kegg_annotation</strong>(id_list)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Given an id list, gets the KEGG annotations (KEGG ID and KEGG pathway) for
+each id and stores it in @<a href=":KEGG">annotations_hash</a>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(params = {})  &#x21d2; Annotation </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a new instance of Annotation.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(params = {})  &#x21d2; <tt><span class='object_link'><a href="" title="Annotation (class)">Annotation</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a new instance of Annotation</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Hash of parameters</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Annotation.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='ivar'>@annotations_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='comment'># on initialization the hash is empty
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="annotations_hash=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="annotations_hash-instance_method">
+  
+    #<strong>annotations_hash</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get/Set the hash that stores the annotations</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The hash to store the annotations</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Annotation.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_annotations_hash'>annotations_hash</span>
+  <span class='ivar'>@annotations_hash</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="fetch-class_method">
+  
+    .<strong>fetch</strong>(url, headers = {accept: &quot;*/*&quot;}, user = &quot;&quot;, pass = &quot;&quot;)  &#x21d2; <tt>String</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Access an URL, function donated by Mark Wilkinson.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>URL</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>headers</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{accept: &quot;*/*&quot;}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>headers</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>user</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>username, default “”</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>pass</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>password, default “”</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the contents of the URL, or false if an exception occured</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Annotation.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>accept:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*/*</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pass'>pass</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'>RestClient</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+        <span class='label'>method:</span> <span class='symbol'>:get</span><span class='comma'>,</span>
+        <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+        <span class='label'>user:</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span>
+        <span class='label'>password:</span> <span class='id identifier rubyid_pass'>pass</span><span class='comma'>,</span>
+        <span class='label'>headers:</span> <span class='id identifier rubyid_headers'>headers</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span>
+    
+    <span class='kw'>rescue</span> <span class='const'>RestClient</span><span class='op'>::</span><span class='const'>ExceptionWithResponse</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+        <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+        <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='kw'>false</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span> 
+    <span class='kw'>rescue</span> <span class='const'>RestClient</span><span class='op'>::</span><span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+        <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+        <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='kw'>false</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span> 
+    <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># generic
+</span>        <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+        <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='kw'>false</span>
+        <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span> 
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_one_annotation_as_array-instance_method">
+  
+    #<strong>add_one_annotation_as_array</strong>(key, value)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Adds one annotation as an array or as an array of arrays to
+@annotations_hash</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>key</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Annotation type, key of the hash @annotations_hash</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Array of elements to be added to @<a href="key">annotations_hash</a></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Annotation.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_one_annotation_as_array'>add_one_annotation_as_array</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+    <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='ivar'>@annotations_hash</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='comment'># empty array if there isn&#39;t any with that key
+</span>    <span class='kw'>if</span> <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+        <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span> <span class='kw'>unless</span> <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>  <span class='comment'># appending value to the empty array if it doesn&#39;t exist already
+</span>    <span class='kw'>else</span> <span class='comment'># @annotations_hash[key] isn&#39;t an Array (it existed previously and contains a different data structure)
+</span>        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>WARNING: the annotation of type </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not an Array</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+    <span class='comment'># if value is only one element, we will have [a, b, c, ...]
+</span>    <span class='comment'># if value is an array, we will have [[a1, a2], [b1, b2], ...]
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="add_one_annotation_as_hash-instance_method">
+  
+    #<strong>add_one_annotation_as_hash</strong>(key, input_hash)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Adds one annotation as a hash to @annotations_hash</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>key</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Annotation type, key of the hash @annotations_hash</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>input_hash</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Hash of elements to be added to @<a href="key">annotations_hash</a></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Annotation.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_one_annotation_as_hash'>add_one_annotation_as_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_input_hash'>input_hash</span><span class='rparen'>)</span>
+    <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='ivar'>@annotations_hash</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='comment'># empty hash if there isn&#39;t anything with that key
+</span>    <span class='id identifier rubyid_input_hash'>input_hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='op'>|</span>
+        <span class='comment'># if @annotations_hash[key] isn&#39;t a Hash (it existed previously and contains a different data structure):
+</span>        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>WARNING: the annotation of type </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not a Hash</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
+        <span class='comment'># if @annotations_hash[key] is a Hash, store values directly if @annotations_hash[key][id] doesn&#39;t exist:
+</span>        <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span> <span class='kw'>if</span> <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+        <span class='comment'># if @annotations_hash[key] is a Hash, @annotations_hash[key][id] already exists, and the values are different, give a warning:
+</span>        <span class='kw'>if</span> <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='id identifier rubyid_values'>values</span>
+            <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>WARNING: in the annotation of type </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>, the entry </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'> already contained </span><span class='embexpr_beg'>#{</span><span class='ivar'>@annotations_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+            <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not being added.</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_go_annotation-instance_method">
+  
+    #<strong>get_go_annotation</strong>(id_list)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Given an id list, gets the GO annotations (GO ID and biological process)
+for each id if the annotation is a biological process (P:) and there is
+experimental or high-throughput experimental evidence</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id_list</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The list of ids</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Annotation.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_go_annotation'>get_go_annotation</span><span class='lparen'>(</span><span class='id identifier rubyid_id_list'>id_list</span><span class='rparen'>)</span>
+    <span class='comment'># makes the array into an array in case there is only one element
+</span>    <span class='id identifier rubyid_id_list'>id_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_id_list'>id_list</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_id_list'>id_list</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:each</span>
+    <span class='comment'># for each id in the array
+</span>    <span class='id identifier rubyid_id_list'>id_list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_id'>id</span><span class='op'>|</span>
+        <span class='comment'># this URL works with AGI locus codes
+</span>        <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://togows.org/entry/ebi-uniprot/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'>/dr.json</span><span class='tstring_end'>&quot;</span></span> 
+        <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Annotation (class)">Annotation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="#fetch-class_method" title="Annotation.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span> <span class='comment'># if fetch was successful
+</span>            <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='comment'># turns the JSON file into a ruby data structure made of arrays and hashes
+</span>            <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
+                <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GO</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># next id if there aren&#39;t GO annotations
+</span>                <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GO</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_go_info'>go_info</span><span class='op'>|</span>
+                    <span class='comment'># go_info is an array, for instance: [&quot;GO:0080671&quot;, &quot;P:phosphatidylglycerol metabolic process&quot;, &quot;IMP:TAIR&quot;]
+</span>
+                    <span class='comment'># I&#39;m filtering for the evidence type, adding only those annotations inferred from experiments or from high-throughput experiments
+</span>                    <span class='comment'># http://geneontology.org/docs/guide-go-evidence-codes/
+</span>                    <span class='comment'># To do that, instead of looking for those codes, I&#39;m looking for the annotations NOT inferred from experiments and skipping them
+</span>                    <span class='id identifier rubyid_not_exp_evidence_codes'>not_exp_evidence_codes</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IBA</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IBD</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IKR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IRD</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ISS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ISO</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ISA</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ISM</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IGC</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RCA</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TAS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>NAS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IC</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ND</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IEA</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+                    <span class='id identifier rubyid_matchobj'>matchobj</span> <span class='op'>=</span> <span class='id identifier rubyid_go_info'>go_info</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>([A-Z]{2,3}):.*</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+                    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_not_exp_evidence_codes'>not_exp_evidence_codes</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_matchobj'>matchobj</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='comment'># skipping the GO annotation if the evidence is one of those types
+</span>                    
+                    <span class='comment'># getting only the biological processes, whose second field (go_info[1]) starts with &#39;P:&#39;
+</span>                    <span class='id identifier rubyid_matchobj'>matchobj</span> <span class='op'>=</span> <span class='id identifier rubyid_go_info'>go_info</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>P:(.*)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+                    <span class='kw'>if</span> <span class='id identifier rubyid_matchobj'>matchobj</span>
+                        <span class='id identifier rubyid_go_id'>go_id</span><span class='comma'>,</span> <span class='id identifier rubyid_go_process'>go_process</span> <span class='op'>=</span> <span class='id identifier rubyid_go_info'>go_info</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_matchobj'>matchobj</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+                        <span class='comment'># adding the annotation in the format: {&quot;GO:0080671&quot; =&gt; &quot;phosphatidylglycerol metabolic process&quot;}
+</span>                        <span class='id identifier rubyid_add_one_annotation_as_hash'>add_one_annotation_as_hash</span><span class='lparen'>(</span><span class='symbol'>:GO</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='id identifier rubyid_go_id'>go_id</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_go_process'>go_process</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+                    <span class='kw'>end</span>
+                <span class='kw'>end</span>
+            <span class='kw'>end</span>
+        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_kegg_annotation-instance_method">
+  
+    #<strong>get_kegg_annotation</strong>(id_list)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Given an id list, gets the KEGG annotations (KEGG ID and KEGG pathway) for
+each id and stores it in @<a href=":KEGG">annotations_hash</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id_list</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The list of ids</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Annotation.rb', line 117</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_kegg_annotation'>get_kegg_annotation</span><span class='lparen'>(</span><span class='id identifier rubyid_id_list'>id_list</span><span class='rparen'>)</span>
+    <span class='comment'># makes the array into an array in case there is only one element
+</span>    <span class='id identifier rubyid_id_list'>id_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_id_list'>id_list</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_id_list'>id_list</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:each</span>
+    <span class='comment'># for each id in the array
+</span>    <span class='id identifier rubyid_id_list'>id_list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_id'>id</span><span class='op'>|</span>
+        <span class='comment'># this URL works with AGI locus codes
+</span>        <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://togows.org/entry/kegg-genes/ath:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'>/pathways.json</span><span class='tstring_end'>&quot;</span></span> 
+        <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Annotation (class)">Annotation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="#fetch-class_method" title="Annotation.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span> <span class='comment'># if fetch was successful
+</span>            <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='comment'># turns the JSON file into a ruby data structure made of arrays and hashes
+</span>            <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='comment'># next id if there is nothing inside the hash
+</span>            <span class='comment'># for each {kegg_id: kegg_pathway_name} hash in body
+</span>            <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_kegg_hash'>kegg_hash</span><span class='op'>|</span>
+                <span class='comment'># for each hash
+</span>                <span class='id identifier rubyid_kegg_hash'>kegg_hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_kegg_path_id'>kegg_path_id</span><span class='comma'>,</span> <span class='id identifier rubyid_kegg_path_name'>kegg_path_name</span><span class='op'>|</span>
+                    <span class='id identifier rubyid_add_one_annotation_as_hash'>add_one_annotation_as_hash</span><span class='lparen'>(</span><span class='symbol'>:KEGG</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='id identifier rubyid_kegg_path_id'>kegg_path_id</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_kegg_path_name'>kegg_path_name</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+                <span class='kw'>end</span>
+            <span class='kw'>end</span>
+        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Mon Nov  1 19:22:47 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.5.1).
+</div>
+
+    </div>
+  </body>
+</html>

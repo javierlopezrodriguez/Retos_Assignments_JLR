@@ -1,0 +1,2804 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: InteractionNetwork
+  
+    &mdash; Documentation by YARD 0.9.25
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "InteractionNetwork";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (I)</a> &raquo;
+    
+    
+    <span class="title">InteractionNetwork</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: InteractionNetwork
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="Annotation.html" title="Annotation (class)">Annotation</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Annotation.html" title="Annotation (class)">Annotation</a></span></li>
+          
+            <li class="next">InteractionNetwork</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>InteractionNetwork.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h2 id="label-InteractionNetwork">InteractionNetwork</h2>
+
+<p>Class that represents an interaction network between genes from a list.
+Contains the functions to process the list, look for the interactions and
+create the individual networks.</p>
+
+<h2 id="label-Summary">Summary</h2>
+
+<p>This can be used to find interactions networks between genes from a list.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="all_networks-classvariable" class="">@@all_networks =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Class variable, array to store every InteractionNetwork object</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="gene_array-classvariable" class="">@@gene_array =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Class variable, array to store every gene id (as a lowercase symbol) read
+from the .txt file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="all_interactions-classvariable" class="">@@all_interactions =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Class variable, hash that stores every interaction found that involves one
+of the genes read from the file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='rbrace'>}</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#network_graph-instance_method" title="#network_graph (instance method)">#<strong>network_graph</strong>  &#x21d2; RGL::AdjacencyGraph </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get/Set the graph that represents the interaction network.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Annotation.html" title="Annotation (class)">Annotation</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Annotation.html#annotations_hash-instance_method" title="Annotation#annotations_hash (method)">#annotations_hash</a></span></p>
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_interaction_to_hash-class_method" title="add_interaction_to_hash (class method)">.<strong>add_interaction_to_hash</strong>(gene1, gene2, int_hash = @@all_interactions)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Adds an interaction to a hash.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#all_interactions-class_method" title="all_interactions (class method)">.<strong>all_interactions</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get method for the class variable @@all_interactions,  that stores every
+interaction found that involves one of the genes read from the file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#all_interactions=-class_method" title="all_interactions= (class method)">.<strong>all_interactions=</strong>(new_value)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the class variable @@all_interactions to a new value.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#all_networks-class_method" title="all_networks (class method)">.<strong>all_networks</strong>  &#x21d2; Array&lt;InteractionNetwork&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the class variable @@all_networks that stores every InteractionNetwork
+object.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_networks_rgl-class_method" title="create_networks_rgl (class method)">.<strong>create_networks_rgl</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates InteractionNetwork objects using the interactions in
+@@all_interactions.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_interactions_intact-class_method" title="find_interactions_intact (class method)">.<strong>find_interactions_intact</strong>(cutoff = 0.45, gene_array = @@gene_array)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Finds interactions from the IntAct database  where both members are from
+Arabidopsis thaliana, one of them is from a list of genes, and the miscore
+is greater or equal than a threshold.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#gene_array-class_method" title="gene_array (class method)">.<strong>gene_array</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the class variable @@gene_array that stores as a lowercase symbol every
+gene id read from a .txt file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#gene_array=-class_method" title="gene_array= (class method)">.<strong>gene_array=</strong>(new_value)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the class variable @@gene_array to a new value.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_interactions_from_all_interactions-class_method" title="get_interactions_from_all_interactions (class method)">.<strong>get_interactions_from_all_interactions</strong>(id_list)  &#x21d2; Hash<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Given a list of ids, returns the interactions from @@all_interactions
+composed only by genes from the list of ids (both members of the
+interaction need to be in the list).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#read_gene_list-class_method" title="read_gene_list (class method)">.<strong>read_gene_list</strong>(filename)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Reads a file containing one gene id (in AGI locus code format) in each
+column and stores each id as a lowercase symbol on the class variable
+@@gene_array.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove_interactions-class_method" title="remove_interactions (class method)">.<strong>remove_interactions</strong>(gene_id)  &#x21d2; Array&lt;Symbol&gt;<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Removes an id from @@all_interactions, removing it from every interaction
+it was part of.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove_unimportant_branches-class_method" title="remove_unimportant_branches (class method)">.<strong>remove_unimportant_branches</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>For every gene from @@all_interactions that is not in @@gene_array, removes
+that gene from @@all_interactions if it only interacts with one other gene,
+doing it iteratively until every gene matching that condition has been
+removed.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reset_all_interactions-class_method" title="reset_all_interactions (class method)">.<strong>reset_all_interactions</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Resets the class variable @@all_interactions to an empty state.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reset_gene_array-class_method" title="reset_gene_array (class method)">.<strong>reset_gene_array</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Resets the class variable @@gene_array to an empty state.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#start-class_method" title="start (class method)">.<strong>start</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Resets the class variables to an empty state (mostly used for testing and
+at the start of the process).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#write_report-class_method" title="write_report (class method)">.<strong>write_report</strong>(filename = &quot;Report.txt&quot;)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Writes a report to a file detailing the genes of a network, the
+interactions, and the KEGG and GO annotations for those genes.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#genes-instance_method" title="#genes (instance method)">#<strong>genes</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the genes contained in an InteractionNetwork object.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#genes_with_origin-instance_method" title="#genes_with_origin (instance method)">#<strong>genes_with_origin</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the genes contained in an InteractionNetwork object, distinguishing
+between genes that are present in @@gene_array and genes that aren&#39;t.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(params = {})  &#x21d2; InteractionNetwork </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a new instance of InteractionNetwork.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#interactions-instance_method" title="#interactions (instance method)">#<strong>interactions</strong>  &#x21d2; Array&lt;Array&lt;Symbol&gt;&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the interactions contained in an InteractionNetwork object as an array
+of arrays [[source1, target1], [source2, target2] …].</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#interactions_as_edges-instance_method" title="#interactions_as_edges (instance method)">#<strong>interactions_as_edges</strong>  &#x21d2; Array&lt;RGL::Edge::UnDirectedEdge&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the interactions contained in an InteractionNetwork object as an array
+of edges.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#interactions_as_hash-instance_method" title="#interactions_as_hash (instance method)">#<strong>interactions_as_hash</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the interactions contained in an InteractionNetwork object as a hash.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#interactions_as_string-instance_method" title="#interactions_as_string (instance method)">#<strong>interactions_as_string</strong>(int = &quot;&lt;--&gt;&quot;, sep = &quot;\n&quot;)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the interactions contained in an InteractionNetwork object as a string.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Annotation.html" title="Annotation (class)">Annotation</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Annotation.html#add_one_annotation_as_array-instance_method" title="Annotation#add_one_annotation_as_array (method)">#add_one_annotation_as_array</a></span>, <span class='object_link'><a href="Annotation.html#add_one_annotation_as_hash-instance_method" title="Annotation#add_one_annotation_as_hash (method)">#add_one_annotation_as_hash</a></span>, <span class='object_link'><a href="Annotation.html#fetch-class_method" title="Annotation.fetch (method)">fetch</a></span>, <span class='object_link'><a href="Annotation.html#get_go_annotation-instance_method" title="Annotation#get_go_annotation (method)">#get_go_annotation</a></span>, <span class='object_link'><a href="Annotation.html#get_kegg_annotation-instance_method" title="Annotation#get_kegg_annotation (method)">#get_kegg_annotation</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(params = {})  &#x21d2; <tt><span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a new instance of InteractionNetwork</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Parameters to initialize the network</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <p class="tag_title">Options Hash (<tt>params</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:net_interactions</span>
+          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>A hash with the interactions that will form the network</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 104</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='kw'>super</span> <span class='comment'># initializing Annotation
+</span>    <span class='comment'># initializing @network_graph with a new AdjacencyGraph (undirected graph from rgl)
+</span>    <span class='ivar'>@network_graph</span> <span class='op'>=</span> <span class='const'>RGL</span><span class='op'>::</span><span class='const'>AdjacencyGraph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='comment'># getting the hash with the network interactions
+</span>    <span class='id identifier rubyid_net_interactions'>net_interactions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:net_interactions</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='comment'># adding each interaction to the graph:
+</span>    <span class='id identifier rubyid_net_interactions'>net_interactions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='comma'>,</span> <span class='id identifier rubyid_interactions'>interactions</span><span class='op'>|</span>
+        <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_interactions'>interactions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='comment'># skip when there aren&#39;t interactions (shouldn&#39;t happen)
+</span>        <span class='comment'># foreach id in the interactions array
+</span>        <span class='id identifier rubyid_interactions'>interactions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_inter_id'>inter_id</span><span class='op'>|</span>
+            <span class='ivar'>@network_graph</span><span class='period'>.</span><span class='id identifier rubyid_add_edge'>add_edge</span><span class='lparen'>(</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='comma'>,</span> <span class='id identifier rubyid_inter_id'>inter_id</span><span class='rparen'>)</span> <span class='comment'># adding the edge to the graph
+</span>        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='comment'># getting the list of genes from the graph
+</span>    <span class='id identifier rubyid_network_gene_list'>network_gene_list</span> <span class='op'>=</span> <span class='ivar'>@network_graph</span><span class='period'>.</span><span class='id identifier rubyid_vertices'>vertices</span>
+    <span class='comment'># adding KEGG annotations for the genes in the network
+</span>    <span class='id identifier rubyid_get_kegg_annotation'>get_kegg_annotation</span><span class='lparen'>(</span><span class='id identifier rubyid_network_gene_list'>network_gene_list</span><span class='rparen'>)</span>
+    <span class='comment'># adding GO annotations for the genes in the network
+</span>    <span class='id identifier rubyid_get_go_annotation'>get_go_annotation</span><span class='lparen'>(</span><span class='id identifier rubyid_network_gene_list'>network_gene_list</span><span class='rparen'>)</span>
+    <span class='comment'># adding this new InteractionNetwork object into the class variable @@all_networks
+</span>    <span class='cvar'>@@all_networks</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="network_graph=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="network_graph-instance_method">
+  
+    #<strong>network_graph</strong>  &#x21d2; <tt>RGL::AdjacencyGraph</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get/Set the graph that represents the interaction network</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RGL::AdjacencyGraph</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The graph</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95
+96
+97</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 95</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_network_graph'>network_graph</span>
+  <span class='ivar'>@network_graph</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_interaction_to_hash-class_method">
+  
+    .<strong>add_interaction_to_hash</strong>(gene1, gene2, int_hash = @@all_interactions)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Adds an interaction to a hash. The interaction gets added in both
+directions (gene1 =&gt; [gene2] and gene2 =&gt; [gene1])</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>gene1</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The id of the first gene</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>gene2</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The id of the second gene</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>int_hash</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>@@all_interactions</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The hash to which the interactions will be added, by default the class
+variable @@all_interactions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148
+149
+150
+151
+152
+153</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_add_interaction_to_hash'>add_interaction_to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_gene1'>gene1</span><span class='comma'>,</span> <span class='id identifier rubyid_gene2'>gene2</span><span class='comma'>,</span> <span class='id identifier rubyid_int_hash'>int_hash</span> <span class='op'>=</span> <span class='cvar'>@@all_interactions</span><span class='rparen'>)</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_gene1'>gene1</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='id identifier rubyid_gene2'>gene2</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_gene'>gene</span><span class='op'>|</span> 
+        <span class='comment'># for each gene, creating an empty array to store the gene&#39;s interactions if there aren&#39;t any already
+</span>        <span class='id identifier rubyid_int_hash'>int_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_gene'>gene</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_int_hash'>int_hash</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_gene'>gene</span><span class='rparen'>)</span> 
+    <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_int_hash'>int_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_gene1'>gene1</span><span class='rbracket'>]</span> <span class='op'>|=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_gene2'>gene2</span><span class='rbracket'>]</span> <span class='comment'># adding gene2 to gene1&#39;s interaction array if it isn&#39;t already there
+</span>    <span class='id identifier rubyid_int_hash'>int_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_gene2'>gene2</span><span class='rbracket'>]</span> <span class='op'>|=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_gene1'>gene1</span><span class='rbracket'>]</span> <span class='comment'># adding gene1 to gene2&#39;s interaction array if it isn&#39;t already there
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="all_interactions-class_method">
+  
+    .<strong>all_interactions</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get method for the class variable @@all_interactions,  that stores every
+interaction found that involves one of the genes read from the file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The hash containing all interactions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all_interactions'>all_interactions</span>
+    <span class='kw'>return</span> <span class='cvar'>@@all_interactions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="all_interactions=-class_method">
+  
+    .<strong>all_interactions=</strong>(new_value)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the class variable @@all_interactions to a new value</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>new_value</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The hash of interactions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89
+90</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all_interactions='>all_interactions=</span><span class='lparen'>(</span><span class='id identifier rubyid_new_value'>new_value</span><span class='rparen'>)</span>
+    <span class='cvar'>@@all_interactions</span> <span class='op'>=</span> <span class='id identifier rubyid_new_value'>new_value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="all_networks-class_method">
+  
+    .<strong>all_networks</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the class variable @@all_networks that stores every InteractionNetwork
+object</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The array containing every interaction network</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all_networks'>all_networks</span>
+    <span class='kw'>return</span> <span class='cvar'>@@all_networks</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_networks_rgl-class_method">
+  
+    .<strong>create_networks_rgl</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates InteractionNetwork objects using the interactions in
+@@all_interactions. At least two genes of each network are present in
+@@gene_array.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 311</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_create_networks_rgl'>create_networks_rgl</span>
+    <span class='comment'># The general idea is to create an undirected graph, using all the interactions in @@all_interactions as its edges.
+</span>    <span class='comment'># The nodes of the graph will be the genes.
+</span>    
+    <span class='comment'># After creating the graph, rgl can get the connected components of a graph. 
+</span>    <span class='comment'># A connected component is a group of nodes where you can find a path between any two nodes of the group,
+</span>    <span class='comment'># but there is no path between any node of the group and any node outside of the group.
+</span>    <span class='comment'># (So, every smaller sub-graph that is isolated from the rest of the nodes).
+</span>    <span class='comment'># Each connected component that contains more than one gene from the @@gene_array (our .txt) will be used to create an InteractionNetwork.
+</span>    
+    <span class='comment'># All the information about using this library was gotten from https://www.rubydoc.info/github/monora/rgl
+</span>    
+    <span class='comment'># First step: creating the graph with all of the interactions.
+</span>    <span class='id identifier rubyid_full_graph'>full_graph</span> <span class='op'>=</span> <span class='const'>RGL</span><span class='op'>::</span><span class='const'>AdjacencyGraph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='comment'># instantiating an undirected graph
+</span>    <span class='comment'># Before starting, I&#39;m removing the unnecessary interactions (interactions with genes not in @@gene_array that don&#39;t lead anywhere)
+</span>    <span class='const'><span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span></span><span class='period'>.</span><span class='id identifier rubyid_remove_unimportant_branches'><span class='object_link'><a href="#remove_unimportant_branches-class_method" title="InteractionNetwork.remove_unimportant_branches (method)">remove_unimportant_branches</a></span></span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Creating the networks...</span><span class='tstring_end'>&quot;</span></span>
+    <span class='comment'># for each gene_id in @@all_interactions hash
+</span>    <span class='cvar'>@@all_interactions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='comma'>,</span> <span class='id identifier rubyid_interactions'>interactions</span><span class='op'>|</span>
+        <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_interactions'>interactions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='comment'># skip if there aren&#39;t interactions (shouldn&#39;t happen)
+</span>        <span class='comment'># for each id in the interactions array
+</span>        <span class='id identifier rubyid_interactions'>interactions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_inter_id'>inter_id</span><span class='op'>|</span>
+            <span class='id identifier rubyid_full_graph'>full_graph</span><span class='period'>.</span><span class='id identifier rubyid_add_edge'>add_edge</span><span class='lparen'>(</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='comma'>,</span> <span class='id identifier rubyid_inter_id'>inter_id</span><span class='rparen'>)</span> <span class='comment'># adding the edge to the graph
+</span>        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    
+    <span class='comment'># Second step: when the graph is complete, getting each of the connected components.
+</span>    <span class='comment'># each_connected_component returns an array with the nodes of each subgraph
+</span>    <span class='id identifier rubyid_full_graph'>full_graph</span><span class='period'>.</span><span class='id identifier rubyid_each_connected_component'>each_connected_component</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgraph_nodes'>subgraph_nodes</span><span class='op'>|</span>
+        <span class='id identifier rubyid_num_genes_in_array'>num_genes_in_array</span> <span class='op'>=</span> <span class='int'>0</span> <span class='comment'># counter, number of genes that are part of @@gene_array
+</span>        <span class='comment'># for each node in the connected component
+</span>        <span class='id identifier rubyid_subgraph_nodes'>subgraph_nodes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
+            <span class='id identifier rubyid_num_genes_in_array'>num_genes_in_array</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='cvar'>@@gene_array</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_node'>node</span> <span class='comment'># incrementing the counter if the node is part of the array
+</span>        <span class='kw'>end</span>
+        <span class='comment'># if that connected component has two or more genes from @@gene_array, build an InteractionNetwork
+</span>        <span class='kw'>if</span> <span class='id identifier rubyid_num_genes_in_array'>num_genes_in_array</span> <span class='op'>&gt;=</span> <span class='int'>2</span>
+            <span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>net_interactions:</span> <span class='const'><span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_interactions_from_all_interactions'><span class='object_link'><a href="#get_interactions_from_all_interactions-class_method" title="InteractionNetwork.get_interactions_from_all_interactions (method)">get_interactions_from_all_interactions</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_subgraph_nodes'>subgraph_nodes</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+            <span class='kw'>if</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='lbracket'>[</span><span class='symbol'>:net_interactions</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+                <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>WARNING: for genes </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_subgraph_nodes'>subgraph_nodes</span><span class='embexpr_end'>}</span><span class='tstring_content'> something went wrong when creating the InteractionNetwork, there were no interactions found even though there should have been.</span><span class='tstring_end'>&quot;</span></span>
+                <span class='kw'>next</span>
+            <span class='kw'>else</span>
+                <span class='const'><span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="InteractionNetwork#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span> <span class='comment'># creating the new InteractionNetwork.
+</span>            <span class='kw'>end</span>
+        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_interactions_intact-class_method">
+  
+    .<strong>find_interactions_intact</strong>(cutoff = 0.45, gene_array = @@gene_array)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Finds interactions from the IntAct database  where both members are from
+Arabidopsis thaliana, one of them is from a list of genes, and the miscore
+is greater or equal than a threshold. It adds them to @@all_interactions</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cutoff</span>
+      
+      
+        <span class='type'>(<tt>Float</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>0.45</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The threshold for the miscore, default 0.45</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>gene_array</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>@@gene_array</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The list of genes, default @@gene_array</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 268</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_interactions_intact'>find_interactions_intact</span><span class='lparen'>(</span><span class='id identifier rubyid_cutoff'>cutoff</span> <span class='op'>=</span> <span class='float'>0.45</span><span class='comma'>,</span> <span class='id identifier rubyid_gene_array'>gene_array</span> <span class='op'>=</span> <span class='cvar'>@@gene_array</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Finding interactions...</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_gene_array'>gene_array</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='op'>|</span>
+        <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_gene_id'>gene_id</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[Aa][Tt]\w[Gg]\d\d\d\d\d</span><span class='regexp_end'>/</span></span> <span class='comment'># we only want AGI locus codes
+</span>        <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/interactor/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>?format=tab25</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="Annotation.html#fetch-class_method" title="Annotation.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='comment'># ruby uses short-circuit evaluation, if response is false, the second half doesn&#39;t get evaluated
+</span>            <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_each_line'>each_line</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tab25'>tab25</span><span class='op'>|</span>
+                <span class='id identifier rubyid_fields'>fields</span> <span class='op'>=</span> <span class='id identifier rubyid_tab25'>tab25</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+                <span class='comment'># fields 4 and 5 contain the interacting genes, fields 9 and 10 contain the species, fields 14 contains the mi-score
+</span>                <span class='comment'># I&#39;m not filtering by interaction type, but if I had to, I would filter by the field 11 (for example: psi-mi:&quot;MI:0915&quot;(physical association))
+</span>                
+                <span class='comment'># Checking for species, taxid:3702 is Arabidopsis thaliana
+</span>                <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields'>fields</span><span class='lbracket'>[</span><span class='int'>9</span><span class='rbracket'>]</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>taxid:3702</span><span class='regexp_end'>/</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_fields'>fields</span><span class='lbracket'>[</span><span class='int'>10</span><span class='rbracket'>]</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>taxid:3702</span><span class='regexp_end'>/</span></span> 
+                <span class='comment'># Checking for score &gt;= cutoff
+</span>                <span class='comment'># http://europepmc.org/article/MED/25652942
+</span>                <span class='comment'># &quot;the IntAct database regards data with a score of &gt;0.6 as high-confidence and 0.45–0.6 as medium confidence&quot; 
+</span>                <span class='id identifier rubyid_matchscore'>matchscore</span> <span class='op'>=</span> <span class='id identifier rubyid_fields'>fields</span><span class='lbracket'>[</span><span class='int'>14</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>score:(.*)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+                <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_matchscore'>matchscore</span> <span class='comment'># if there is no score, skip
+</span>                <span class='id identifier rubyid_miscore'>miscore</span> <span class='op'>=</span> <span class='id identifier rubyid_matchscore'>matchscore</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+                <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_miscore'>miscore</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_cutoff'>cutoff</span>
+                <span class='comment'># Getting the genes and checking they are in AGI locus code format:
+</span>                <span class='id identifier rubyid_matchgene1'>matchgene1</span> <span class='op'>=</span> <span class='id identifier rubyid_fields'>fields</span><span class='lbracket'>[</span><span class='int'>4</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>uniprotkb:([Aa][Tt]\w[Gg]\d\d\d\d\d)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+                <span class='id identifier rubyid_matchgene2'>matchgene2</span> <span class='op'>=</span> <span class='id identifier rubyid_fields'>fields</span><span class='lbracket'>[</span><span class='int'>5</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>uniprotkb:([Aa][Tt]\w[Gg]\d\d\d\d\d)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+                <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_matchgene1'>matchgene1</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_matchgene2'>matchgene2</span> <span class='comment'># skipping if there aren&#39;t AGI locus codes
+</span>                <span class='id identifier rubyid_gene1'>gene1</span><span class='comma'>,</span> <span class='id identifier rubyid_gene2'>gene2</span> <span class='op'>=</span> <span class='id identifier rubyid_matchgene1'>matchgene1</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='id identifier rubyid_matchgene2'>matchgene2</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+                <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_gene1'>gene1</span> <span class='op'>==</span> <span class='id identifier rubyid_gene2'>gene2</span> <span class='comment'># if both are the same gene, skip
+</span>                <span class='id identifier rubyid_new_gene'>new_gene</span> <span class='op'>=</span> <span class='id identifier rubyid_gene1'>gene1</span> <span class='kw'>if</span> <span class='id identifier rubyid_gene2'>gene2</span> <span class='op'>==</span> <span class='id identifier rubyid_gene_id'>gene_id</span> <span class='comment'># if the original gene_id used in the search is gene2, the new gene is gene1
+</span>                <span class='id identifier rubyid_new_gene'>new_gene</span> <span class='op'>=</span> <span class='id identifier rubyid_gene2'>gene2</span> <span class='kw'>if</span> <span class='id identifier rubyid_gene1'>gene1</span> <span class='op'>==</span> <span class='id identifier rubyid_gene_id'>gene_id</span> <span class='comment'># and viceversa
+</span>                <span class='kw'>unless</span> <span class='id identifier rubyid_gene2'>gene2</span> <span class='op'>==</span> <span class='id identifier rubyid_gene_id'>gene_id</span> <span class='op'>||</span> <span class='id identifier rubyid_gene1'>gene1</span> <span class='op'>==</span> <span class='id identifier rubyid_gene_id'>gene_id</span> <span class='comment'># shouldn&#39;t happen but just in case none of the genes equal the original gene_id
+</span>                    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>WARNING: unexpected, none of the gene ids of the interaction (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_gene1'>gene1</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_gene2'>gene2</span><span class='embexpr_end'>}</span><span class='tstring_content'>) are the original gene </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># warning
+</span>                    <span class='kw'>next</span> <span class='comment'># skip
+</span>                <span class='kw'>end</span>
+                <span class='const'><span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_interaction_to_hash'><span class='object_link'><a href="#add_interaction_to_hash-class_method" title="InteractionNetwork.add_interaction_to_hash (method)">add_interaction_to_hash</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='comma'>,</span> <span class='id identifier rubyid_new_gene'>new_gene</span><span class='rparen'>)</span> <span class='comment'># adding the interaction
+</span>            <span class='kw'>end</span>
+        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="gene_array-class_method">
+  
+    .<strong>gene_array</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the class variable @@gene_array that stores as a lowercase symbol every
+gene id read from a .txt file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The array containing every gene id</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_gene_array'>gene_array</span>
+    <span class='kw'>return</span> <span class='cvar'>@@gene_array</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="gene_array=-class_method">
+  
+    .<strong>gene_array=</strong>(new_value)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the class variable @@gene_array to a new value</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>new_value</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The array of gene ids</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_gene_array='>gene_array=</span><span class='lparen'>(</span><span class='id identifier rubyid_new_value'>new_value</span><span class='rparen'>)</span>
+    <span class='cvar'>@@gene_array</span> <span class='op'>=</span> <span class='id identifier rubyid_new_value'>new_value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_interactions_from_all_interactions-class_method">
+  
+    .<strong>get_interactions_from_all_interactions</strong>(id_list)  &#x21d2; <tt>Hash</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Given a list of ids, returns the interactions from @@all_interactions
+composed only by genes from the list of ids (both members of the
+interaction need to be in the list)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id_list</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The array of ids whose interactions will be returned</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The hash of interactions, or nil if none were found</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 164</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_interactions_from_all_interactions'>get_interactions_from_all_interactions</span><span class='lparen'>(</span><span class='id identifier rubyid_id_list'>id_list</span><span class='rparen'>)</span>
+    <span class='comment'># gets the interactions A-B from @@all_interactions where both A and B are part of id_list
+</span>    <span class='id identifier rubyid_int_subset'>int_subset</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='comment'># hash to store the results
+</span>    <span class='comment'># getting all the keys from id_list that are in @@all_interactions
+</span>    <span class='id identifier rubyid_key_list'>key_list</span> <span class='op'>=</span> <span class='cvar'>@@all_interactions</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='op'>|</span> <span class='id identifier rubyid_id_list'>id_list</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_gene_id'>gene_id</span><span class='rbrace'>}</span>
+    <span class='comment'># for each key
+</span>    <span class='id identifier rubyid_key_list'>key_list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
+        <span class='comment'># storing the interactions between the genes of the id_list
+</span>        <span class='id identifier rubyid_int_subset'>int_subset</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='cvar'>@@all_interactions</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_interactor'>interactor</span><span class='op'>|</span> <span class='id identifier rubyid_id_list'>id_list</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_interactor'>interactor</span><span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_int_subset'>int_subset</span> <span class='kw'>unless</span> <span class='id identifier rubyid_int_subset'>int_subset</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='comment'># returns the results hash
+</span>    <span class='kw'>return</span> <span class='kw'>nil</span> <span class='comment'># if empty
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="read_gene_list-class_method">
+  
+    .<strong>read_gene_list</strong>(filename)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Reads a file containing one gene id (in AGI locus code format) in each
+column and stores each id as a lowercase symbol on the class variable
+@@gene_array</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>filename</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Path of the txt file</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 184</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_read_gene_list'>read_gene_list</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
+    <span class='comment'># for each gene in the file, stores the id as a lowercase symbol in @@gene_array (if it doesn&#39;t exist already)
+</span>    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Reading the gene list...</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>begin</span>
+        <span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_gene'>gene</span><span class='op'>|</span>
+            <span class='id identifier rubyid_gene'>gene</span> <span class='op'>=</span> <span class='id identifier rubyid_gene'>gene</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='comment'># removing whitespace (if any) and converting the letters to lowercase
+</span>            <span class='cvar'>@@gene_array</span> <span class='op'>|=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_gene'>gene</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_gene'>gene</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>at\wg\d\d\d\d\d</span><span class='regexp_end'>/</span></span> <span class='comment'># storing the gene id as a symbol if it matches the regexp
+</span>        <span class='kw'>end</span>
+    <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># handling the missing file exception
+</span>        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ERROR: Can&#39;t find the file</span><span class='tstring_end'>&quot;</span></span>
+        <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># other possible exceptions
+</span>        <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+    <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remove_interactions-class_method">
+  
+    .<strong>remove_interactions</strong>(gene_id)  &#x21d2; <tt>Array&lt;Symbol&gt;</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Removes an id from @@all_interactions, removing it from every interaction
+it was part of</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>gene_id</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The id that will be removed</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The ids of the genes that interacted with gene_id, or nil if none.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 215</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_remove_interactions'>remove_interactions</span><span class='lparen'>(</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='cvar'>@@all_interactions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span> <span class='op'>!</span><span class='cvar'>@@all_interactions</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='rparen'>)</span> <span class='comment'># if there aren&#39;t interactions with that id
+</span>    <span class='id identifier rubyid_interactor_ids'>interactor_ids</span> <span class='op'>=</span> <span class='cvar'>@@all_interactions</span><span class='lbracket'>[</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='rbracket'>]</span> <span class='comment'># storing the interactors
+</span>    <span class='cvar'>@@all_interactions</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='rparen'>)</span> <span class='comment'># deleting the entry of gene_id
+</span>    <span class='id identifier rubyid_interactor_ids'>interactor_ids</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_interactor'>interactor</span><span class='op'>|</span>
+        <span class='kw'>if</span> <span class='cvar'>@@all_interactions</span><span class='lbracket'>[</span><span class='id identifier rubyid_interactor'>interactor</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span> <span class='comment'># deleting the entry of interactor if gene_id was the only element
+</span>            <span class='cvar'>@@all_interactions</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_interactor'>interactor</span><span class='rparen'>)</span>
+        <span class='kw'>else</span> <span class='comment'># removing gene_id from the entry of interactor if it is not the only element
+</span>            <span class='cvar'>@@all_interactions</span><span class='lbracket'>[</span><span class='id identifier rubyid_interactor'>interactor</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_interactor_ids'>interactor_ids</span> <span class='comment'># returns the removed interactor ids
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remove_unimportant_branches-class_method">
+  
+    .<strong>remove_unimportant_branches</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>For every gene from @@all_interactions that is not in @@gene_array, removes
+that gene from @@all_interactions if it only interacts with one other gene,
+doing it iteratively until every gene matching that condition has been
+removed</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 234</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_remove_unimportant_branches'>remove_unimportant_branches</span>
+    <span class='comment'># getting the ids in @@all_interactions that aren&#39;t part of @@gene_array
+</span>    <span class='id identifier rubyid_genes_not_in_array'>genes_not_in_array</span> <span class='op'>=</span> <span class='cvar'>@@all_interactions</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='op'>|</span> <span class='op'>!</span><span class='cvar'>@@gene_array</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_gene_id'>gene_id</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_genes_not_in_array'>genes_not_in_array</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='op'>|</span>
+        <span class='kw'>next</span> <span class='kw'>unless</span> <span class='cvar'>@@all_interactions</span><span class='lbracket'>[</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span> <span class='comment'># skip it unless it has only one interaction
+</span>        <span class='id identifier rubyid_to_be_removed'>to_be_removed</span> <span class='op'>=</span> <span class='id identifier rubyid_gene_id'>gene_id</span>
+        <span class='kw'>while</span> <span class='kw'>true</span>
+            <span class='id identifier rubyid_interactors'>interactors</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span></span><span class='period'>.</span><span class='id identifier rubyid_remove_interactions'><span class='object_link'><a href="#remove_interactions-class_method" title="InteractionNetwork.remove_interactions (method)">remove_interactions</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_to_be_removed'>to_be_removed</span><span class='rparen'>)</span> <span class='comment'># remove to_be_removed from the @@all_interactions
+</span>            <span class='kw'>if</span> <span class='id identifier rubyid_interactors'>interactors</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
+                <span class='kw'>if</span> <span class='cvar'>@@gene_array</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_interactors'>interactors</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+                    <span class='kw'>break</span> <span class='comment'># exit the while loop if the interactor is in @@gene_array
+</span>                <span class='kw'>else</span>
+                    <span class='comment'># exit the while loop unless the interactor has exactly one interaction remaining
+</span>                    <span class='kw'>break</span> <span class='kw'>if</span> <span class='cvar'>@@all_interactions</span><span class='lbracket'>[</span><span class='id identifier rubyid_interactors'>interactors</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='cvar'>@@all_interactions</span><span class='lbracket'>[</span><span class='id identifier rubyid_interactors'>interactors</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>1</span> 
+                    <span class='comment'># if it has one interaction (we know from above it is not in @@gene_array), we want to repeat the process
+</span>                    <span class='id identifier rubyid_to_be_removed'>to_be_removed</span> <span class='op'>=</span> <span class='id identifier rubyid_interactors'>interactors</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='comment'># setting to_be_removed to this id so that it also gets removed from @@all_interactions
+</span>                <span class='kw'>end</span>
+            <span class='kw'>else</span> <span class='comment'># if interactors.length != 1                    
+</span>                <span class='kw'>break</span> <span class='comment'># exit the while loop if more than one interaction were removed
+</span>            <span class='kw'>end</span>
+        <span class='kw'>end</span>
+    <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="reset_all_interactions-class_method">
+  
+    .<strong>reset_all_interactions</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Resets the class variable @@all_interactions to an empty state</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 79</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_reset_all_interactions'>reset_all_interactions</span>
+    <span class='cvar'>@@all_interactions</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="reset_gene_array-class_method">
+  
+    .<strong>reset_gene_array</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Resets the class variable @@gene_array to an empty state</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 45</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_reset_gene_array'>reset_gene_array</span>
+    <span class='cvar'>@@gene_array</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="start-class_method">
+  
+    .<strong>start</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Resets the class variables to an empty state (mostly used for testing and
+at the start of the process)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+132
+133
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 132</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span>
+    <span class='cvar'>@@all_networks</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='cvar'>@@all_interactions</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+    <span class='cvar'>@@gene_array</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="write_report-class_method">
+  
+    .<strong>write_report</strong>(filename = &quot;Report.txt&quot;)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Writes a report to a file detailing the genes of a network, the
+interactions, and the KEGG and GO annotations for those genes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>filename</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;Report.txt&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the file, default “Report.txt”</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 437</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_write_report'>write_report</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Report.txt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Writing the report...</span><span class='tstring_end'>&quot;</span></span>
+    
+    <span class='id identifier rubyid_gene_counter'>gene_counter</span> <span class='op'>=</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_total_genes_num'>total_genes_num</span> <span class='op'>=</span> <span class='cvar'>@@gene_array</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+    <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>w</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># opening the file
+</span>    
+    <span class='cvar'>@@all_networks</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_network'>network</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
+        <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--------------------------------------------\n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Network </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_index'>index</span> <span class='op'>+</span> <span class='int'>1</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_network_genes'>network_genes</span> <span class='op'>=</span> <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_genes_with_origin'>genes_with_origin</span>
+        <span class='id identifier rubyid_gene_counter'>gene_counter</span> <span class='op'>+=</span> <span class='id identifier rubyid_network_genes'>network_genes</span><span class='lbracket'>[</span><span class='symbol'>:gene_list</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='comment'># incrementing the counter
+</span>        <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Genes from the gene list: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_network_genes'>network_genes</span><span class='lbracket'>[</span><span class='symbol'>:gene_list</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Interactions: \n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_interactions_as_string'>interactions_as_string</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_annotations_hash'>annotations_hash</span><span class='lbracket'>[</span><span class='symbol'>:KEGG</span><span class='rbracket'>]</span>
+            <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KEGG annotations for all the genes in the network: \n</span><span class='tstring_end'>&quot;</span></span>
+            <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_annotations_hash'>annotations_hash</span><span class='lbracket'>[</span><span class='symbol'>:KEGG</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_kegg_id'>kegg_id</span><span class='comma'>,</span> <span class='id identifier rubyid_kegg_pathway'>kegg_pathway</span><span class='op'>|</span>
+                <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ID: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_kegg_id'>kegg_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>, pathway name: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_kegg_pathway'>kegg_pathway</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+            <span class='kw'>end</span>
+        <span class='kw'>else</span>
+            <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No KEGG pathways found for the genes in the network. \n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>end</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_annotations_hash'>annotations_hash</span><span class='lbracket'>[</span><span class='symbol'>:GO</span><span class='rbracket'>]</span>
+            <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GO annotations for all the genes in the network: \n</span><span class='tstring_end'>&quot;</span></span>
+            <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_annotations_hash'>annotations_hash</span><span class='lbracket'>[</span><span class='symbol'>:GO</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_go_id'>go_id</span><span class='comma'>,</span> <span class='id identifier rubyid_go_process'>go_process</span><span class='op'>|</span>
+                <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ID: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_go_id'>go_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>, process: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_go_process'>go_process</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+            <span class='kw'>end</span>
+        <span class='kw'>else</span>
+            <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No GO annotations found for the genes in the network. \n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>end</span>
+        <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--------------------------------------------</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nFrom the </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_total_genes_num'>total_genes_num</span><span class='embexpr_end'>}</span><span class='tstring_content'> genes of the gene list, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_gene_counter'>gene_counter</span><span class='embexpr_end'>}</span><span class='tstring_content'> are present in interaction networks.</span><span class='tstring_end'>&quot;</span></span>
+    
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span><span class='lparen'>(</span><span class='rparen'>)</span> <span class='comment'># closing the file        
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="genes-instance_method">
+  
+    #<strong>genes</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the genes contained in an InteractionNetwork object</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The array of genes</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+363
+364
+365</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 363</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_genes'>genes</span>
+    <span class='kw'>return</span> <span class='ivar'>@network_graph</span><span class='period'>.</span><span class='id identifier rubyid_vertices'>vertices</span> <span class='comment'># returns an array of the genes
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="genes_with_origin-instance_method">
+  
+    #<strong>genes_with_origin</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the genes contained in an InteractionNetwork object, distinguishing
+between genes that are present in @@gene_array and genes that aren&#39;t.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Hash with the genes, :gene_list =&gt; [Array of genes that are in
+@@gene_array], :intact =&gt; [Array of genes that are not in @@gene_array]</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+373
+374
+375
+376
+377
+378</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 373</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_genes_with_origin'>genes_with_origin</span>
+    <span class='id identifier rubyid_gene_hash'>gene_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>gene_list:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>intact:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_gene_hash'>gene_hash</span><span class='lbracket'>[</span><span class='symbol'>:gene_list</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@network_graph</span><span class='period'>.</span><span class='id identifier rubyid_vertices'>vertices</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_gene'>gene</span><span class='op'>|</span> <span class='cvar'>@@gene_array</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_gene'>gene</span><span class='rbrace'>}</span> <span class='comment'># genes from the network that are in @@gene_array
+</span>    <span class='id identifier rubyid_gene_hash'>gene_hash</span><span class='lbracket'>[</span><span class='symbol'>:intact</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@network_graph</span><span class='period'>.</span><span class='id identifier rubyid_vertices'>vertices</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_gene'>gene</span><span class='op'>|</span> <span class='op'>!</span><span class='id identifier rubyid_gene_hash'>gene_hash</span><span class='lbracket'>[</span><span class='symbol'>:gene_list</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_gene'>gene</span><span class='rbrace'>}</span> <span class='comment'># the rest of the genes from the network
+</span>    <span class='kw'>return</span> <span class='id identifier rubyid_gene_hash'>gene_hash</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="interactions-instance_method">
+  
+    #<strong>interactions</strong>  &#x21d2; <tt>Array&lt;Array&lt;Symbol&gt;&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the interactions contained in an InteractionNetwork object as an array
+of arrays</p>
+<dl class="rdoc-list label-list"><dt>[source1, target1], [source2, target2
+<dd>
+<p>…]</p>
+</dd></dl>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Array&lt;Symbol&gt;&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The array of interactions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+386
+387
+388</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 386</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_interactions'>interactions</span>
+    <span class='kw'>return</span> <span class='ivar'>@network_graph</span><span class='period'>.</span><span class='id identifier rubyid_edges'>edges</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='op'>&amp;</span><span class='symbol'>:to_a</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="interactions_as_edges-instance_method">
+  
+    #<strong>interactions_as_edges</strong>  &#x21d2; <tt>Array&lt;RGL::Edge::UnDirectedEdge&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the interactions contained in an InteractionNetwork object as an array
+of edges</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;RGL::Edge::UnDirectedEdge&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The array of interactions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+409
+410
+411</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 409</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_interactions_as_edges'>interactions_as_edges</span>
+    <span class='kw'>return</span> <span class='ivar'>@network_graph</span><span class='period'>.</span><span class='id identifier rubyid_edges'>edges</span> <span class='comment'># returns each interaction as RGL::Edge::UnDirectedEdge object
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="interactions_as_hash-instance_method">
+  
+    #<strong>interactions_as_hash</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the interactions contained in an InteractionNetwork object as a hash</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The hash of interactions in the same format as @@all_interactions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+395
+396
+397
+398
+399
+400
+401
+402</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 395</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_interactions_as_hash'>interactions_as_hash</span>
+    <span class='id identifier rubyid_interaction_array'>interaction_array</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_interactions'>interactions</span>
+    <span class='id identifier rubyid_interaction_hash'>interaction_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_interaction_array'>interaction_array</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_interaction'>interaction</span><span class='op'>|</span>
+        <span class='const'><span class='object_link'><a href="" title="InteractionNetwork (class)">InteractionNetwork</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_interaction_to_hash'><span class='object_link'><a href="#add_interaction_to_hash-class_method" title="InteractionNetwork.add_interaction_to_hash (method)">add_interaction_to_hash</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_interaction'>interaction</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>=</span><span class='id identifier rubyid_interaction_hash'>interaction_hash</span><span class='rparen'>)</span> <span class='comment'># adding the interaction to the hash
+</span>    <span class='kw'>end</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_interaction_hash'>interaction_hash</span> <span class='comment'># returns a hash of interactions, with every interaction twice (bidirectional)
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="interactions_as_string-instance_method">
+  
+    #<strong>interactions_as_string</strong>(int = &quot;&lt;--&gt;&quot;, sep = &quot;\n&quot;)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the interactions contained in an InteractionNetwork object as a string</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>int</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;&lt;--&gt;&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The string that denotes the interaction, default “&lt;–&gt;”</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>sep</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;\n&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The separator that goes at the end of each interaction, default “n”</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The string with all the interactions of the network</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+421
+422
+423
+424
+425
+426
+427
+428
+429</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 421</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_interactions_as_string'>interactions_as_string</span><span class='lparen'>(</span><span class='id identifier rubyid_int'>int</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;--&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_sep'>sep</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_interaction_array'>interaction_array</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_interactions'>interactions</span>
+    <span class='id identifier rubyid_result_string'>result_string</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_interaction_array'>interaction_array</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_interaction'>interaction</span><span class='op'>|</span>
+        <span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span> <span class='op'>=</span> <span class='op'>*</span><span class='id identifier rubyid_interaction'>interaction</span>
+        <span class='id identifier rubyid_result_string'>result_string</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_int'>int</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sep'>sep</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_result_string'>result_string</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Mon Nov  1 19:22:47 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.5.1).
+</div>
+
+    </div>
+  </body>
+</html>
