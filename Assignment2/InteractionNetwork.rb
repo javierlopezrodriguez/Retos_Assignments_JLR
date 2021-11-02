@@ -67,7 +67,7 @@ class InteractionNetwork < Annotation
     # Get method for the class variable @@all_interactions, 
     # that stores every interaction found that involves one of the genes read from the file
     #
-    # @return [Hash] The hash containing all interactions
+    # @return [Hash<Symbol, Array<Symbol>>] The hash containing all interactions
     #
     def self.all_interactions
         return @@all_interactions
@@ -83,7 +83,7 @@ class InteractionNetwork < Annotation
     #
     # Set the class variable @@all_interactions to a new value
     #
-    # @param [Hash] new_value The hash of interactions
+    # @param [Hash<Symbol, Array<Symbol>>] new_value The hash of interactions
     #
     def self.all_interactions=(new_value)
         @@all_interactions = new_value
@@ -99,7 +99,7 @@ class InteractionNetwork < Annotation
     # Create a new instance of InteractionNetwork
     #
     # @param [Hash] params Parameters to initialize the network
-    # @option params [Hash] :net_interactions A hash with the interactions that will form the network
+    # @option params [Hash<Symbol, Array<Symbol>>] :net_interactions A hash with the interactions that will form the network
     #
     def initialize(params = {})
         super # initializing Annotation
@@ -141,7 +141,7 @@ class InteractionNetwork < Annotation
     #
     # @param [Symbol] gene1 The id of the first gene
     # @param [Symbol] gene2 The id of the second gene
-    # @param [Hash] int_hash The hash to which the interactions will be added, by default the class variable @@all_interactions
+    # @param [Hash<Symbol, Array<Symbol>>] int_hash The hash to which the interactions will be added, by default the class variable @@all_interactions
     #
     def self.add_interaction_to_hash(gene1, gene2, int_hash = @@all_interactions)
         [gene1.to_sym, gene2.to_sym].each { |gene| 
@@ -159,7 +159,7 @@ class InteractionNetwork < Annotation
     #
     # @param [Array<Symbol>] id_list The array of ids whose interactions will be returned
     #
-    # @return [Hash, nil] The hash of interactions, or nil if none were found
+    # @return [Hash<Symbol, Array<Symbol>>, nil] The hash of interactions, or nil if none were found
     #
     def self.get_interactions_from_all_interactions(id_list)
         # gets the interactions A-B from @@all_interactions where both A and B are part of id_list
@@ -368,7 +368,7 @@ class InteractionNetwork < Annotation
     # Get the genes contained in an InteractionNetwork object,
     # distinguishing between genes that are present in @@gene_array and genes that aren't.
     #
-    # @return [Hash] Hash with the genes, :gene_list => [Array of genes that are in @@gene_array], :intact => [Array of genes that are not in @@gene_array]
+    # @return [Hash<Symbol, Array<Symbol>>] Hash with the genes, :gene_list => [Array of genes that are in @@gene_array], :intact => [Array of genes that are not in @@gene_array]
     #
     def genes_with_origin
         gene_hash = {gene_list: [], intact: []}
@@ -390,7 +390,7 @@ class InteractionNetwork < Annotation
     #
     # Get the interactions contained in an InteractionNetwork object as a hash
     #
-    # @return [Hash] The hash of interactions in the same format as @@all_interactions
+    # @return [Hash<Symbol, Array<Symbol>>] The hash of interactions
     #
     def interactions_as_hash
         interaction_array = self.interactions

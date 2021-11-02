@@ -260,7 +260,7 @@ of the genes read from the file</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#all_interactions-class_method" title="all_interactions (class method)">.<strong>all_interactions</strong>  &#x21d2; Hash </a>
+      <a href="#all_interactions-class_method" title="all_interactions (class method)">.<strong>all_interactions</strong>  &#x21d2; Hash&lt;Symbol, Array&lt;Symbol&gt;&gt; </a>
     
 
     
@@ -434,7 +434,7 @@ gene id read from a .txt file.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_interactions_from_all_interactions-class_method" title="get_interactions_from_all_interactions (class method)">.<strong>get_interactions_from_all_interactions</strong>(id_list)  &#x21d2; Hash<sup>?</sup> </a>
+      <a href="#get_interactions_from_all_interactions-class_method" title="get_interactions_from_all_interactions (class method)">.<strong>get_interactions_from_all_interactions</strong>(id_list)  &#x21d2; Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;<sup>?</sup> </a>
     
 
     
@@ -669,7 +669,7 @@ interactions, and the KEGG and GO annotations for those genes.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#genes_with_origin-instance_method" title="#genes_with_origin (instance method)">#<strong>genes_with_origin</strong>  &#x21d2; Hash </a>
+      <a href="#genes_with_origin-instance_method" title="#genes_with_origin (instance method)">#<strong>genes_with_origin</strong>  &#x21d2; Hash&lt;Symbol, Array&lt;Symbol&gt;&gt; </a>
     
 
     
@@ -770,7 +770,7 @@ of edges.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#interactions_as_hash-instance_method" title="#interactions_as_hash (instance method)">#<strong>interactions_as_hash</strong>  &#x21d2; Hash </a>
+      <a href="#interactions_as_hash-instance_method" title="#interactions_as_hash (instance method)">#<strong>interactions_as_hash</strong>  &#x21d2; Hash&lt;Symbol, Array&lt;Symbol&gt;&gt; </a>
     
 
     
@@ -881,7 +881,7 @@ of edges.</p>
       
         <li>
           <span class="name">:net_interactions</span>
-          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="type">(<tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt>)</span>
           <span class="default">
             
           </span>
@@ -1089,7 +1089,7 @@ directions (gene1 =&gt; [gene2] and gene2 =&gt; [gene1])</p>
         <span class='name'>int_hash</span>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>@@all_interactions</tt>)</em>
@@ -1140,7 +1140,7 @@ variable @@all_interactions</p>
       <div class="method_details ">
   <h3 class="signature " id="all_interactions-class_method">
   
-    .<strong>all_interactions</strong>  &#x21d2; <tt>Hash</tt> 
+    .<strong>all_interactions</strong>  &#x21d2; <tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt> 
   
 
   
@@ -1163,7 +1163,7 @@ interaction found that involves one of the genes read from the file</p>
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt>)</span>
       
       
       
@@ -1223,7 +1223,7 @@ interaction found that involves one of the genes read from the file</p>
         <span class='name'>new_value</span>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt>)</span>
       
       
       
@@ -1724,7 +1724,7 @@ gene id read from a .txt file</p>
       <div class="method_details ">
   <h3 class="signature " id="get_interactions_from_all_interactions-class_method">
   
-    .<strong>get_interactions_from_all_interactions</strong>(id_list)  &#x21d2; <tt>Hash</tt><sup>?</sup> 
+    .<strong>get_interactions_from_all_interactions</strong>(id_list)  &#x21d2; <tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt><sup>?</sup> 
   
 
   
@@ -1768,7 +1768,7 @@ interaction need to be in the list)</p>
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -2421,7 +2421,7 @@ interactions, and the KEGG and GO annotations for those genes.</p>
       <div class="method_details ">
   <h3 class="signature " id="genes_with_origin-instance_method">
   
-    #<strong>genes_with_origin</strong>  &#x21d2; <tt>Hash</tt> 
+    #<strong>genes_with_origin</strong>  &#x21d2; <tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt> 
   
 
   
@@ -2444,7 +2444,7 @@ between genes that are present in @@gene_array and genes that aren&#39;t.</p>
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt>)</span>
       
       
       
@@ -2612,7 +2612,7 @@ of edges</p>
       <div class="method_details ">
   <h3 class="signature " id="interactions_as_hash-instance_method">
   
-    #<strong>interactions_as_hash</strong>  &#x21d2; <tt>Hash</tt> 
+    #<strong>interactions_as_hash</strong>  &#x21d2; <tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt> 
   
 
   
@@ -2634,13 +2634,13 @@ of edges</p>
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash&lt;Symbol, Array&lt;Symbol&gt;&gt;</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>The hash of interactions in the same format as @@all_interactions</p>
+<p>The hash of interactions</p>
 </div>
       
     </li>
@@ -2794,7 +2794,7 @@ of edges</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Nov  1 19:22:47 2021 by
+  Generated on Tue Nov  2 13:19:51 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.5.1).
 </div>
