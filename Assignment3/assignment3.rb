@@ -110,35 +110,57 @@ end
 # by retrieving them from whatever database you wish
 ############
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ############
 # Task 2:
 # Loop over every exon feature, and scan it for the CTTCTT sequence
 ############
+
+def find_seq_in_exons(embl_hash)
+    embl_hash.each do |gene_id, bio_embl| # iterating over the hash
+        embl_seq = bio_embl.seq
+        bio_embl.features.each do |feature| # for each feature
+            next unless feature.feature == "exon" # skip if the feature is not an exon
+            
+            ###### vvvv for testing
+            unless feature.assoc["note"].match(Regexp.new(gene_id.to_s, "i"))
+                puts "this is being skipped"
+                puts gene_id
+                puts feature.assoc["note"]
+            end
+            ###### ^^^^ for testing
+
+            next unless feature.assoc["note"].match(Regexp.new(gene_id.to_s, "i")) # skip if the exon is from another gene (because of overlapping or whatever)
+
+            exon_seq = embl_seq.subseq(feature.location.from, feature.location.to)
+
+            # using lookahead (?=) so that I can match overlapping expressions (https://stackoverflow.com/questions/41028602/find-overlapping-regexp-matches)
+            regexp_f = Regexp.new(/(?=(CTTCTT))/i) 
+            regexp_r = Regexp.new(/(?=(AAGAAG))/i)
+
+            match_f = exon_seq.match(regexp_f)
+            match_r = exon_seq.match(regexp_r)
+
+            unless match_f || match_r # if there is no match
+
+                ###### Testing
+                puts "No match!"
+                puts gene_id
+                puts exon_seq
+                ###### Testing
+
+                next
+            end
+            # if there is at least one match
+            if match_f
+
+            end
+
+            if match_r
+
+            end
+        end
+    end
+end
 
 ############
 # Task 3:
