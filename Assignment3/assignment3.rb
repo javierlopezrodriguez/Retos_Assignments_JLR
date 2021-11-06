@@ -161,7 +161,7 @@ def find_seq_in_exons(embl_hash)
                 # To find the sequence, I'm using lookahead (?=) so that I can match overlapping expressions 
                 # (https://stackoverflow.com/questions/41028602/find-overlapping-regexp-matches)
                 # (https://stackoverflow.com/questions/5241653/ruby-regex-match-and-get-positions-of)
-                start_f = my_seq.enum_for(:scan, /(?=(cttctt))/i).map { Regexp.last_match.begin(0) + 1} # 1-indexed
+                start_f = exon_seq.enum_for(:scan, /(?=(cttctt))/i).map { Regexp.last_match.begin(0) + 1} # 1-indexed
                 
                 if start_f.empty? # if there is no match
 
@@ -183,7 +183,7 @@ def find_seq_in_exons(embl_hash)
                 # To find the sequence, I'm using lookahead (?=) so that I can match overlapping expressions 
                 # (https://stackoverflow.com/questions/41028602/find-overlapping-regexp-matches)
                 # (https://stackoverflow.com/questions/5241653/ruby-regex-match-and-get-positions-of)
-                start_r = my_seq.enum_for(:scan, /(?=(aagaag))/i).map { Regexp.last_match.begin(0) + 1} # 1-indexed
+                start_r = exon_seq.enum_for(:scan, /(?=(aagaag))/i).map { Regexp.last_match.begin(0) + 1} # 1-indexed
 
                 if start_r.empty? # if there is no match
 
@@ -198,7 +198,8 @@ def find_seq_in_exons(embl_hash)
 
                 # if there is a match
                 positions_r = start_r.map {|pos| [pos, pos + 5]} unless start_r.empty? # 1-indexed
-                # create feature en la otra strand
+
+                ######## create feature en la otra strand
 
 
             else
