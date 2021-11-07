@@ -44,6 +44,7 @@ end
 #
 def read_gene_list(path)
     # for each gene in the file, stores the id as a lowercase symbol in gene_array (if it doesn't exist already)
+    puts "Reading the gene list..."
     gene_array = []
     begin
         IO.foreach(path) do |gene|
@@ -75,6 +76,7 @@ def get_embl(gene_array)
         return nil
     end
     # else 
+    puts "Getting the EMBL entries for each gene..."
     embl_hash = {} # Hash to store {gene_id => Bio::EMBL object}
     gene_array = [gene_array] unless gene_array.is_a?(Array) # converting it into an array if it isn't (if there's only one element)
     gene_array.each do |gene_id| # for each gene in the array
@@ -155,7 +157,7 @@ end
 # @return [Hash<Symbol, Bio::Sequence>] The new hash of Bio::Sequence objects, containing only the ids of those genes with 'CTTCTT' in any of their exons
 #
 def find_seq_in_exons(embl_hash)
-
+    puts "Searching for CTTCTT in the entries..."
     new_embl_hash = {} # Hash to store {gene_id => Bio::EMBL object with the new features}
 
     embl_hash.each do |gene_id, bio_embl| # iterating over the hash
@@ -266,6 +268,8 @@ def write_gff3(new_embl_hash, mode, filename)
     #phase = "." # not a CDS
     #attributes # ID=unique_id;Name=CTTCTT_direct_repeat;
 
+    puts "Writing the GFF3 file..."
+
     puts "WARNING: mode isn't 'local' or 'global', the default 'local' will be used" if mode != "local" && mode != "global"
 
     source = "BioRuby"
@@ -317,6 +321,7 @@ end
 # @param [String] filename The name of the output file
 #
 def write_report(gene_array, new_embl_hash, filename = "CTTCTT_report.txt")
+    puts "Writing the report..."
     # getting the genes from gene_array that aren't in new_embl_hash
     not_feature_genes = gene_array.select {|gene_id| !new_embl_hash.keys.include?(gene_id)} 
     f = File.new(filename, "w") # opening the file
