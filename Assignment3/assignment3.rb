@@ -88,8 +88,6 @@ def get_embl(gene_array)
         response = fetch(url) # accessing the url
         if response
             entry = Bio::EMBL.new(response.body) # pass it the record as a string
-            puts entry.class
-            puts "The record is #{entry.definition} "
             unless embl_hash.keys.include?(gene_id)
                 embl_hash[gene_id] = entry # storing it in the hash
             else
@@ -115,11 +113,76 @@ end
 # Loop over every exon feature, and scan it for the CTTCTT sequence
 ############
 
+#
+# <Description>
+#
+# @param [<Type>] biosequence <description>
+# @param [<Type>] gene_id <description>
+# @param [<Type>] positions_array <description>
+# @param [<Type>] strand <description>
+#
+# @return [<Type>] <description>
+#
+def create_and_add_features(biosequence, gene_id, positions_array, strand)
+    
+    positions_array.uniq.each_with_index do |position_pair, index|
+        start_pos, end_pos = *position_pair
+        # creating the position string
+        if strand == +1 || strand == "+" || strand == "+1"
+            position_string = "#{start_pos}..#{end_pos}"
+            strand_label = "+"
+        elsif strand == -1 || strand == "-" || strand == "-1"
+            position_string = "complement(#{start_pos}..#{end_pos})"
+            strand_label = "-"
+        else
+            puts "WARNING: For #{gene_id}, the strand parameter was #{strand}. It should be '+1' or '+' for the forward, and '-1' or '-' for the reverse"
+            next
+        end
+
+        new_feature = Bio::Feature.new(feature = "direct_repeat", position = position_string, 
+                                        qualifiers = [Bio::Feature::Qualifier.new('sequence', 'CTTCTT'),
+                                                        Bio::Feature::Qualifier.new('strand', bio_location.strand.to_s),
+                                                        Bio::Feature::Qualifier.new('ID', "#{gene_id.to_s.upcase}.CTTCTT_repeat.#{strand_label}.#{index + 1}")])
+                                                        # id, for example: AT2G46340.CTTCTT_repeat.-.1
+                                                        # that way I can use it afterwards for the GFF3 file
+        biosequence.features << new_feature
+    end
+end
+
+########################################
+######## This comment is for myself to understand this:
+
+##The sequence of the embl is always 5'3' and the exon can be on that one or on the complement one
+######## https://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=embl&id=AT2G46340&style=raw
+## that (embl) has the sequence 5'3', the exons are on the complement, so we would need the reverse complement of that
+## if we translate this sequence as is, we dont get the proteins, because the exons are on the complement
+## doing: get_embl([:AT2G46340])[:AT2G46340].seq gives me the above sequence
+## if I want to search for CTTCTT on the exons, I need to reverse complement the sequence or the query
+## because the exons are on the complement strand
+
+######## https://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=fasta&id=AT2G46340&style=raw
+## that (fasta) has the reverse complement already -> from here if we translate this we get the proteins
+## here we would always look for CTTCTT because it is the correct strand (if we didn't want exons only)
+########################################
+
+#
+# <Description>
+#
+# @param [<Type>] embl_hash <description>
+#
+# @return [<Type>] <description>
+#
 def find_seq_in_exons(embl_hash)
+
+    new_embl_hash = {} # Hash to store {gene_id => Bio::EMBL object with the new features}
+
     embl_hash.each do |gene_id, bio_embl| # iterating over the hash
 
         bio_embl_as_biosequence = bio_embl.to_biosequence # turning the Bio::EMBL into Bio::Sequence so that I can add features
         embl_seq = bio_embl.seq # getting the dna sequence as Bio::Sequence::NA
+
+        all_positions_forward = [] # store the positions of the feature CTTCTT on the forward strand
+        all_positions_reverse = [] # store the positions of the feature CTTCTT on the reverse strand
 
         # iterating through each feature of the original bio_embl
         # not using bio_embl_as_biosequence here because I will be adding features 
@@ -138,24 +201,7 @@ def find_seq_in_exons(embl_hash)
             next unless feature.assoc["note"].match(Regexp.new(gene_id.to_s, "i")) # skip if the exon is from another gene (because of overlapping or whatever)
 
             bio_location = feature.locations[0] # feature.locations is Bio::Locations, which is basically an array of Bio::Location objects
-            exon_seq = embl_seq.subseq(bio_location.from, bio_location.to)
-
-            
-            ########################################
-            ######## This comment is for myself to understand this:
-
-            ##The sequence of the embl is always 5'3' and the exon can be on that one or on the complement one
-            ######## https://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=embl&id=AT2G46340&style=raw
-            ## that (embl) has the sequence 5'3', the exons are on the complement, so we would need the reverse complement of that
-            ## if we translate this sequence as is, we dont get the proteins, bc the exons are on the complement
-            ## doing: get_embl([:AT2G46340])[:AT2G46340].seq gives me the above sequence
-            ## if I want to search for CTTCTT on the exons, I need to reverse complement the sequence or the query
-            ## because the exons are on the complement strand
-
-            ######## https://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=fasta&id=AT2G46340&style=raw
-            ## that (fasta) has the reverse complement already -> from here if we translate this we get the proteins
-            ## here we would always look for CTTCTT because it is the correct strand (if we didn't want exons only)
-            ########################################
+            exon_seq = embl_seq.subseq(bio_location.from, bio_location.to) # getting the sequence of the exon, 1-indexed
 
             if bio_location.strand == +1 # the feature is on the current strand, we need to search for CTTCTT
                 # To find the sequence, I'm using lookahead (?=) so that I can match overlapping expressions 
@@ -163,21 +209,10 @@ def find_seq_in_exons(embl_hash)
                 # (https://stackoverflow.com/questions/5241653/ruby-regex-match-and-get-positions-of)
                 start_f = exon_seq.enum_for(:scan, /(?=(cttctt))/i).map { Regexp.last_match.begin(0) + 1} # 1-indexed
                 
-                if start_f.empty? # if there is no match
-
-                    ###### Testing
-                    puts "No match!"
-                    puts gene_id
-                    puts exon_seq
-                    ###### Testing
-    
-                    next # next feature
-                end
-
+                next if start_f.empty? # if there is no match, skip
                 # if there is a match
                 positions_f = start_f.map {|pos| [pos, pos + 5]} unless start_f.empty? # 1-indexed
-
-                ####### create feature en la misma strand
+                all_positions_forward |= positions_f # include the [start_pos, end_pos] pairs that aren't included already
 
             elsif bio_location.strand == -1 # the feature is on the complement strand, we need to search for the reverse complement, AAGAAG
                 # To find the sequence, I'm using lookahead (?=) so that I can match overlapping expressions 
@@ -185,54 +220,26 @@ def find_seq_in_exons(embl_hash)
                 # (https://stackoverflow.com/questions/5241653/ruby-regex-match-and-get-positions-of)
                 start_r = exon_seq.enum_for(:scan, /(?=(aagaag))/i).map { Regexp.last_match.begin(0) + 1} # 1-indexed
 
-                if start_r.empty? # if there is no match
-
-                    ###### Testing
-                    puts "No match!"
-                    puts gene_id
-                    puts exon_seq
-                    ###### Testing
-    
-                    next # next feature
-                end
-
+                next if start_r.empty? # if there is no match, skip
                 # if there is a match
                 positions_r = start_r.map {|pos| [pos, pos + 5]} unless start_r.empty? # 1-indexed
-
-                ######## create feature en la otra strand
-
-
+                all_positions_reverse |= positions_r # include the [start_pos, end_pos] pairs that aren't included already
             else
                 puts "WARNING: no strand"
                 next # skip
             end
-
-            
-            
-
-            if start_f.empty? && start_r.empty? # if there is no match
-
-                ###### Testing
-                puts "No match!"
-                puts gene_id
-                puts exon_seq
-                ###### Testing
-
-                next # next feature
-            end
-            # if there is at least one match
-            unless start_f.empty?
-                
-
-            end
-
-            unless start_r.empty?
-                
-
-            end
+        end
+        # once every feature has been scanned for that Bio::EMBL object, we add the new CTTCTT features
+        create_and_add_features(bio_embl_as_biosequence, gene_id, all_positions_forward, "+")
+        create_and_add_features(bio_embl_as_biosequence, gene_id, all_positions_reverse, "-")
+        # adding the biosequence object to the new hash unless no new features were added
+        unless all_positions_forward.empty? && all_positions_reverse.empty? 
+            new_embl_hash[gene_id] = bio_embl_as_biosequence unless new_embl_hash.keys.include?(gene_id)
         end
     end
+    return new_embl_hash # return the new embl hash
 end
+
 
 ############
 # Task 3:
@@ -244,15 +251,6 @@ end
 # there are methods that will tell you the starting and ending coordinates of the match in the string)
 ############
 
-def create_feature(position, gene_id)
-    return Bio::Feature.new(feature = 'repeat_sequence', 
-                            position = place..holder, 
-                            qualifiers = [Bio::Feature::Qualifier.new('gene', placeholder),
-                                            Bio::Feature::Qualifier.new('sequence', 'CTTCTT'),
-                                            Bio::Feature::Qualifier.new('strand', placeholder),
-                                            Bio::Feature::Qualifier.new('start', placeholder),
-                                            Bio::Feature::Qualifier.new('end', placeholder)])
-end
 
 ############
 # Task 4a:
@@ -260,14 +258,36 @@ end
 # (using the #features method of the EnsEMBL Sequence object) and create a GFF3-formatted file of these features.
 ############
 
+#
+# <Description>
+#
+# @param [<Type>] parameters <description>
+#
+# @return [<Type>] <description>
+#
 def write_gff3_local(parameters)
     write_gff3(mode = "local", parameters)
 end
 
+#
+# <Description>
+#
+# @param [<Type>] parameters <description>
+#
+# @return [<Type>] <description>
+#
 def write_gff3_global(parameters)
     write_gff3(mode = "global", parameters)
 end
 
+#
+# <Description>
+#
+# @param [<Type>] mode <description>
+# @param [<Type>] parameters <description>
+#
+# @return [<Type>] <description>
+#
 def write_gff3(mode, parameters)
 
     #seqid # id of the landmark: gene id in local, chr number in global
@@ -288,8 +308,26 @@ end
 # Output a report showing which (if any) genes on your list do NOT have exons with the CTTCTT repeat
 ############
 
-def write_report
-
+#
+# <Description>
+#
+# @param [<Type>] gene_array <description>
+# @param [<Type>] new_embl_hash <description>
+# @param [<Type>] filename <description>
+#
+# @return [<Type>] <description>
+#
+def write_report(gene_array, new_embl_hash, filename = "CTTCTT_report.txt")
+    # getting the genes from gene_array that aren't in new_embl_hash
+    not_feature_genes = gene_array.select {|gene_id| !new_embl_hash.keys.include?(gene_id)} 
+    f = File.new(filename, "w") # opening the file
+    f.write("Number of genes present in the initial txt: #{gene_array.length}\n")
+    f.write("Number of genes without CTTCTT in any of their exons: #{not_feature_genes.length}\n")
+    f.write("List of genes: \n")
+    not_feature_genes.each do |gene_id|
+        f.write("#{gene_id}\n")
+    end
+    f.close # closing the file
 end
 
 ############
