@@ -120,7 +120,7 @@ def create_and_add_features(biosequence, gene_id, positions_array, strand)
 
         new_feature = Bio::Feature.new(feature = "CTTCTT_direct_repeat", position = position_string, 
                                         qualifiers = [Bio::Feature::Qualifier.new('sequence', 'CTTCTT'),
-                                                        Bio::Feature::Qualifier.new('strand', bio_location.strand.to_s),
+                                                        Bio::Feature::Qualifier.new('strand', strand_label),
                                                         Bio::Feature::Qualifier.new('ID', "#{gene_id.to_s.upcase}.CTTCTT_repeat.#{strand_label}.#{index + 1}")])
                                                         # id, for example: AT2G46340.CTTCTT_repeat.-.1
                                                         # that way I can use it afterwards for the GFF3 file
@@ -280,11 +280,11 @@ def write_gff3(new_embl_hash, mode, filename)
             # unique elements to each gff3 file
             if mode == "global"
                 seqid = "Chr#{gene_id.to_s[2]}"
-                chr_start_pos = biosequence.accession.split(":")[3] # chromosome:TAIR10:3:20119140:20121314:1 -> [3] is 20119140
+                chr_start_pos = biosequence.primary_accession.split(":")[3].to_i # chromosome:TAIR10:3:20119140:20121314:1 -> [3] is 20119140
                 # for the positions, both the gene position in the chromosome and the feature position in the gene are 1-indexed
                 # if the gene is at position 1 in the chromosome and the feature is at position 1 in the gene, the feature should be at position 1 in the chromosome
-                start_pos = chr_start_pos + bio_location.from - 1 # so substracting 1 to the sum
-                end_pos = chr_start_pos + bio_location.to - 1 # same as above
+                start_pos = (chr_start_pos + bio_location.from.to_i - 1).to_s # so substracting 1 to the sum
+                end_pos = (chr_start_pos + bio_location.to.to_i - 1).to_s # same as above
             else # default and if mode == "local"
                 seqid = gene_id.to_s.upcase
                 start_pos = bio_location.from
@@ -292,7 +292,7 @@ def write_gff3(new_embl_hash, mode, filename)
             end
             # common elements in both gff3 files
             strand = feature.assoc["strand"]
-            attributes = "ID=#{feature_assoc["ID"]};Name=#{feature.feature};"
+            attributes = "ID=#{feature.assoc["ID"]};Name=#{feature.feature};"
 
             # joining the elements and writing them to the file
             elements = [seqid, source, type, start_pos, end_pos, score, strand, phase, attributes]
