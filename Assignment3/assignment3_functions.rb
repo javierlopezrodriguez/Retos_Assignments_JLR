@@ -180,7 +180,9 @@ def find_seq_in_exons(embl_hash)
             next unless feature.assoc["note"].match(Regexp.new(gene_id.to_s, "i")) # skip if the exon is from another gene (because of overlapping or whatever)
 
             bio_location = feature.locations[0] # feature.locations is Bio::Locations, which is basically an array of Bio::Location objects
-            exon_seq = embl_seq.subseq(bio_location.from, bio_location.to) # getting the sequence of the exon, 1-indexed
+            exon_start_pos, exon_end_pos = bio_location.from, bio_location.to # 1-indexed
+
+            exon_seq = embl_seq.subseq(exon_start_pos, exon_end_pos) # getting the sequence of the exon, 1-indexed
 
             if bio_location.strand == +1 # the feature is on the current strand, we need to search for CTTCTT
                 # To find the sequence, I'm using lookahead (?=) so that I can match overlapping expressions 
@@ -190,7 +192,11 @@ def find_seq_in_exons(embl_hash)
                 
                 next if start_f.empty? # if there is no match, skip
                 # if there is a match
-                positions_f = start_f.map {|pos| [pos, pos + 5]} unless start_f.empty? # 1-indexed
+                # Positions: 
+                # pos is the position of the feature with respect to the exon
+                # to get it with respect to the gene, we have to sum pos + exon_start_pos
+                # everything is 1-indexed, so when summing two 1-indexed positions we have to substract 1.
+                positions_f = start_f.map {|pos| [pos + exon_start_pos - 1, pos + exon_start_pos -1 + 5]} unless start_f.empty? # 1-indexed
                 all_positions_forward |= positions_f # include the [start_pos, end_pos] pairs that aren't included already
 
             elsif bio_location.strand == -1 # the feature is on the complement strand, we need to search for the reverse complement, AAGAAG
@@ -201,7 +207,11 @@ def find_seq_in_exons(embl_hash)
 
                 next if start_r.empty? # if there is no match, skip
                 # if there is a match
-                positions_r = start_r.map {|pos| [pos, pos + 5]} unless start_r.empty? # 1-indexed
+                # Positions: 
+                # pos is the position of the feature with respect to the exon
+                # to get it with respect to the gene, we have to sum pos + exon_start_pos
+                # everything is 1-indexed, so when summing two 1-indexed positions we have to substract 1.
+                positions_r = start_r.map {|pos| [pos + exon_start_pos - 1, pos + exon_start_pos -1 + 5]} unless start_r.empty? # 1-indexed
                 all_positions_reverse |= positions_r # include the [start_pos, end_pos] pairs that aren't included already
             else
                 puts "WARNING: no strand"
