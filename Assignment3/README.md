@@ -1,6 +1,6 @@
 Command to run the program:
 
-ruby main.rb
+ruby main.rb ../Assignment2/ArabidopsisSubNetwork_GeneList.txt
 
 Files:
 
