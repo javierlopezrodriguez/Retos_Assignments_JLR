@@ -8,9 +8,9 @@ assignment3_functions.rb contains the functions I made for this assignment. I ha
 
 main.rb contains the main program.
 
-AT2G46340_full_219022154_19027528.pdf contains the screenshot of the AT2G46340 gene with the feature track added.
+AT2G46340_full_2_19022154_19027528.pdf contains the screenshot of the AT2G46340 gene with the feature track added.
 
-AT2G46340_zoomed_219027246_19027307.pdf contains the screenshot of a zoomed region where there are overlapping CTTCTT so that it can be seen more easily.
+AT2G46340_zoomed_2_19027246_19027307.pdf contains the screenshot of a zoomed region where there are overlapping CTTCTT so that it can be seen more easily.
 
 Test3.ipynb was a notebook for me to test things about BioRuby, it doesn't contain anything relevant for the assignment.
 
