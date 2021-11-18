@@ -13,6 +13,8 @@ WHERE
 
 Answer at 17/11/2021: 
 "347429645"xsd:int
+(there are 347429645 protein records)
+
 
 Q2: 1 POINT How many Arabidopsis thaliana protein records are in UniProt? 
 Query:
@@ -31,36 +33,103 @@ WHERE
 
 Answer at 17/11/2021:
 "136783"xsd:int
+(there are 136783 Arabidopsis thaliana protein records)
+
 
 Q3: 1 POINT retrieve pictures of Arabidopsis thaliana from UniProt? 
 Query:
 
-Answer:
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT ?image
+WHERE
+{
+  ?taxon_id a up:Taxon;
+    		up:scientificName "Arabidopsis thaliana";
+      		foaf:depiction ?image .
+  ?image a foaf:Image .
+}
+
+Answer at 18/11/2021:
+https://upload.wikimedia.org/wikipedia/commons/3/39/Arabidopsis.jpg
+https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Arabidopsis_thaliana_inflorescencias.jpg/800px-Arabidopsis_thaliana_inflorescencias.jpg
+
 
 Q4: 1 POINT:  What is the description of the enzyme activity of UniProt Protein Q9SZZ8 
-Query:
+Query: 
+#######################################################################
+#######################################################################
+CASI PERO NO, me da más cosas aparte de la que yo quiero :(
+#######################################################################
+#######################################################################
+
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+SELECT ?activity_annot
+WHERE
+{
+  	uniprotkb:Q9SZZ8 a up:Protein ;
+					up:enzyme ?enzyme .
+	?activity up:enzymeClass ?enzyme ;
+			a up:Catalytic_Activity .
+	?activity_annot up:catalyticActivity ?activity ;
+					a up:Catalytic_Activity_Annotation .
+}
 
 Answer:
+
 
 Q5: 1 POINT:  Retrieve the proteins ids, and date of submission, for proteins that have been added to UniProt this year   (HINT Google for “SPARQL FILTER by date”)
 Query:
 
 Answer:
 
+
 Q6: 1 POINT How  many species are in the UniProt taxonomy?
 Query:
 
-Answer:
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT (COUNT (DISTINCT ?taxon) AS ?count)
+WHERE
+{
+  ?taxon a up:Taxon;
+          up:rank up:Species .
+}
+
+Answer at 18/11/2021:
+"1886992"xsd:int
+(there are 1886992 different species)
+
 
 Q7: 2 POINT  How many species have at least one protein record? (this might take a long time to execute, so do this one last!)
 Query:
 
-Answer:
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT (COUNT (DISTINCT ?taxon) AS ?count)
+WHERE
+{
+  ?protein a up:Protein;
+           up:organism ?taxon .
+  ?taxon a up:Taxon;
+          up:rank up:Species .
+}
+
+Answer at 18/11/2021:
+"1049286"xsd:int
+(1049286 species have at least one protein record)
+
 
 Q8: 3 points:  find the AGI codes and gene names for all Arabidopsis thaliana  proteins that have a protein function annotation description that mentions “pattern formation”
 Query:
 
 Answer:
+
 
 ---------------------------------------------
 
@@ -68,6 +137,9 @@ From the MetaNetX metabolic networks for metagenomics database SPARQL Endpoint: 
 
 
 Q9: 4 POINTS:  what is the MetaNetX Reaction identifier (starts with “mnxr”) for the UniProt Protein uniprotkb:Q18A79
+Query:
+
+Answer:
 
 
 ---------------------------------------------
@@ -76,3 +148,6 @@ FEDERATED QUERY - UniProt and MetaNetX
 
 
 Q10: 5 POINTS:  What is the official Gene ID (UniProt calls this a “mnemonic”) and the MetaNetX Reaction identifier (mnxr…..) for the protein that has “Starch synthase” catalytic activity in Clostridium difficile (taxon 272563).
+Query:
+
+Answer:
