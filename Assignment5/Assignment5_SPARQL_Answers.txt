@@ -139,7 +139,26 @@ From the MetaNetX metabolic networks for metagenomics database SPARQL Endpoint: 
 Q9: 4 POINTS:  what is the MetaNetX Reaction identifier (starts with “mnxr”) for the UniProt Protein uniprotkb:Q18A79
 Query:
 
-Answer:
+PREFIX mnx: <https://rdf.metanetx.org/schema/>
+PREFIX up: <http://purl.uniprot.org/uniprot/>
+SELECT ?mnxr_label
+WHERE{
+    ?pept a mnx:PEPT ;
+          mnx:peptXref up:Q18A79 .
+    ?cata a mnx:CATA ;
+          mnx:pept ?pept .
+    ?gpr a mnx:GPR ;
+         mnx:cata ?cata ;
+         mnx:reac ?reac .
+    ?reac a mnx:REAC ;
+          mnx:mnxr ?mnxr .
+    ?mnxr rdfs:label ?mnxr_label .
+}
+
+Answer at 18/11/2021:
+"MNXR145046"
+"MNXR165934"
+(There are two MetaNetX reaction identifiers, MNXR145046 and MNXR165934. Both refer to the same reaction, but one considers that glycogen is static and doesn't change in the reaction, and the other one considers it to change from [(1->4)-alpha-D-glucosyl](n+1) to [(1->4)-alpha-D-glucosyl](n) )
 
 
 ---------------------------------------------
