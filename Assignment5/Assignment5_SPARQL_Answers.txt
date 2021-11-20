@@ -83,6 +83,18 @@ Answer:
 
 Q5: 1 POINT:  Retrieve the proteins ids, and date of submission, for proteins that have been added to UniProt this year   (HINT Google for “SPARQL FILTER by date”)
 Query:
+###################
+NO LA HE PROBADO PORQUE EL SERVER ESTA CAIDO O ALGO ASI
+###################
+
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT ?protein ?date
+WHERE
+{
+    ?protein a up:Protein .
+    ?protein up:created ?date .
+    FILTER (?date >= "2021-01-01"^^xsd:date)
+}
 
 Answer:
 
