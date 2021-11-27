@@ -60,8 +60,18 @@ def get_best_reciprocal_hits(db1_hash, db2_hash, evalue = nil, filtering = nil)
     end
 
     # For each sequence (query) in db1:
+    $stderr.puts "Blasting each sequence from #{db1_hash[:fasta_file_no_ext]} against the database #{db2_hash[:fasta_file_no_ext]}..."
     db1_ff = Bio::FlatFile.auto(db1_hash[:fasta_file])
     db1_ff.each_entry do |entry|
+        report = factory.query(entry)
+        next if report.hits.empty? # if no results, skip
+        best_hit = report.hits.first
+        next unless filter_by_coverage(query_start = best_hit.query_start,
+                                         query_end = best_hit.query_end,
+                                          query_length = best_hit.query_len, 
+                                          threshold = 0.5) # True if coverage > 0.5, so the hit doesn't get skipped
+        # If by now the entry hasn't been skipped, the best hit had more than 50% coverage
+        # We do the search in the opposite direction
 
 
     end
@@ -87,5 +97,10 @@ def determine_blast_type(type_query_seq, type_db)
     return "tblastn" if type_query_seq == "prot" && type_db == "nucl" # search translated nucleotide databases using a protein query
     # if none of the above, the abort gets executed
     abort("This program doesn't support the combination of query type #{type_query_seq} and database type #{type_db}, it only accepts 'nucl' or 'prot'")
+end
+
+def filter_by_coverage(query_start, query_end, query_length, threshold)
+    coverage = (query_end.to_f - query_start.to_f)/query_length.to_f
+    return coverage >= threshold
 end
 
