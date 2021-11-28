@@ -1,6 +1,6 @@
 Assignment 4. Command to run:
 
-ruby main.rb ./blast_databases/arabidopsis_thaliana.fa ./blast_databases/schizosaccharomyces_pombe.fa
+ruby main.rb ./blast_databases/schizosaccharomyces_pombe.fa ./blast_databases/arabidopsis_thaliana.fa
 
 
 About the fasta files:
@@ -19,7 +19,11 @@ Also, the best detection of orthologs as best reciprocal hits was obtained with 
 
 Next steps in the search of orthologs:
 
-COMPLETE THIS!!
+From https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3193375/
+
+A reasonable next step would be to include a third species, and perform a COG search (cluster of orthologous genes), a clustering method based on best reciprocal hit. We could identify the best reciprocal hits between the three species, and find the clusters that contain a best reciprocal hit from the three species. Because we have included one additional species, it is more probable that the orthologous genes we find here are really orthologous.
+
+Furthermore, we could use tree-based approaches, building phylogenetic gene trees between three or more species, and looking for orthologous genes between our species of interest.
 
 
 

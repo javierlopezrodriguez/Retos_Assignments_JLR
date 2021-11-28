@@ -203,5 +203,6 @@ def write_report(best_reciprocal_hits, output_name = "BRH_report.tsv")
     best_reciprocal_hits.each do |seq1, seq2|
         f.write("#{seq1}\t#{seq2}\n")
     end
+    f.close
 end
 

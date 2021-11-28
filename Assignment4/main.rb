@@ -1,6 +1,6 @@
 require_relative './assignment4_functions.rb'
 
-# ruby main.rb ./blast_databases/arabidopsis_thaliana.fa ./blast_databases/schizosaccharomyces_pombe.fa
+# ruby main.rb ./blast_databases/schizosaccharomyces_pombe.fa ./blast_databases/arabidopsis_thaliana.fa
 
 abort("You need to include both databases, example of the command: ruby main.rb ./blast_databases/arabidopsis_thaliana.fa ./blast_databases/schizosaccharomyces_pombe.fa") if ARGV.length < 2
 
