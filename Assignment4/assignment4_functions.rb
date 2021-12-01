@@ -1,11 +1,11 @@
 require 'bio'
 
 #
-# <Description>
+# Makes a blast database from a fasta file.
 #
-# @param [<Type>] fastafilename <description>
+# @param [String] fastafilename The name of the fasta file.
 #
-# @return [<Type>] <description>
+# @return [Hash<Symbol, String>] The hash containing information about the database (name without extension, name with extension and type of database).
 #
 def make_blast_db(fastafilename)
     begin
@@ -38,15 +38,15 @@ end
 
 
 #
-# <Description>
+# Performs the best reciprocal hit analysis between the two databases created previously, and returns the hash with the best reciprocal hits found.
 #
-# @param [<Type>] db1_hash <description>
-# @param [<Type>] db2_hash <description>
-# @param [<Type>] evalue <description>
-# @param [<Type>] filtering <description>
-# @param [<Type>] coverage <description>
+# @param [Hash<Symbol, String>] db1_hash The hash containing information about the first database (name without extension, name with extension and type of database)
+# @param [Hash<Symbol, String>] db2_hash The hash containing information about the second database (name without extension, name with extension and type of database)
+# @param [String, nil] evalue The E-value threshold, as a string, which will be passed to the argument -e of blast. Example: 1*10^-6 would be "1e-6". If nil, blast default is used.
+# @param [String, nil] filtering The filters, as a string, which will be passed to the argument -F of blast. Double string quotes are needed sometimes, for example: for -F “m S”, we need to pass '"m S"' so that the inner quotes get included in the argument string. If nil, blast default is used.
+# @param [Float, nil] coverage Query coverage threshold, hits with lower query coverage will be discarded. If nil, it won't filter by coverage.
 #
-# @return [<Type>] <description>
+# @return [Hash<Symbol, Symbol>] The hash containing the best reciprocal hits found by the analysis. 
 #
 def get_best_reciprocal_hits(db1_hash, db2_hash, evalue = nil, filtering = nil, coverage = nil)
 
@@ -72,12 +72,12 @@ def get_best_reciprocal_hits(db1_hash, db2_hash, evalue = nil, filtering = nil, 
 end
 
 #
-# <Description>
+# Given the types of the query sequence and the target database, returns the type of blast that needs to be performed (blastn, blastp, blastx, tblastn).
 #
-# @param [<Type>] type_query_seq <description>
-# @param [<Type>] type_db <description>
+# @param [String] type_query_seq The type of sequence in the query database, "prot" for proteins, "nucl" for nucleotides.
+# @param [String] type_db The type of sequence in the target database, "prot" for proteins, "nucl" for nucleotides.
 #
-# @return [<Type>] <description>
+# @return [String] The type of blast.
 #
 def determine_blast_type(type_query_seq, type_db)
     # For this assignment only the last two are necessary
@@ -90,14 +90,14 @@ def determine_blast_type(type_query_seq, type_db)
 end
 
 #
-# <Description>
+# Given the start and end positions of the query sequence in the alignment, its full length, and a threshold, returns True if the query coverage is higher or equal than the threshold.
 #
-# @param [<Type>] query_start <description>
-# @param [<Type>] query_end <description>
-# @param [<Type>] query_length <description>
-# @param [<Type>] threshold <description>
+# @param [Integer] query_start Start position of the query in the alignment
+# @param [Integer] query_end End position of the query in the alignment
+# @param [Integer] query_length Full length of the query
+# @param [Float] threshold Coverage threshold
 #
-# @return [<Type>] <description>
+# @return [True, False] If the query coverage is >= the threshold.
 #
 def coverage_bigger_than_threshold?(query_start, query_end, query_length, threshold)
     coverage = (query_end.to_f - query_start.to_f)/query_length.to_f
@@ -105,12 +105,12 @@ def coverage_bigger_than_threshold?(query_start, query_end, query_length, thresh
 end
 
 #
-# <Description>
+# Given the E-value and filtering arguments, builds a string that will be passed to the blast.
 #
-# @param [<Type>] evalue <description>
-# @param [<Type>] filtering <description>
-#
-# @return [<Type>] <description>
+# @param [String, nil] evalue The E-value threshold, as a string, which will be passed to the argument -e of blast. Example: 1*10^-6 would be "1e-6". If nil, blast default is used.
+# @param [String, nil] filtering The filters, as a string, which will be passed to the argument -F of blast. Double string quotes are needed sometimes, for example: for -F “m S”, we need to pass '"m S"' so that the inner quotes get included in the argument string. If nil, blast default is used.
+# 
+# @return [String, nil] The string with the arguments, or nil if the string is empty.
 #
 def build_arguments_string(evalue = nil, filtering = nil)
     arguments = ""
@@ -121,13 +121,13 @@ def build_arguments_string(evalue = nil, filtering = nil)
 end
 
 #
-# <Description>
+# Creates an appropriate blast factory to perform a certain type of blast on a database (with or without additional arguments).
 #
-# @param [<Type>] blast_type <description>
-# @param [<Type>] database <description>
-# @param [<Type>] arguments <description>
+# @param [String] blast_type The type of blast ("blastn", "blastp", "blastx", "tblastn").
+# @param [String] database The path of the database.
+# @param [String, nil] arguments The arguments string to pass to Bio::Blast.local as additional arguments.
 #
-# @return [<Type>] <description>
+# @return [Bio::Blast] The blast factory.
 #
 def create_factory(blast_type, database, arguments = nil)
     if arguments.nil? || arguments.empty? # no arguments passed
@@ -140,16 +140,16 @@ end
 
 
 #
-# <Description>
+# Blasts every sequence of database 1 against the complete database 2, and stores the best results. If reverse hash is passed, it only blasts those sequences that are values of that hash.
 #
-# @param [<Type>] db1_hash <description>
-# @param [<Type>] db2_hash <description>
-# @param [<Type>] evalue <description>
-# @param [<Type>] filtering <description>
-# @param [<Type>] coverage <description>
-# @param [<Type>] reverse_hash <description>
+# @param [Hash<Symbol, String>] db1_hash The hash containing information about the first database (name without extension, name with extension and type of database)
+# @param [Hash<Symbol, String>] db2_hash The hash containing information about the second database (name without extension, name with extension and type of database)
+# @param [String, nil] evalue The E-value threshold, as a string, which will be passed to the argument -e of blast. Example: 1*10^-6 would be "1e-6". If nil, blast default is used.
+# @param [String, nil] filtering The filters, as a string, which will be passed to the argument -F of blast. Double string quotes are needed sometimes, for example: for -F “m S”, we need to pass '"m S"' so that the inner quotes get included in the argument string. If nil, blast default is used.
+# @param [Float, nil] coverage Query coverage threshold, hits with lower query coverage will be discarded. If nil, it won't filter by coverage.
+# @param [Hash<Symbol, Symbol>, nil] reverse_hash The hash of the reverse search (database 2 against database 1).
 #
-# @return [<Type>] <description>
+# @return [Hash<Symbol, Symbol>] A hash where the key is the id of the query sequence from database 1, and the value is the id of the best hit in database 2.
 #
 def blast_db_against_db(db1_hash, db2_hash, evalue = nil, filtering = nil, coverage = nil, reverse_hash = nil)
 
@@ -191,12 +191,10 @@ return best_hits_q1_db2 # returns the hash with the hits of each entry of db1 ag
 end
 
 #
-# <Description>
+# Writes a report with the best reciprocal hits found in the analysis, in a .tsv format.
 #
-# @param [<Type>] best_reciprocal_hits <description>
-# @param [<Type>] output_name <description>
-#
-# @return [<Type>] <description>
+# @param [Hash<Symbol, Symbol>] best_reciprocal_hits The hash containing the best reciprocal hits found by the analysis.
+# @param [String] output_name The name of the output file.
 #
 def write_report(best_reciprocal_hits, output_name = "BRH_report.tsv")
     f = File.new(output_name, "w")
