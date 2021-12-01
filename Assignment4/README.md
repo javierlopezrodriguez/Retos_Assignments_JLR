@@ -2,11 +2,15 @@ Assignment 4. Command to run:
 
 ruby main.rb ./blast_databases/schizosaccharomyces_pombe.fa ./blast_databases/arabidopsis_thaliana.fa
 
+The results of the analysis are in BRH_report.tsv
+
+---------------
 
 About the fasta files:
 
 In this case, the fasta files provided for Arabidopsis and S. pombe don't have the problem we mentioned in class about the non-unique identifiers.
 
+---------------
 
 About the parameters:
 
