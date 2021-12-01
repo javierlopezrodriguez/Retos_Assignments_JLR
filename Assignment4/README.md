@@ -20,6 +20,7 @@ They recommend an E-value threshold of 1*10^-6 and that there is a query coverag
 
 Also, the best detection of orthologs as best reciprocal hits was obtained with soft filtering and a Smith-Waterman final alignment (-F “m S” -s T), giving both the highest number of orthologs and the minimal error rates. However, using a Smith-Waterman final alignment is computationally expensive, and almost the same results were achieved just by using soft filtering (-F “m S”), which is what I'll use.
 
+----------------
 
 Next steps in the search of orthologs:
 
